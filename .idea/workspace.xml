@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="39d6a968-7a90-47bc-a7ea-01242f510b09" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/algorithm/server/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/grpc/algorithm.proto" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/~dev/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/~dev/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/~dev/docker-compose.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/predis/predis" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/monolog-bundle" />
+      <path value="$PROJECT_DIR$/vendor/ocramius/proxy-manager" />
+      <path value="$PROJECT_DIR$/vendor/webimpress/safe-writer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/common" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/reflection" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-zendframework-bridge" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-code" />
+      <path value="$PROJECT_DIR$/vendor/laminas/laminas-eventmanager" />
+      <path value="$PROJECT_DIR$/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/vendor/symfony/orm-pack" />
+      <path value="$PROJECT_DIR$/vendor/symfony/stopwatch" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1iCFsEVSVtM3razXNybHBXF5lfN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/algorithm" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/algorithm" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/~dev/redis/conf" />
+      <recent name="$PROJECT_DIR$/~dev/nginx/conf" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="39d6a968-7a90-47bc-a7ea-01242f510b09" name="Default Changelist" comment="" />
+      <created>1601403872006</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601403872006</updated>
+      <workItem from="1601403873237" duration="5748000" />
+      <workItem from="1601409632929" duration="83000" />
+      <workItem from="1601490066573" duration="155000" />
+      <workItem from="1601490242550" duration="3893000" />
+      <workItem from="1601660569376" duration="5872000" />
+      <workItem from="1601746609819" duration="9209000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2682" y="422" width="386" height="228" key="#Composer" timestamp="1601403904030">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2682" y="422" width="386" height="228" key="#Composer/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601403904030" />
+    <state x="2566" y="313" width="617" height="447" key="#Log_Highlighting_(ideolog)" timestamp="1601661482213">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2566" y="313" width="617" height="447" key="#Log_Highlighting_(ideolog)/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601661482213" />
+    <state x="2392" y="179" width="939" height="657" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1601492157391">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2392" y="179" width="939" height="657" key="#com.intellij.execution.impl.EditConfigurationsDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601492157391" />
+    <state x="2598" y="344" width="553" height="385" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601752254839">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2598" y="344" width="553" height="385" key="#com.intellij.fileTypes.FileTypeChooser/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601752254839" />
+    <state width="1294" height="238" key="GridCell.Tab.0.bottom" timestamp="1601492834086">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1294" height="238" key="GridCell.Tab.0.bottom/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601492834086" />
+    <state width="1294" height="238" key="GridCell.Tab.0.center" timestamp="1601492834085">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1294" height="238" key="GridCell.Tab.0.center/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601492834085" />
+    <state width="1294" height="238" key="GridCell.Tab.0.left" timestamp="1601492834085">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1294" height="238" key="GridCell.Tab.0.left/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601492834085" />
+    <state width="1294" height="238" key="GridCell.Tab.0.right" timestamp="1601492834085">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1294" height="238" key="GridCell.Tab.0.right/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601492834085" />
+    <state x="2513" y="211" width="677" height="593" key="NewPhpClassDialog" timestamp="1601493286652">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2513" y="211" width="677" height="593" key="NewPhpClassDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601493286652" />
+    <state x="2384" y="174" key="SettingsEditor" timestamp="1601752176971">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2384" y="174" key="SettingsEditor/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601752176971" />
+    <state x="2744" y="210" width="262" height="653" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1601661075735">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2744" y="210" width="262" height="653" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601661075735" />
+    <state x="2494" y="189" width="762" height="695" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1601493754383">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2494" y="189" width="762" height="695" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601493754383" />
+    <state x="2586" y="288" width="587" height="502" key="find.popup" timestamp="1601404010096">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2586" y="288" width="587" height="502" key="find.popup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601404010096" />
+    <state x="2543" y="238" width="672" height="678" key="search.everywhere.popup" timestamp="1601746641229">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2543" y="238" width="672" height="678" key="search.everywhere.popup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601746641229" />
+    <state x="2605" y="454" width="540" height="166" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1601493362897">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2605" y="454" width="540" height="166" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601493362897" />
+  </component>
+</project>
