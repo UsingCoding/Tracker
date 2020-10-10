@@ -1,3 +1,11 @@
-index:
-    path: /
-    controller: App\Controller\IndexController::index
+api:
+    path: /api/{wildcard}
+    controller: App\Controller\ApiController
+    requirements:
+        wildcard: .*
+
+frontend:
+    path: /{wildcard}
+    controller: App\Controller\FrontendController
+    requirements:
+        wildcard: .*
