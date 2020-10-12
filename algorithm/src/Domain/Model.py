@@ -5,24 +5,24 @@ import matplotlib.pyplot as plt
 class Model:
     def __init__(self):
 
-        difficulty = np.arange(0, 10, 1)
-        requiredTime = np.arange(0, 40, 1)
-        employeeLevel  = np.arange(0, 10, 1)
+    difficulty = np.arange(0, 10, 1)
+    requiredTime = np.arange(0, 40, 1)
+    employeeLevel  = np.arange(0, 10, 1)
 
-        easyDifficulty = fuzz.trimf(difficulty, [0, 4, 5])
-        mediumDifficulty = fuzz.trimf(difficulty, [4, 8, 10])
-        hardDifficulty = fuzz.trimf(difficulty, [7, 10, 10])
+    easyDifficulty = fuzz.trimf(difficulty, [0, 3, 5])
+    mediumDifficulty = fuzz.trimf(difficulty, [3, 6, 8])
+    hardDifficulty = fuzz.trimf(difficulty, [6, 8, 10])
 
-        veryShortRequiredTime = fuzz.trimf(requiredTime, [0, 3, 5])
-        shortRequiredTime = fuzz.trimf(requiredTime, [2, 6, 10])
-        usualRequiredTime = fuzz.trimf(requiredTime, [4, 10, 11])
-        longRequiredTime = fuzz.trimf(requiredTime, [8, 32, 40])
-        veryLongRequiredTime = fuzz.trimf(requiredTime, [28, 40, 40])
+    veryShortRequiredTime = fuzz.trimf(requiredTime, [0, 2, 3])
+    shortRequiredTime = fuzz.trimf(requiredTime, [2, 4, 6])
+    usualRequiredTime = fuzz.trimf(requiredTime, [4, 7, 10])
+    longRequiredTime = fuzz.trimf(requiredTime, [8, 20, 32])
+    veryLongRequiredTime = fuzz.trimf(requiredTime, [28, 34, 40])
 
-        juniorEmployeeLevel = fuzz.trimf(employeeLevel, [0, 4, 5])
-        middleEmployeeLevel = fuzz.trimf(employeeLevel, [3, 7, 10])
-        seniorEmployeeLevel = fuzz.trimf(employeeLevel, [6, 9, 10])
-        architectEmployeeLevel = fuzz.trimf(employeeLevel, [9, 10, 10])
+    juniorEmployeeLevel = fuzz.trimf(employeeLevel, [0, 2, 4])
+    middleEmployeeLevel = fuzz.trimf(employeeLevel, [3, 5, 7])
+    seniorEmployeeLevel = fuzz.trimf(employeeLevel, [6, 7, 9])
+    architectEmployeeLevel = fuzz.trimf(employeeLevel, [9, 10, 10])
 
         fig, (ax0, ax1, ax2) = plt.subplots(nrows=3, figsize=(8, 9))
 
