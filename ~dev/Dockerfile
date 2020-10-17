@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install -y \
         git \
         curl \
         wget \
+        protobuf-compiler \
 #    && docker-php-ext-install pgsql \
 #    && docker-php-ext-configure pgsql \
 
