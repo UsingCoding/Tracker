@@ -3,17 +3,29 @@ FROM php:7.4-fpm
 RUN apt-get update && apt-get install -y \
         git \
         curl \
+        gnupg \
         wget \
+        unzip \
         protobuf-compiler \
-#    && docker-php-ext-install pgsql \
-#    && docker-php-ext-configure pgsql \
+        libpq-dev \
+        libzip-dev \
+        libgrpc-dev
 
-#ADD ./php.ini /usr/local/etc/php/php.ini
+RUN docker-php-ext-install pgsql && docker-php-ext-configure pgsql && \
+    docker-php-ext-install zip && docker-php-ext-configure zip
+#    docker-php-ext-install grpc && docker-php-ext-configure grpc
+
+ADD ./php/php.ini /usr/local/etc/php/php.ini
 
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
 
-RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
+#RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt-get update && apt-get install -y yarn
 
 WORKDIR /var/www
 
