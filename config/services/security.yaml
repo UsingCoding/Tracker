@@ -1,0 +1,8 @@
+services:
+
+    authentication.user.provider:
+        class: App\Framework\Infrastructure\Security\Provider\UserProvider
+        arguments:
+
+    authentication.authenticator:
+        class: App\Framework\Infrastructure\Security\Authenticator\Authenticator

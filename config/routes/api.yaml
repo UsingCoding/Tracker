@@ -1,0 +1,2 @@
+api_auth:
+  path: /api/auth

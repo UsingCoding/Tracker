@@ -1,8 +1,5 @@
 api:
-    path: /api/{wildcard}
-    controller: App\Controller\ApiController
-    requirements:
-        wildcard: .*
+    resource: routes/api.yaml
 
 frontend:
     path: /{wildcard}
