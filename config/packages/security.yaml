@@ -26,6 +26,6 @@ security:
             # switch_user: true
 
     access_control:
-         - { path: ^/api/auth$, roles: ROLE_USER }
+         - { path: ^/api/auth$, roles: PUBLIC_ACCESS }
          - { path: ^/api, roles: ROLE_USER }
 #         - { path: ^/profile/get, roles: PUBLIC_ACCESS }
