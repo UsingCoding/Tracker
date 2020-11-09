@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class FrontendEnvironmentRequestListener implements EventSubscriberInterface
 {
     private const CONTROLLER_ATTRIBUTE_KEY = '_controller';
-    private const ROUTE__ATTRIBUTE_KEY = '_route';
+    private const ROUTE_ATTRIBUTE_KEY = '_route';
     private const FRONTEND_PREFIX = 'frontend';
 
     private LoggerInterface $logger;
@@ -51,7 +51,7 @@ class FrontendEnvironmentRequestListener implements EventSubscriberInterface
 
     private function isFrontendRequest(Request $request): bool
     {
-        return Strings::isStartsWith($request->get(self::ROUTE__ATTRIBUTE_KEY) ?? '', self::FRONTEND_PREFIX);
+        return Strings::isStartsWith($request->get(self::ROUTE_ATTRIBUTE_KEY) ?? '', self::FRONTEND_PREFIX);
     }
 
     public static function getSubscribedEvents(): array
