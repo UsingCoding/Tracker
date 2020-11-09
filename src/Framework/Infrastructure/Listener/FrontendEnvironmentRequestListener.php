@@ -19,7 +19,7 @@ class FrontendEnvironmentRequestListener implements EventSubscriberInterface
     private LoggerInterface $logger;
     private string $defaultFrontendControllerClass;
 
-    public function __construct(LoggerInterface $logger, string $defaultFrontendControllerClass = '')
+    public function __construct(LoggerInterface $logger, string $defaultFrontendControllerClass)
     {
         $this->logger = $logger;
         $this->defaultFrontendControllerClass = $defaultFrontendControllerClass;
