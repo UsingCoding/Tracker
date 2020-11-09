@@ -2,7 +2,4 @@ api:
     resource: routes/api.yaml
 
 frontend:
-    path: /{wildcard}
-    controller: App\Controller\FrontendController
-    requirements:
-        wildcard: .*
+    resource: routes/frontend.yaml

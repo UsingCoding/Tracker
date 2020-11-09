@@ -1,4 +1,5 @@
 monolog:
+    channels: ["environment"]
     handlers:
         main:
             type: fingers_crossed

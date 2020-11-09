@@ -4,6 +4,7 @@
 namespace App\Framework\Infrastructure\Security\User;
 
 
+use App\Framework\Domain\User\Access;
 use App\Module\User\Api\Output\UserOutput;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -21,7 +22,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return [Access::USER];
     }
 
     /**

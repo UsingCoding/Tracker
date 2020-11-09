@@ -15,7 +15,7 @@ security:
             custom_authenticators:
                 - authentication.authenticator
 
-            pattern: ^/api/
+            pattern: ^/
             logout:
                 path: /api/logout
 
@@ -26,6 +26,7 @@ security:
             # switch_user: true
 
     access_control:
-         - { path: ^/api/auth$, roles: PUBLIC_ACCESS }
-         - { path: ^/api, roles: ROLE_USER }
-#         - { path: ^/profile/get, roles: PUBLIC_ACCESS }
+         - { path: ^/api/auth$, roles: !php/const App\Framework\Domain\User\Access::PUBLIC }
+         - { path: ^/api, roles: !php/const App\Framework\Domain\User\Access::USER }
+         - { path: ^/login$, roles: !php/const App\Framework\Domain\User\Access::PUBLIC }
+         - { path: ^/, roles: !php/const App\Framework\Domain\User\Access::USER }
