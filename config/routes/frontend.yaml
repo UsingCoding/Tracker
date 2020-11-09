@@ -3,6 +3,5 @@ frontend_login:
 
 frontend:
     path: /{wildcard}
-    controller: App\Controller\Frontend\FrontendController
     requirements:
         wildcard: .*

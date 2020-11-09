@@ -17,10 +17,12 @@ class FrontendEnvironmentRequestListener implements EventSubscriberInterface
     private const FRONTEND_PREFIX = 'frontend';
 
     private LoggerInterface $logger;
+    private string $defaultFrontendControllerClass;
 
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, string $defaultFrontendControllerClass = '')
     {
         $this->logger = $logger;
+        $this->defaultFrontendControllerClass = $defaultFrontendControllerClass;
     }
 
     public function onKernelRequest(RequestEvent $event): void
@@ -44,7 +46,7 @@ class FrontendEnvironmentRequestListener implements EventSubscriberInterface
 
         $this->logger->debug('Default frontend controller was set for request', ['uri' => $request->getUri()]);
 
-        $request->attributes->set(self::CONTROLLER_ATTRIBUTE_KEY, FrontendController::class);
+        $request->attributes->set(self::CONTROLLER_ATTRIBUTE_KEY, $this->defaultFrontendControllerClass);
     }
 
     private function isFrontendRequest(Request $request): bool
