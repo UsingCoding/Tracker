@@ -15,6 +15,7 @@ services:
       - algorithm
     volumes:
       - ./../:/var/www
+      - ./php/php.ini:/usr/local/etc/php/php.ini-development
 
   nginx:
     image: nginx:latest

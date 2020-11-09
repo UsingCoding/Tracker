@@ -1,8 +1,11 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
     authentication.user.provider:
         class: App\Framework\Infrastructure\Security\Provider\UserProvider
-        arguments:
 
     authentication.authenticator:
         class: App\Framework\Infrastructure\Security\Authenticator\Authenticator

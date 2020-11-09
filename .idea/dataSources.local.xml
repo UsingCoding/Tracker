@@ -10,9 +10,11 @@
       <user-name>root</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="database">
-            <name qname="postgres" />
-            <name qname="main" />
+          <node negative="1">
+            <node kind="database" qname="main">
+              <node kind="schema" qname="public" />
+            </node>
+            <node kind="database" qname="postgres" />
           </node>
         </introspection-scope>
       </schema-mapping>

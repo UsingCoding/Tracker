@@ -4,15 +4,22 @@
 namespace App\Framework\Infrastructure\Security\User;
 
 
+use App\Module\User\Api\Output\UserOutput;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
+    private UserOutput $userOutput;
+
+    public function __construct(UserOutput $userOutput)
+    {
+        $this->userOutput = $userOutput;
+    }
 
     /**
      * @inheritDoc
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return ['ROLE_USER'];
     }
@@ -20,15 +27,15 @@ class User implements UserInterface
     /**
      * @inheritDoc
      */
-    public function getPassword()
+    public function getPassword(): string
     {
-        return '1234';
+        return $this->userOutput->getPassword();
     }
 
     /**
      * @inheritDoc
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -36,15 +43,15 @@ class User implements UserInterface
     /**
      * @inheritDoc
      */
-    public function getUsername()
+    public function getUsername(): string
     {
-        return "Session User";
+        return $this->userOutput->getUsername();
     }
 
     /**
      * @inheritDoc
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
 
     }

@@ -11,23 +11,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39d6a968-7a90-47bc-a7ea-01242f510b09" name="Default Changelist" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/config/routes/api.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/services/security.yaml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/Authenticator/Authenticator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/Provider/UserProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/User/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Api/Api.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Api/ApiInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Api/Exception/ApiException.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Api/Output/UserOutput.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Domain/Service/UserRepositoryInterface.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Domain/User/User.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Module/User/Infrastructure/Repository/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c78db80f-f14e-4171-b5fb-296825ac50d2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c78db80f-f14e-4171-b5fb-296825ac50d2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ApiController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ApiController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/Authenticator/Authenticator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/Authenticator/Authenticator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/Provider/UserProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/Provider/UserProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/User/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Framework/Infrastructure/Security/User/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/~dev/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/~dev/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/~dev/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/~dev/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/~dev/php/php.ini" beforeDir="false" afterPath="$PROJECT_DIR$/~dev/php/php.ini" afterDir="false" />
     </list>
@@ -138,16 +139,16 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/algorithm/Infrastructure/GRpcServerGenerated" />
+      <recent name="$PROJECT_DIR$/algorithm" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/js/components" />
       <recent name="$PROJECT_DIR$/assets/js" />
       <recent name="$PROJECT_DIR$/algorithm/src" />
       <recent name="$PROJECT_DIR$/~dev/redis/conf" />
       <recent name="$PROJECT_DIR$/~dev/nginx/conf" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/algorithm/Infrastructure/GRpcServerGenerated" />
-      <recent name="$PROJECT_DIR$/algorithm" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -173,6 +174,16 @@
       <workItem from="1601888669149" duration="6011000" />
       <workItem from="1602346443572" duration="9040000" />
       <workItem from="1602960411541" duration="625000" />
+      <workItem from="1603484455265" duration="120000" />
+      <workItem from="1603568404534" duration="6084000" />
+      <workItem from="1603624156008" duration="1005000" />
+      <workItem from="1603998852762" duration="5040000" />
+      <workItem from="1604084731305" duration="6181000" />
+      <workItem from="1604231810377" duration="11662000" />
+      <workItem from="1604859975943" duration="5522000" />
+      <workItem from="1604900085299" duration="124000" />
+      <workItem from="1604900510813" duration="88000" />
+      <workItem from="1604901456092" duration="1276000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1601757539532</created>
@@ -195,7 +206,28 @@
       <option name="project" value="LOCAL" />
       <updated>1601892403664</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Добавил security-bundle и авторизацию">
+      <created>1603484545062</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1603484545062</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Добавил забытый security.yaml">
+      <created>1603568560130</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1603568560130</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Поправил security.yaml">
+      <created>1603569107716</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1603569107716</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,7 +238,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -217,7 +255,10 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Добавил зависимость контейнера приложения от контейнера алгоритма" />
     <MESSAGE value="Добавил базовый код для терм" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавил базовый код для терм" />
+    <MESSAGE value="Добавил security-bundle и авторизацию" />
+    <MESSAGE value="Добавил забытый security.yaml" />
+    <MESSAGE value="Поправил security.yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Поправил security.yaml" />
   </component>
   <component name="WindowStateProjectService">
     <state x="2682" y="422" width="386" height="228" key="#Composer" timestamp="1601403904030">
@@ -228,6 +269,10 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2566" y="313" width="617" height="447" key="#Log_Highlighting_(ideolog)/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601661482213" />
+    <state x="2350" y="407" width="1050" height="258" key="#SQL_Resolution_Scopes" timestamp="1603570584013">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2350" y="407" width="1050" height="258" key="#SQL_Resolution_Scopes/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603570584013" />
     <state x="2523" y="191" width="807" height="604" key="#YAML" timestamp="1603484220489">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -241,10 +286,10 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2598" y="344" width="553" height="385" key="#com.intellij.fileTypes.FileTypeChooser/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601752254839" />
-    <state x="2681" y="224" width="397" height="625" key="#com.intellij.ide.util.MemberChooser" timestamp="1603483761356">
+    <state x="2681" y="224" width="397" height="625" key="#com.intellij.ide.util.MemberChooser" timestamp="1604864731660">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2681" y="224" width="397" height="625" key="#com.intellij.ide.util.MemberChooser/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603483761356" />
+    <state x="2681" y="224" width="397" height="625" key="#com.intellij.ide.util.MemberChooser/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604864731660" />
     <state x="2646" y="287" width="525" height="409" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1603482015290">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -257,35 +302,39 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2613" y="297" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603482818761" />
-    <state x="2126" y="22" width="1575" height="1006" key="CommitChangelistDialog2" timestamp="1603484374955">
+    <state x="2126" y="22" width="1575" height="1006" key="CommitChangelistDialog2" timestamp="1604865326510">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2126" y="22" width="1575" height="1006" key="CommitChangelistDialog2/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484374955" />
+    <state x="2126" y="22" width="1575" height="1006" key="CommitChangelistDialog2/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604865326510" />
     <state x="365" y="59" width="1437" height="941" key="CommitChangelistDialog2/40.0.1880.1080@40.0.1880.1080" timestamp="1601895752844" />
-    <state width="1878" height="289" key="GridCell.Tab.0.bottom" timestamp="1603484136099">
+    <state width="1294" height="362" key="GridCell.Tab.0.bottom" timestamp="1604863237543">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="289" key="GridCell.Tab.0.bottom/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484136099" />
-    <state width="1878" height="289" key="GridCell.Tab.0.center" timestamp="1603484136099">
+    <state width="1294" height="362" key="GridCell.Tab.0.bottom/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604863237543" />
+    <state width="1294" height="362" key="GridCell.Tab.0.center" timestamp="1604863237543">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="289" key="GridCell.Tab.0.center/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484136099" />
-    <state width="1878" height="289" key="GridCell.Tab.0.left" timestamp="1603484136098">
+    <state width="1294" height="362" key="GridCell.Tab.0.center/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604863237543" />
+    <state width="1294" height="362" key="GridCell.Tab.0.left" timestamp="1604863237543">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="289" key="GridCell.Tab.0.left/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484136098" />
-    <state width="1878" height="289" key="GridCell.Tab.0.right" timestamp="1603484136099">
+    <state width="1294" height="362" key="GridCell.Tab.0.left/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604863237543" />
+    <state width="1294" height="362" key="GridCell.Tab.0.right" timestamp="1604863237543">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="289" key="GridCell.Tab.0.right/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484136099" />
+    <state width="1294" height="362" key="GridCell.Tab.0.right/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604863237543" />
+    <state width="231" height="471" key="HiddenNamespacesPopup" timestamp="1603570154548">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state width="231" height="471" key="HiddenNamespacesPopup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603570154548" />
     <state x="2123" y="92" width="1504" height="889" key="MergeDialog" timestamp="1603479857732">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2123" y="92" width="1504" height="889" key="MergeDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603479857732" />
-    <state x="2450" y="152" width="927" height="685" key="NewPhpClassDialog" timestamp="1603483743895">
+    <state x="2450" y="152" width="927" height="685" key="NewPhpClassDialog" timestamp="1604864382533">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2450" y="152" width="927" height="685" key="NewPhpClassDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603483743895" />
+    <state x="2450" y="152" width="927" height="685" key="NewPhpClassDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604864382533" />
     <state x="2637" y="219" width="360" height="583" key="RollbackChangesDialog" timestamp="1601758846752">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -294,20 +343,20 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2384" y="174" key="SettingsEditor/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484444607" />
-    <state width="509" height="445" key="SwitcherDM" timestamp="1603482938127">
+    <state width="509" height="445" key="SwitcherDM" timestamp="1604864394955">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state width="509" height="445" key="SwitcherDM/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603482938127" />
+    <state width="509" height="445" key="SwitcherDM/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604864394955" />
     <state width="498" height="445" key="SwitcherDM/40.0.1880.1080@40.0.1880.1080" timestamp="1601891123615" />
-    <state x="2475" y="275" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1603484068060">
+    <state x="2475" y="275" width="800" height="523" key="Vcs.Push.Dialog.v2" timestamp="1604089023517">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2475" y="275" width="800" height="523" key="Vcs.Push.Dialog.v2/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484068060" />
+    <state x="2475" y="275" width="800" height="523" key="Vcs.Push.Dialog.v2/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604089023517" />
     <state x="583" y="275" width="800" height="523" key="Vcs.Push.Dialog.v2/40.0.1880.1080@40.0.1880.1080" timestamp="1601892616359" />
-    <state x="2744" y="210" width="262" height="653" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1601661075735">
+    <state x="2655" y="197" width="529" height="653" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog" timestamp="1603570554639">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2744" y="210" width="262" height="653" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1601661075735" />
+    <state x="2655" y="197" width="529" height="653" key="com.intellij.database.view.ui.AbstractDbRefactoringDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603570554639" />
     <state x="2494" y="189" width="762" height="695" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1603483056602">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
@@ -325,14 +374,14 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2640" y="352" width="470" height="368" key="git4idea.ui.GitUnstashDialog/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1602347969836" />
-    <state x="2544" y="248" width="672" height="677" key="run.anything.popup" timestamp="1603484116812">
+    <state x="2544" y="248" width="672" height="677" key="run.anything.popup" timestamp="1603624628737">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2544" y="248" width="672" height="677" key="run.anything.popup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603484116812" />
-    <state x="2543" y="238" width="672" height="678" key="search.everywhere.popup" timestamp="1603482619650">
+    <state x="2544" y="248" width="672" height="677" key="run.anything.popup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603624628737" />
+    <state x="2543" y="238" width="672" height="678" key="search.everywhere.popup" timestamp="1604860138116">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2543" y="238" width="672" height="678" key="search.everywhere.popup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1603482619650" />
+    <state x="2543" y="238" width="672" height="678" key="search.everywhere.popup/40.0.1880.1080/1920.0.1920.1080@1920.0.1920.1080" timestamp="1604860138116" />
     <state x="650" y="238" width="672" height="678" key="search.everywhere.popup/40.0.1880.1080@40.0.1880.1080" timestamp="1601888812804" />
     <state x="711" y="454" width="540" height="166" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1601895961790">
       <screen x="40" y="0" width="1880" height="1080" />

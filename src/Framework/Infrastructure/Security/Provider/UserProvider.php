@@ -10,17 +10,17 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
 {
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername(string $username): UserInterface
     {
         return new User();
     }
 
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         return new User();
     }
 
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
         return User::class === $class;
     }
