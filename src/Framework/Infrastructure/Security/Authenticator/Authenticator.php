@@ -2,6 +2,7 @@
 
 namespace App\Framework\Infrastructure\Security\Authenticator;
 
+use App\Framework\Infrastructure\Security\Provider\AccessDeniedResponseProviderInterface;
 use App\Framework\Infrastructure\Security\User\User;
 use App\Module\User\Api\ApiInterface as UserApi;
 use App\Module\User\Api\Exception\ApiException;
@@ -21,10 +22,12 @@ class Authenticator extends AbstractAuthenticator implements AuthenticationEntry
     private const SUPPORTED_ROUTE = 'api_auth';
 
     private UserApi $api;
+    private AccessDeniedResponseProviderInterface $responseProvider;
 
-    public function __construct(UserApi $api)
+    public function __construct(UserApi $api, AccessDeniedResponseProviderInterface $responseProvider)
     {
         $this->api = $api;
+        $this->responseProvider = $responseProvider;
     }
 
     public function supports(Request $request): ?bool
@@ -42,7 +45,7 @@ class Authenticator extends AbstractAuthenticator implements AuthenticationEntry
         }
         catch (ApiException $exception)
         {
-            throw new UsernameNotFoundException('');
+            throw new UsernameNotFoundException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
@@ -56,13 +59,8 @@ class Authenticator extends AbstractAuthenticator implements AuthenticationEntry
         return new JsonResponse(['isLogin' => 0], 403);
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
-        return $this->getAccessDeniedResponse();
-    }
-
-    private function getAccessDeniedResponse(): JsonResponse
-    {
-        return new JsonResponse(['error' => 'access_denied'], 403);
+        return $this->responseProvider->getResponse();
     }
 }

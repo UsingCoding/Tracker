@@ -3,7 +3,6 @@
 namespace App\Framework\Infrastructure\Listener;
 
 use App\Common\Domain\Utils\Strings;
-use App\Controller\Frontend\FrontendController;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;

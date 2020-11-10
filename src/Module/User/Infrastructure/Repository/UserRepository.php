@@ -2,25 +2,21 @@
 
 namespace App\Module\User\Infrastructure\Repository;
 
-use App\Module\User\Domain\Service\UserRepositoryInterface;
-use Doctrine\ORM\EntityManager;
+use App\Module\User\Domain\Model\User;
+use App\Module\User\Domain\Model\UserRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Doctrine\Persistence\ObjectRepository;
 
 class UserRepository implements UserRepositoryInterface
 {
     private EntityManagerInterface $entityManager;
-    private ParameterBagInterface $parameterBag;
-    private LoggerInterface $logger;
+    private ObjectRepository $repo;
 
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->parameterBag = $parameterBag;
-        $this->logger = $logger;
+        $this->repo = $this->entityManager->getRepository(User::class);
     }
-
 
     public function getUserByEmail(string $email): void
     {
@@ -48,5 +44,25 @@ class UserRepository implements UserRepositoryInterface
 //        $line = pg_fetch_array($res, null, PGSQL_ASSOC);
 //
 //        $this->logger->debug('RESULT', [$line]);
+    }
+
+    public function add(User $user): void
+    {
+        $this->entityManager->persist($user);
+    }
+
+    public function findById(int $id): ?User
+    {
+        return $this->repo->findOneBy(['user_id' => $id]);
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        return $this->repo->findOneBy(['email' => $email]);
+    }
+
+    public function remove(User $user): void
+    {
+        $this->entityManager->remove($user);
     }
 }

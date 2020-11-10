@@ -3,35 +3,28 @@
 namespace App\Module\User\Api;
 
 use App\Module\User\Api\Exception\ApiException;
+use App\Module\User\Api\Mapper\UserMapper;
 use App\Module\User\Api\Output\UserOutput;
-use App\Module\User\Domain\Service\UserRepositoryInterface;
+use App\Module\User\App\Service\AuthenticationService;
 
 class Api implements ApiInterface
 {
-    private UserRepositoryInterface $repository;
+    private AuthenticationService $authenticationService;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(AuthenticationService $authenticationService)
     {
-        $this->repository = $repository;
+        $this->authenticationService = $authenticationService;
     }
 
     public function authorizeUserByEmail(string $email, string $password): UserOutput
     {
         try
         {
-            $this->repository->getUserByEmail($email);
-
-            return new UserOutput(
-                11,
-                'qq',
-                '1234',
-                'mail@mail.com',
-                '12312412'
-            );
+            return UserMapper::getUserOutput($this->authenticationService->authenticate($email, $password));
         }
         catch (\Throwable $throwable)
         {
-            throw new ApiException($throwable->getMessage(), $throwable->getCode(), $throwable);
+            throw ApiException::from($throwable);
         }
     }
 }
