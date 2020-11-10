@@ -8,6 +8,7 @@ services:
     restart: always
     env_file:
       - ../.env
+      - ../.env.local
     stdin_open: true
     tty: true
     depends_on:
