@@ -14,4 +14,18 @@ interface ApiInterface
      * @throws ApiException
      */
     public function authorizeUserByEmail(string $email, string $password): UserOutput;
+
+    /**
+     * @param int $userId
+     * @return UserOutput
+     * @throws ApiException
+     */
+    public function getUserById(int $userId): UserOutput;
+
+    /**
+     * @param string $userName
+     * @return UserOutput
+     * @throws ApiException
+     */
+    public function getUserByUsername(string $userName): UserOutput;
 }

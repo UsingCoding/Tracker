@@ -56,4 +56,9 @@ class User implements UserInterface
     {
 
     }
+
+    public function getUserOutput(): UserOutput
+    {
+        return $this->userOutput;
+    }
 }

@@ -61,6 +61,11 @@ class UserRepository implements UserRepositoryInterface
         return $this->repo->findOneBy(['email' => $email]);
     }
 
+    public function findByUsername(string $username): ?User
+    {
+        return $this->repo->findOneBy(['username' => $username]);
+    }
+
     public function remove(User $user): void
     {
         $this->entityManager->remove($user);
