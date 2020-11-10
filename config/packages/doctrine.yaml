@@ -1,17 +1,30 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
+        default_connection: account
+        connections:
+            main:
+                url: '%env(resolve:MAIN_DATABASE_URL)%'
+                driver: 'pdo_pgsql'
+                charset: utf8
 
-        driver: 'pdo_pgsql'
-        charset: utf8
+            account:
+                url: '%env(resolve:ACCOUNT_DATABASE_URL)%'
+                driver: 'pdo_pgsql'
+                charset: utf8
+
+
     orm:
         auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
-        auto_mapping: true
-        mappings:
-            App\Module\User:
-                is_bundle: false
-                type: xml
-                dir: '%kernel.project_dir%/config/doctrine/user'
-                prefix: 'App\Module\User'
-                alias: User
+        default_entity_manager: account
+        entity_managers:
+            account:
+                connection: account
+                naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+                auto_mapping: true
+                mappings:
+                    App\Module\User:
+                        is_bundle: false
+                        type: xml
+                        dir: '%kernel.project_dir%/config/doctrine/user'
+                        prefix: 'App\Module\User'
+                        alias: User

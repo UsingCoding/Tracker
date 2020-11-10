@@ -9,13 +9,13 @@ use Doctrine\Persistence\ObjectRepository;
 
 class UserRepository implements UserRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
+    private EntityManagerInterface $accountEntityManager;
     private ObjectRepository $repo;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $accountEntityManager)
     {
-        $this->entityManager = $entityManager;
-        $this->repo = $this->entityManager->getRepository(User::class);
+        $this->accountEntityManager = $accountEntityManager;
+        $this->repo = $this->accountEntityManager->getRepository(User::class);
     }
 
     public function getUserByEmail(string $email): void
@@ -28,7 +28,7 @@ class UserRepository implements UserRepositoryInterface
 
 //        $this->logger->debug("URL", [$this->parameterBag->get('app.url')]);
 
-        $connection = $this->entityManager->getConnection();
+        $connection = $this->accountEntityManager->getConnection();
 
         $sql = 'select * from client where email = :email limit 1';
 
@@ -48,7 +48,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function add(User $user): void
     {
-        $this->entityManager->persist($user);
+        $this->accountEntityManager->persist($user);
     }
 
     public function findById(int $id): ?User
@@ -68,6 +68,6 @@ class UserRepository implements UserRepositoryInterface
 
     public function remove(User $user): void
     {
-        $this->entityManager->remove($user);
+        $this->accountEntityManager->remove($user);
     }
 }
