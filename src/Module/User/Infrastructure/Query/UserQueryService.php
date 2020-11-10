@@ -17,7 +17,6 @@ class UserQueryService implements UserQueryServiceInterface
         $this->userRepo = $userRepo;
     }
 
-
     public function getUserById(int $userId): UserData
     {
         $user = $this->userRepo->findById($userId);

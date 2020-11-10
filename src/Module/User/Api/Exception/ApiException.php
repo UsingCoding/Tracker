@@ -34,7 +34,7 @@ class ApiException extends \Exception
 
     public static function from(\Throwable $throwable): self
     {
-        $type = Arrays::get(self::EXCEPTION_CLASS_CODE_MAP, gettype($throwable), self::UNKNOWN_ERROR);
+        $type = Arrays::get(self::EXCEPTION_CLASS_CODE_MAP, get_class($throwable), self::UNKNOWN_ERROR);
 
         return new self($type, $throwable->getMessage(), $throwable->getCode(), $throwable);
     }
