@@ -21,6 +21,9 @@ class Authenticator extends AbstractAuthenticator implements AuthenticationEntry
 {
     private const SUPPORTED_ROUTE = 'api_auth';
 
+    private const USERNAME_KEY = 'username';
+    private const PASSWORD_KEY = 'password';
+
     private UserApi $api;
     private AccessDeniedResponseProviderInterface $responseProvider;
 
@@ -39,7 +42,7 @@ class Authenticator extends AbstractAuthenticator implements AuthenticationEntry
     {
         try
         {
-            $user = new User($this->api->authorizeUserByEmail('mail@mail.com', '1234'));
+            $user = new User($this->api->authorizeUserByEmail($request->get(self::USERNAME_KEY), $request->get(self::PASSWORD_KEY)));
 
             return new SelfValidatingPassport($user);
         }
