@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
@@ -48,7 +47,7 @@ class Authenticator extends AbstractAuthenticator implements AuthenticationEntry
         }
         catch (ApiException $exception)
         {
-            throw new UsernameNotFoundException($exception->getMessage(), $exception->getCode(), $exception);
+            throw new AuthenticationException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 
