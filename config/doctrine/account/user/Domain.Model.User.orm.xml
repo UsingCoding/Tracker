@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\User\Domain\Model\User" table="account_user">
+        <id name="id" type="integer" column="user_id">
+            <generator strategy="IDENTITY" />
+        </id>
+        <field name="username" type="string" column="username" unique="true" length="255" />
+        <field name="password" type="string" column="password" length="255" />
+        <field name="createdAt" type="datetime_immutable" column="created_at" length="255" />
+        <field name="email" type="string" column="email" unique="true" length="255"/>
+    </entity>
+</doctrine-mapping>

@@ -25,12 +25,12 @@ class AuthenticationService
 
         if ($user === null)
         {
-            throw new UserNotFoundException('');
+            throw new UserNotFoundException('', ['email' => $email, 'password' => $password]);
         }
 
         if ($user->getPassword() !== $password)
         {
-            throw new IncorrectUserPasswordException('');
+            throw new IncorrectUserPasswordException('', ['email' => $email, 'password' => $password]);
         }
 
         return $user;

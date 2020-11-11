@@ -2,7 +2,9 @@
 
 namespace App\Module\User\App\Exception;
 
-class IncorrectUserPasswordException extends \RuntimeException
+use App\Common\App\Exception\AbstractContextException;
+
+class IncorrectUserPasswordException extends AbstractContextException
 {
 
 }

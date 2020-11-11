@@ -25,7 +25,7 @@ abstract class AbstractApiException extends \Exception
 
     public static function from(\Throwable $throwable): ApiException
     {
-        $type = Arrays::get(static::getExceptionMap(), get_class($throwable), self::UNKNOWN_ERROR);
+        $type = Arrays::get(static::getExceptionMap() ?? [], get_class($throwable), self::UNKNOWN_ERROR);
 
         $exceptionClass = static::getSelf();
 
@@ -34,5 +34,5 @@ abstract class AbstractApiException extends \Exception
 
     abstract protected static function getSelf(): string;
 
-    abstract protected static function getExceptionMap(): array;
+    abstract protected static function getExceptionMap(): ?array;
 }

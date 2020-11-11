@@ -23,7 +23,7 @@ class UserQueryService implements UserQueryServiceInterface
 
         if ($user === null)
         {
-            throw new UserNotFoundException('');
+            throw new UserNotFoundException('', ['userId' => $userId]);
         }
 
         return UserMapper::getUserData($user);
@@ -35,7 +35,7 @@ class UserQueryService implements UserQueryServiceInterface
 
         if ($user === null)
         {
-            throw new UserNotFoundException('');
+            throw new UserNotFoundException('', ['username' => $username]);
         }
 
         return UserMapper::getUserData($user);

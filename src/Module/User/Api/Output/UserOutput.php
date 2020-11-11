@@ -8,9 +8,9 @@ class UserOutput
     private string $username;
     private string $password;
     private string $email;
-    private string $createdAt;
+    private \DateTimeImmutable $createdAt;
 
-    public function __construct(int $userId, string $username, string $password, string $email, string $createdAt)
+    public function __construct(int $userId, string $username, string $password, string $email, \DateTimeImmutable $createdAt)
     {
         $this->userId = $userId;
         $this->username = $username;
@@ -52,9 +52,9 @@ class UserOutput
     }
 
     /**
-     * @return string
+     * @return \DateTimeImmutable
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }

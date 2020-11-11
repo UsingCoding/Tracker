@@ -2,7 +2,9 @@
 
 namespace App\Module\User\App\Exception;
 
-class UserNotFoundException extends \RuntimeException
+use App\Common\App\Exception\AbstractContextException;
+
+class UserNotFoundException extends AbstractContextException
 {
 
 }

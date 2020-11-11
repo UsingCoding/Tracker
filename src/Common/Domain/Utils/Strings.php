@@ -8,4 +8,21 @@ class Strings
     {
         return strpos($haystack, $needle) === 0;
     }
+
+    public static function contains(string $haystack, string $needle): bool
+    {
+        return str_contains($haystack, $needle);
+    }
+
+    public static function isEndsWith(string $haystack, string $needle): bool
+    {
+        $length = strlen($needle);
+
+        if($length === 0)
+        {
+            return true;
+        }
+
+        return substr($haystack, -$length) === $needle;
+    }
 }

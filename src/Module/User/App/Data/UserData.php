@@ -7,10 +7,11 @@ class UserData
     private int $id;
     private string $username;
     private string $password;
-    private string $createdAt;
+    private \DateTimeImmutable $createdAt;
     private string $email;
 
-    public function __construct(int $id, string $username, string $password, string $createdAt, string $email)
+
+    public function __construct(int $id, string $username, string $password, \DateTimeImmutable $createdAt, string $email)
     {
         $this->id = $id;
         $this->username = $username;
@@ -44,9 +45,9 @@ class UserData
     }
 
     /**
-     * @return string
+     * @return \DateTimeImmutable
      */
-    public function getCreatedAt(): string
+    public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }

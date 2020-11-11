@@ -16,7 +16,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false
         bind:
-            Doctrine\DBAL\Connection $mainConnection: '@app.doctrine.dbal.connection.main'
+#            Doctrine\DBAL\Connection $mainConnection: '@app.doctrine.dbal.connection.main'
             Doctrine\DBAL\Connection $accountConnection: '@app.doctrine.dbal.connection.account'
 #            Doctrine\ORM\EntityManagerInterface $mainEntityManager: '@app.doctrine.orm.entity_managers.main'
             Doctrine\ORM\EntityManagerInterface $accountEntityManager: '@app.doctrine.orm.entity_managers.account'
@@ -30,6 +30,7 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+            - '../src/Migrations/'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -40,7 +41,7 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    app.doctrine.dbal.connection.main: '@doctrine.dbal.main_connection'
+#    app.doctrine.dbal.connection.main: '@doctrine.dbal.main_connection'
 #    app.doctrine.orm.entity_managers.main: '@doctrine.orm.main_entity_manager'
     app.doctrine.dbal.connection.account: '@doctrine.dbal.account_connection'
     app.doctrine.orm.entity_managers.account: '@doctrine.orm.account_entity_manager'
