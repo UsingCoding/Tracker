@@ -2,15 +2,27 @@
 
 namespace App\Controller\Api;
 
+use App\Controller\Api\Exception\NoLoggedUserException;
+use App\Framework\Infrastructure\Security\User\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class ApiController extends AbstractController
 {
-    public function response(array $data): Response
+    /**
+     * @return User
+     * @throws NoLoggedUserException
+     */
+    public function getLoggedUser(): User
     {
-        return new JsonResponse($data);
+        $user = $this->getUser();
+
+        if (!$user instanceof User)
+        {
+            throw new NoLoggedUserException();
+        }
+
+        return $user;
     }
 
     public function __invoke(): Response

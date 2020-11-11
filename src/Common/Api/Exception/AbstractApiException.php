@@ -3,7 +3,6 @@
 namespace App\Common\Api\Exception;
 
 use App\Common\Domain\Utils\Arrays;
-use App\Module\User\Api\Exception\ApiException;
 
 abstract class AbstractApiException extends \Exception
 {
@@ -23,7 +22,7 @@ abstract class AbstractApiException extends \Exception
         return $this->type;
     }
 
-    public static function from(\Throwable $throwable): ApiException
+    public static function from(\Throwable $throwable): self
     {
         $type = Arrays::get(static::getExceptionMap() ?? [], get_class($throwable), self::UNKNOWN_ERROR);
 

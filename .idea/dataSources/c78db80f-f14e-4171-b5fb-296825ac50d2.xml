@@ -1408,7 +1408,7 @@ false posix/WET
 false posix/Zulu
 false posixrules
 </TimeZones>
-      <StartupTime>1605033124</StartupTime>
+      <StartupTime>1605035527</StartupTime>
     </root>
     <database id="2" parent="1" name="client_1">
       <ObjectId>16416</ObjectId>
@@ -1417,9 +1417,7 @@ false posixrules
     <database id="3" parent="1" name="main">
       <ObjectId>16385</ObjectId>
       <Owner>root</Owner>
-      <IntrospectionStateNumber>528</IntrospectionStateNumber>
-      <Relations>sequence|table|16396|16398|1
-</Relations>
+      <IntrospectionStateNumber>555</IntrospectionStateNumber>
     </database>
     <database id="4" parent="1" name="postgres">
       <ObjectId>13395</ObjectId>
@@ -1480,7 +1478,7 @@ false posixrules
       <Comment>standard public schema</Comment>
       <StateNumber>287</StateNumber>
       <Owner>root</Owner>
-      <IntrospectionStateNumber>529</IntrospectionStateNumber>
+      <IntrospectionStateNumber>556</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <access-method id="18" parent="3" name="heap">
@@ -1550,124 +1548,5 @@ false posixrules
     <language id="27" parent="3" name="internal"/>
     <language id="28" parent="3" name="plpgsql"/>
     <language id="29" parent="3" name="sql"/>
-    <sequence id="30" parent="17" name="user_user_id_seq">
-      <ObjectId>16396</ObjectId>
-      <Owner>root</Owner>
-      <StateNumber>505</StateNumber>
-      <DataType>integer|0s</DataType>
-    </sequence>
-    <table id="31" parent="17" name="client">
-      <ObjectId>16398</ObjectId>
-      <Owner>root</Owner>
-      <StateNumber>511</StateNumber>
-    </table>
-    <table id="32" parent="17" name="migration_versions">
-      <ObjectId>16411</ObjectId>
-      <Owner>root</Owner>
-      <StateNumber>523</StateNumber>
-    </table>
-    <column id="33" parent="31" name="user_id">
-      <Position>1</Position>
-      <DataType>integer|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>505</StateNumber>
-      <DefaultExpression>nextval(&apos;user_user_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>23</TypeId>
-    </column>
-    <column id="34" parent="31" name="username">
-      <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>505</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="35" parent="31" name="password">
-      <Position>3</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>505</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="36" parent="31" name="email">
-      <Position>4</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>505</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="37" parent="31" name="created_at">
-      <Position>5</Position>
-      <DataType>timestamp|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>505</StateNumber>
-      <TypeId>1114</TypeId>
-    </column>
-    <index id="38" parent="31" name="user_pkey">
-      <ObjectId>16405</ObjectId>
-      <StateNumber>505</StateNumber>
-      <ColNames>user_id</ColNames>
-      <Unique>1</Unique>
-      <Primary>1</Primary>
-    </index>
-    <index id="39" parent="31" name="unique_username">
-      <ObjectId>16409</ObjectId>
-      <StateNumber>520</StateNumber>
-      <ColNames>username</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="40" parent="31" name="user_email_key">
-      <ObjectId>16407</ObjectId>
-      <StateNumber>505</StateNumber>
-      <ColNames>email</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="41" parent="31" name="user_pkey">
-      <ObjectId>16406</ObjectId>
-      <StateNumber>505</StateNumber>
-      <ColNames>user_id</ColNames>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>user_pkey</UnderlyingIndexName>
-    </key>
-    <key id="42" parent="31" name="unique_username">
-      <ObjectId>16410</ObjectId>
-      <StateNumber>520</StateNumber>
-      <ColNames>username</ColNames>
-      <UnderlyingIndexName>unique_username</UnderlyingIndexName>
-    </key>
-    <key id="43" parent="31" name="user_email_key">
-      <ObjectId>16408</ObjectId>
-      <StateNumber>505</StateNumber>
-      <ColNames>email</ColNames>
-      <UnderlyingIndexName>user_email_key</UnderlyingIndexName>
-    </key>
-    <column id="44" parent="32" name="version">
-      <Position>1</Position>
-      <DataType>varchar(14)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>523</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="45" parent="32" name="executed_at">
-      <Position>2</Position>
-      <Comment>(DC2Type:datetime_immutable)</Comment>
-      <DataType>timestamp(0)|0s</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>523</StateNumber>
-      <TypeId>1114</TypeId>
-    </column>
-    <index id="46" parent="32" name="migration_versions_pkey">
-      <ObjectId>16414</ObjectId>
-      <StateNumber>523</StateNumber>
-      <ColNames>version</ColNames>
-      <Unique>1</Unique>
-      <Primary>1</Primary>
-    </index>
-    <key id="47" parent="32" name="migration_versions_pkey">
-      <ObjectId>16415</ObjectId>
-      <StateNumber>523</StateNumber>
-      <ColNames>version</ColNames>
-      <Primary>1</Primary>
-      <UnderlyingIndexName>migration_versions_pkey</UnderlyingIndexName>
-    </key>
   </database-model>
 </dataSource>

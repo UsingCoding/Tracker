@@ -39,3 +39,9 @@ doctrine:
                         dir: '%kernel.project_dir%/config/doctrine/account/user'
                         prefix: 'App\Module\User'
                         alias: User
+                    App\Module\Project:
+                        is_bundle: false
+                        type: xml
+                        dir: '%kernel.project_dir%/config/doctrine/account/project'
+                        prefix: 'App\Module\Project'
+                        alias: User

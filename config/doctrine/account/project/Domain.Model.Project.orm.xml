@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\Project\Domain\Model\Project" table="project">
+        <id name="id" type="integer" column="project_id">
+            <generator strategy="IDENTITY" />
+        </id>
+        <field name="name" length="50" column="name" />
+        <field name="nameId" length="10" column="name_id" unique="true" />
+        <field name="description" length="255" column="description" nullable="true" />
+    </entity>
+</doctrine-mapping>

@@ -1,2 +1,8 @@
 api_auth:
   path: /api/auth
+
+api_get_project:
+  path: /api/project/{id}
+  controller: App\Controller\Api\Project\ProjectManagementController::getProject
+  requirements:
+    id: '\d+'
