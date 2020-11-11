@@ -47,7 +47,7 @@ services:
     build: ../fuzzy/
     container_name: tracker_fuzzy
     volumes:
-      - '../algorithm/:/usr/src/app'
+      - '../fuzzy/:/usr/src/app'
       - '../config/grpc/fuzzy.proto:/usr/src/config/fuzzy.proto'
     environment:
       DATABASE_USER: root
