@@ -13,7 +13,7 @@ services:
     tty: true
     depends_on:
       - db
-      - algorithm
+      - fuzzy
     volumes:
       - ./../:/var/www
       - ./php/php.ini:/usr/local/etc/php/php.ini-development
