@@ -1,1 +1,1 @@
-include algorithm/Makefile
+include fuzzy/Makefile

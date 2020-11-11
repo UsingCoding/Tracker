@@ -2,8 +2,8 @@ version: "3.3"
 
 services:
   php-fpm:
-    image: vadimmakerov/symfony5-php-fpm
-#    build: './'
+#    image: vadimmakerov/symfony5-php-fpm
+    build: './'
     container_name: tracker_app
     restart: always
     env_file:
@@ -43,13 +43,12 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 1234
 
-  algorithm:
-    build: ../algorithm/
-    container_name: tracker_algorithm
-    command: make
+  fuzzy:
+    build: ../fuzzy/
+    container_name: tracker_fuzzy
     volumes:
       - '../algorithm/:/usr/src/app'
-      - '../config/grpc/algorithm.proto:/usr/src/config/algorithm.proto'
+      - '../config/grpc/fuzzy.proto:/usr/src/config/fuzzy.proto'
     environment:
       DATABASE_USER: root
       DATABASE_PASSWORD: 1234

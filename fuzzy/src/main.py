@@ -9,14 +9,16 @@ sys.path.insert(1, '/usr/src/app/src/Infrastructure/GRpcServer/Generated')
 
 import algorithm_pb2
 import algorithm_pb2_grpc
-from Model import Model
+from FuzzyService import FuzzyService
 from Server import Server
 
 if __name__ == '__main__':
-    model = Model()
+    service = FuzzyService()
 
-    server = Server()
-    server.start()
+    print(service.calculate(5, 40))
+
+#     server = Server()
+#     server.start()
 
     try:
         while True:

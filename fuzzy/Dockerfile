@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y make
 RUN pip install grpcio && \
     pip install grpcio-tools && \
     pip install scikit-fuzzy && \
-    pip install numpy && \
-    pip install matplotlib
+    pip install numpy
 
 WORKDIR /usr/src/app
+
+CMD [ "make" ]
