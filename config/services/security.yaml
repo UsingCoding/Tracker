@@ -9,3 +9,6 @@ services:
 
     authentication.authenticator:
         class: App\Framework\Infrastructure\Security\Authenticator\Authenticator
+
+    authentication.access_denied_handler:
+        alias: App\Framework\Infrastructure\Security\Handler\AccessDeniedHandler

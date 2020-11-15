@@ -6,3 +6,7 @@ api_get_project:
   controller: App\Controller\Api\Project\ProjectManagementController::getProject
   requirements:
     id: '\d+'
+
+api_create_project:
+  path: /api/project/create
+  controller: App\Controller\Api\Project\ProjectManagementController::createProject

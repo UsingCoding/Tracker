@@ -25,4 +25,9 @@ class Strings
 
         return substr($haystack, -$length) === $needle;
     }
+
+    public static function trim(string $value): string
+    {
+        return trim($value);
+    }
 }

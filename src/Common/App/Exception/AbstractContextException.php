@@ -2,6 +2,7 @@
 
 namespace App\Common\App\Exception;
 
+use App\Common\Domain\Utils\Strings;
 use Throwable;
 
 abstract class AbstractContextException extends \Exception
@@ -15,7 +16,7 @@ abstract class AbstractContextException extends \Exception
         $this->context = $context;
     }
 
-    public function getContext(): array
+    public function getContext(): ?array
     {
         return $this->context;
     }
@@ -29,7 +30,7 @@ abstract class AbstractContextException extends \Exception
 
         try
         {
-            return $message . ' ' . json_encode($context, JSON_THROW_ON_ERROR);
+            return Strings::trim($message . ' ') . json_encode($context, JSON_THROW_ON_ERROR);
         }
         catch (\JsonException $e)
         {

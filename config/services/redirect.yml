@@ -1,0 +1,11 @@
+parameters:
+    app.non_auth_user_redirect_map:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    redirect.access_denied_url_provider:
+        class: App\Framework\Infrastructure\Redirect\AccessDeniedRedirectUrlProvider

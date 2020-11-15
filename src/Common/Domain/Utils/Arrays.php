@@ -8,4 +8,16 @@ class Arrays
     {
         return $collection[$key] ?? $defaultValue;
     }
+
+    public static function merge(array ...$arrays): array
+    {
+        $res = [];
+
+        foreach ($arrays as $array)
+        {
+            array_merge($res, $array);
+        }
+
+        return $res;
+    }
 }

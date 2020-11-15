@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    project.command_handler_registry:
+        class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
+        calls:
+            - [registerHandler, [!php/const App\Module\Project\App\Command\CreateProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\CreateProjectCommandHandler']]
+
+    project.command_bus:
+        class: App\Common\App\Command\Bus\AppCommandBus
+        arguments:
+            $commandHandlerRegistry: '@project.command_handler_registry'

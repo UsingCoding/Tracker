@@ -6,6 +6,9 @@
 
 imports:
     - { resource: services/security.yaml }
+    - { resource: services/command_bus.yaml }
+    - { resource: services/redirect.yml }
+    - { resource: services_parameters.yaml }
 
 parameters:
 
@@ -20,6 +23,7 @@ services:
             Doctrine\DBAL\Connection $accountConnection: '@app.doctrine.dbal.connection.account'
 #            Doctrine\ORM\EntityManagerInterface $mainEntityManager: '@app.doctrine.orm.entity_managers.main'
             Doctrine\ORM\EntityManagerInterface $accountEntityManager: '@app.doctrine.orm.entity_managers.account'
+            App\Common\App\Command\Bus\AppCommandBusInterface $projectCommandBus: '@project.command_bus'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
