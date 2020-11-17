@@ -52,12 +52,17 @@ class ProjectDataSanitizer
     }
 
     /**
-     * @param string $rawDescription
+     * @param string|null $rawDescription
      * @return string
      * @throws InvalidProjectDataException
      */
-    public static function sanitizeDescription(string $rawDescription): string
+    public static function sanitizeDescription(?string $rawDescription): ?string
     {
+        if ($rawDescription === null)
+        {
+            return null;
+        }
+
         $description = Strings::trim($rawDescription);
 
         $descriptionLength = Strings::length($description);

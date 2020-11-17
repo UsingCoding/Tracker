@@ -8,9 +8,9 @@ class CreateProjectInput implements CreateProjectRequestInterface
 {
     private string $name;
     private string $nameId;
-    private string $description;
+    private ?string $description;
 
-    public function __construct(string $name, string $nameId, string $description)
+    public function __construct(string $name, string $nameId, ?string $description)
     {
         $this->name = $name;
         $this->nameId = $nameId;
@@ -36,7 +36,7 @@ class CreateProjectInput implements CreateProjectRequestInterface
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

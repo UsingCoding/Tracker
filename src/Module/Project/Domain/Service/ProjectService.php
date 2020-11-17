@@ -23,11 +23,11 @@ class ProjectService
     /**
      * @param string $name
      * @param string $nameId
-     * @param string $description
+     * @param string|null $description
      * @return Project
      * @throws DuplicateProjectNameIdException
      */
-    public function addProject(string $name, string $nameId, string $description): Project
+    public function addProject(string $name, string $nameId, ?string $description): Project
     {
         $this->assertNoDuplicateNameId($nameId);
 

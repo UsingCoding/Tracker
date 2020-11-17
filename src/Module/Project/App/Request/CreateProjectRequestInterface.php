@@ -6,5 +6,5 @@ interface CreateProjectRequestInterface
 {
     public function getName(): string;
     public function getNameId(): string;
-    public function getDescription(): string;
+    public function getDescription(): ?string;
 }
