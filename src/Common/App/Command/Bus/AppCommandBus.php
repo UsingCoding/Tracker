@@ -17,6 +17,6 @@ class AppCommandBus implements AppCommandBusInterface
     public function publish(CommandInterface $command): void
     {
         $handler = $this->commandHandlerRegistry->getCommandHandler($command);
-        $handler->handle($command);
+        $handler->execute($command);
     }
 }

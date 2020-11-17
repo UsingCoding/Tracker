@@ -4,12 +4,12 @@ namespace App\Module\Project\Domain\Model;
 
 class Project
 {
-    private int $id;
+    private ?int $id;
     private string $name;
     private string $nameId;
     private ?string $description;
 
-    public function __construct(int $id, string $name, string $nameId, ?string $description)
+    public function __construct(?int $id, string $name, string $nameId, ?string $description)
     {
         $this->id = $id;
         $this->name = $name;
@@ -18,9 +18,9 @@ class Project
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

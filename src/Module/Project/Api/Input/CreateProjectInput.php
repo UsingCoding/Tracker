@@ -2,7 +2,9 @@
 
 namespace App\Module\Project\Api\Input;
 
-class CreateProjectInput
+use App\Module\Project\App\Request\CreateProjectRequestInterface;
+
+class CreateProjectInput implements CreateProjectRequestInterface
 {
     private string $name;
     private string $nameId;

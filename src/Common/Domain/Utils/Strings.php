@@ -30,4 +30,9 @@ class Strings
     {
         return trim($value);
     }
+
+    public static function length(string $value): int
+    {
+        return mb_strlen($value);
+    }
 }
