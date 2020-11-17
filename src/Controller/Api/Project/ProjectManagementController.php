@@ -6,7 +6,6 @@ use App\Controller\Api\ApiController;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
 use App\Module\Project\Api\ProjectManagementApiInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +14,6 @@ class ProjectManagementController extends ApiController
     /**
      * @param int $id
      * @param ProjectManagementApiInterface $api
-     * @param LoggerInterface $logger
      * @return Response
      * @throws ApiException
      */
@@ -35,7 +33,7 @@ class ProjectManagementController extends ApiController
         {
             if ($e->getType() === ApiException::PROJECT_NOT_EXISTS)
             {
-                return $this->json(['error' => 'project_not_exists'], Response::HTTP_NO_CONTENT);
+                return $this->json(['error' => 'project_not_exists'], Response::HTTP_NOT_FOUND);
             }
 
             throw $e;
@@ -45,7 +43,6 @@ class ProjectManagementController extends ApiController
     /**
      * @param Request $request
      * @param ProjectManagementApiInterface $api
-     * @param LoggerInterface $logger
      * @return Response
      * @throws ApiException
      */

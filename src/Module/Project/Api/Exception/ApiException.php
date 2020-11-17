@@ -19,8 +19,8 @@ class ApiException extends AbstractApiException
     protected static function getExceptionMap(): ?array
     {
         return [
-            self::PROJECT_NOT_EXISTS => ProjectNotExistsException::class,
-            self::DUPLICATE_PROJECT_NAME_ID => DuplicateProjectNameIdException::class
+            ProjectNotExistsException::class => self::PROJECT_NOT_EXISTS,
+            DuplicateProjectNameIdException::class => self::DUPLICATE_PROJECT_NAME_ID
         ];
     }
 }

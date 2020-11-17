@@ -25,8 +25,23 @@ abstract class ApiController extends AbstractController
         return $user;
     }
 
-    public function __invoke(): Response
+    /**
+     * @param string $message
+     * @param \Throwable|null $previous
+     * @param string|null $returnUrl
+     * @throws AccessDeniedException
+     */
+    protected function throwAccessDeniedException(string $message = 'Access Denied.', \Throwable $previous = null, ?string $returnUrl = null): void
     {
-        return new Response('REST');
+        $exception = $this->createAccessDeniedException($message, $previous);
+
+        if ($returnUrl !== null)
+        {
+            $exception->setAttributes([
+                'return_url' => $returnUrl
+            ]);
+        }
+
+        throw $exception;
     }
 }

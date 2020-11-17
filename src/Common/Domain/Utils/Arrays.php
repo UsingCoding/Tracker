@@ -15,7 +15,10 @@ class Arrays
 
         foreach ($arrays as $array)
         {
-            array_merge($res, $array);
+            foreach ($array as $key => $value)
+            {
+                $res[$key] = $value;
+            }
         }
 
         return $res;
