@@ -44,4 +44,10 @@ doctrine:
                         type: xml
                         dir: '%kernel.project_dir%/config/doctrine/account/project'
                         prefix: 'App\Module\Project'
-                        alias: User
+                        alias: Project
+                    App\Module\Issue:
+                        is_bundle: false
+                        type: xml
+                        dir: '%kernel.project_dir%/config/doctrine/account/issue'
+                        prefix: 'App\Module\Issue'
+                        alias: Issue

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\Issue\Domain\Model\Issue" table="issue">
+        <id name="id" type="integer" column="issue_id">
+            <generator strategy="IDENTITY" />
+        </id>
+        <field name="name" length="255" column="name" />
+        <field name="description" length="1000" column="description" nullable="true" />
+        <field name="fields" type="json" column="fields" />
+        <many-to-one field="projectId" target-entity="App\Module\Project\Domain\Model\Project">
+            <join-column name="project_id" referenced-column-name="project_id" on-delete="CASCADE" />
+        </many-to-one>
+        <many-to-one field="userId" target-entity="App\Module\User\Domain\Model\User">
+            <join-column name="user_id" referenced-column-name="user_id" on-delete="CASCADE" />
+        </many-to-one>
+        <field name="createdAt" type="datetime_immutable" column="created_at" />
+        <field name="updatedAt" type="datetime_immutable" column="updated_at" />
+    </entity>
+</doctrine-mapping>

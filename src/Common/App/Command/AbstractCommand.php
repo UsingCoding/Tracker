@@ -2,6 +2,8 @@
 
 namespace App\Common\App\Command;
 
+use App\Common\Domain\Utils\Arrays;
+
 class AbstractCommand implements CommandInterface
 {
     private array $payload;
@@ -21,5 +23,10 @@ class AbstractCommand implements CommandInterface
     public function getPayload(): array
     {
         return $this->payload;
+    }
+
+    public function getValue(string $key)
+    {
+        return Arrays::get($this->getPayload(), $key);
     }
 }

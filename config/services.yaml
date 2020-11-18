@@ -24,6 +24,7 @@ services:
 #            Doctrine\ORM\EntityManagerInterface $mainEntityManager: '@app.doctrine.orm.entity_managers.main'
             Doctrine\ORM\EntityManagerInterface $accountEntityManager: '@app.doctrine.orm.entity_managers.account'
             App\Common\App\Command\Bus\AppCommandBusInterface $projectCommandBus: '@project.command_bus'
+            App\Common\App\Command\Bus\AppCommandBusInterface $issueCommandBus: '@issue.command_bus'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

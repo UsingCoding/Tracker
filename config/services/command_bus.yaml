@@ -13,3 +13,13 @@ services:
         class: App\Common\App\Command\Bus\AppCommandBus
         arguments:
             $commandHandlerRegistry: '@project.command_handler_registry'
+
+    issue.command_handler_registry:
+        class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
+        calls:
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\CreateIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\CreateIssueCommandHandler']]
+
+    issue.command_bus:
+        class: App\Common\App\Command\Bus\AppCommandBus
+        arguments:
+            $commandHandlerRegistry: '@issue.command_handler_registry'
