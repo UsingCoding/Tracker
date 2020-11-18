@@ -22,7 +22,7 @@ class ProjectDataSanitizer
 
         $nameLength = Strings::length($name);
 
-        $nameMaxLength = self::DESCRIPTION_MAX_LENGTH;
+        $nameMaxLength = self::NAME_MAX_LENGTH;
         if ($nameLength === 0 || $nameLength > $nameMaxLength)
         {
             throw new InvalidProjectDataException("Name must have length from 1 to {$nameMaxLength}");
@@ -42,7 +42,7 @@ class ProjectDataSanitizer
 
         $nameIdLength = Strings::length($nameId);
 
-        $nameIdMaxLength = self::DESCRIPTION_MAX_LENGTH;
+        $nameIdMaxLength = self::NAME_ID_MAX_LENGTH;
         if ($nameIdLength === 0 || $nameIdLength > $nameIdMaxLength)
         {
             throw new InvalidProjectDataException("NameId must have length from 1 to {$nameIdMaxLength}");
