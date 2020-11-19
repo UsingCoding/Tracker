@@ -32,9 +32,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 
 #RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
 WORKDIR /var/www
 
 #USER "${USER_ID}:${GROUP_ID}"
