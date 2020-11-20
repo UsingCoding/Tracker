@@ -72,4 +72,9 @@ class Arrays
             }
         })();
     }
+
+    public static function removeByKey(array &$collection, $key): void
+    {
+        unset($collection[$key]);
+    }
 }

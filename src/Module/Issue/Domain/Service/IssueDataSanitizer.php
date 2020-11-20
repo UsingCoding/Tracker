@@ -64,14 +64,21 @@ class IssueDataSanitizer
      * @return int
      * @throws InvalidIssueDataException
      */
-    public static function sanitizeUserId(array $fields): ?int
+    public static function sanitizeUserId(array &$fields): ?int
     {
         $userId = Arrays::get($fields, self::USER_ID_KEY);
 
-        if (is_int($userId))
+        if ($userId === null)
+        {
+            return null;
+        }
+
+        if (!ctype_digit($userId))
         {
             throw new InvalidIssueDataException('User id must be int');
         }
+
+        Arrays::removeByKey($fields, self::USER_ID_KEY);
 
         return $userId;
     }
@@ -81,14 +88,16 @@ class IssueDataSanitizer
      * @return int
      * @throws InvalidIssueDataException
      */
-    public static function sanitizeProjectId(array $fields): int
+    public static function sanitizeProjectId(array &$fields): int
     {
         $projectId = Arrays::get($fields, self::PROJECT_ID_KEY);
 
-        if ($projectId === null || is_int($projectId))
+        if ($projectId === null || !ctype_digit($projectId))
         {
             throw new InvalidIssueDataException('No project id provided or it`s invalid', ['project_id' => $projectId]);
         }
+
+        Arrays::removeByKey($fields, self::PROJECT_ID_KEY);
 
         return $projectId;
     }

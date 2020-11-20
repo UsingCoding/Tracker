@@ -2,6 +2,8 @@
 
 namespace App\Module\Issue\Domain\Service;
 
+use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
+use App\Module\Issue\Domain\Adapter\UserAdapterInterface;
 use App\Module\Issue\Domain\Exception\ProjectToAddIssueNotExistsException;
 use App\Module\Issue\Domain\Exception\UserToAssigneeIssueNotExistsException;
 use App\Module\Issue\Domain\Model\Issue;
@@ -10,10 +12,18 @@ use App\Module\Issue\Domain\Model\IssueRepositoryInterface;
 class IssueService
 {
     private IssueRepositoryInterface $issueRepo;
+    private ProjectAdapterInterface $projectAdapter;
+    private UserAdapterInterface $userAdapter;
 
-    public function __construct(IssueRepositoryInterface $issueRepo)
+    public function __construct(
+        IssueRepositoryInterface $issueRepo,
+        ProjectAdapterInterface $projectAdapter,
+        UserAdapterInterface $userAdapter
+    )
     {
         $this->issueRepo = $issueRepo;
+        $this->projectAdapter = $projectAdapter;
+        $this->userAdapter = $userAdapter;
     }
 
     /**
@@ -57,7 +67,9 @@ class IssueService
      */
     private function assertProjectExists(int $projectId): void
     {
-        if (false)
+        $project = $this->projectAdapter->getProjectById($projectId);
+
+        if ($project === null)
         {
             throw new ProjectToAddIssueNotExistsException('Project not exists', ['project_id' => $projectId]);
         }
@@ -69,7 +81,9 @@ class IssueService
      */
     private function assertUserExists(int $userId): void
     {
-        if (false)
+        $user = $this->userAdapter->getUserById($userId);
+
+        if ($user === null)
         {
             throw new UserToAssigneeIssueNotExistsException('User not exists', ['user_id' => $userId]);
         }

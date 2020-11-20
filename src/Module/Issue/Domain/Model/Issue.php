@@ -8,12 +8,12 @@ class Issue
     private string $name;
     private ?string $description;
     private array $fields;
-    private int $projectId;
+    private ?int $projectId;
     private ?int $userId;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(?int $id, string $name, ?string $description, array $fields, int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(?int $id, string $name, ?string $description, array $fields, ?int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
         $this->name = $name;
@@ -58,9 +58,9 @@ class Issue
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getProjectId(): int
+    public function getProjectId(): ?int
     {
         return $this->projectId;
     }
