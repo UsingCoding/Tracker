@@ -4,6 +4,7 @@ namespace App\Module\Issue\Api;
 
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Output\GetIssueOutput;
 
 interface ApiInterface
 {
@@ -13,4 +14,11 @@ interface ApiInterface
      * @throws ApiException
      */
     public function createIssue(CreateIssueInput $input): int;
+
+    /**
+     * @param string $code
+     * @return GetIssueOutput
+     * @throws ApiException
+     */
+    public function getIssue(string $code): GetIssueOutput;
 }

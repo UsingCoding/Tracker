@@ -32,7 +32,31 @@ class IssueManagementController extends ApiController
         }
         catch (ApiException $exception)
         {
+            if ($exception->getType() === ApiException::PROJECT_TO_ADD_ISSUE_NOT_EXISTS)
+            {
+                return $this->json(['error' => 'project_not_exists']);
+            }
+
+            if ($exception->getType() === ApiException::USER_TO_ASSIGNEE_ISSUE_NOT_EXISTS)
+            {
+                return $this->json(['error' => 'user_not_exists']);
+            }
+
             throw $exception;
+        }
+    }
+
+    public function getIssue(string $issueCode, ApiInterface $issueApi): Response
+    {
+        try
+        {
+            $issueApi->getIssue($issueCode);
+
+            return $this->json(['just_empty']);
+        }
+        catch (ApiException $exception)
+        {
+            return $this->json(['ex' => (string) $exception]);
         }
     }
 }
