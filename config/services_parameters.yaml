@@ -1,2 +1,3 @@
 parameters:
     app.site_domain: dev.fold.com
+    app.catch_exceptions: false

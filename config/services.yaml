@@ -59,3 +59,11 @@ services:
 
     environment.frontend_request_listener:
         alias: 'App\Framework\Infrastructure\Listener\FrontendEnvironmentRequestListener'
+
+    App\Framework\Infrastructure\Listener\ExceptionHandlerListener:
+        arguments:
+            $catch: '%app.catch_exceptions%'
+            $logger: '@monolog.logger.environment'
+
+    environment.exception_handler_listener:
+        alias: '@App\Framework\Infrastructure\Listener\ExceptionHandlerListener'
