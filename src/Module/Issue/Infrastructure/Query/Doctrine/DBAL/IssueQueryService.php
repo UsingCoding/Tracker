@@ -9,17 +9,14 @@ use App\Module\Issue\Infrastructure\Hydration\IssueWithUserDataHydrator;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
-use Psr\Log\LoggerInterface;
 
 class IssueQueryService implements IssueQueryServiceInterface
 {
     private Connection $connection;
-    private LoggerInterface $logger;
 
-    public function __construct(Connection $connection, \Psr\Log\LoggerInterface $logger)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->logger = $logger;
     }
 
     public function getIssue(string $code): ?IssueData
@@ -48,11 +45,8 @@ class IssueQueryService implements IssueQueryServiceInterface
 
         if ($row === false)
         {
-            $this->logger->debug("NOTHING FETCHED");
             return null;
         }
-
-        $this->logger->debug("DATA", $row);
 
         $hydrator = new IssueWithUserDataHydrator($this->connection->getDatabasePlatform());
 
