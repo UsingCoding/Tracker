@@ -19,7 +19,7 @@ class IssueCodeService
     {
         $parts = Strings::split($code, self::CODE_SEPARATOR);
 
-        if (count($parts) !== 2 && !is_string($parts[0]) && !is_int($parts[1]))
+        if (count($parts) !== 2 || !is_string($parts[0]) || !ctype_digit($parts[1]))
         {
             throw new InvalidIssueCodeException();
         }

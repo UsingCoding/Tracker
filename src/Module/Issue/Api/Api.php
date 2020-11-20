@@ -6,6 +6,7 @@ use App\Common\App\Command\Bus\AppCommandBusInterface;
 use App\Common\App\Command\CommandInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\App\Command\CreateIssueCommand;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
@@ -30,12 +31,18 @@ class Api implements ApiInterface
         return 1;
     }
 
-    public function getIssue(string $code): GetIssueOutput
+    public function getIssue(string $code): ?GetIssueOutput
     {
         try
         {
             $issueData = $this->issueQueryService->getIssue($code);
-            return new GetIssueOutput();
+
+            if ($issueData === null)
+            {
+                return null;
+            }
+
+            return IssueOutputMapper::getIssueOutput($issueData);
         }
         catch (\Throwable $e)
         {

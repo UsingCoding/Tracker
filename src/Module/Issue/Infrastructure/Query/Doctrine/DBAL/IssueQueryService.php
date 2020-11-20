@@ -2,9 +2,10 @@
 
 namespace App\Module\Issue\Infrastructure\Query\Doctrine\DBAL;
 
-use App\Module\Issue\App\Data\IssueData;
+use App\Module\Issue\App\Query\Data\IssueData;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 use App\Module\Issue\Domain\Service\IssueCodeService;
+use App\Module\Issue\Infrastructure\Hydration\IssueWithUserDataHydrator;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
@@ -28,9 +29,12 @@ class IssueQueryService implements IssueQueryServiceInterface
         $queryBuilder = $this->connection->createQueryBuilder();
 
         $queryBuilder
+            ->addSelect('i.issue_id')
             ->addSelect('i.name')
             ->addSelect('i.description')
             ->addSelect('i.fields')
+            ->addSelect('i.created_at')
+            ->addSelect('i.updated_at')
             ->from('issue', 'i')
             ->leftJoin('i', 'project', 'p', 'p.name_id = :project_name_id')
             ->andWhere($queryBuilder->expr()->eq('issue_id', ':issue_id'))
@@ -50,6 +54,12 @@ class IssueQueryService implements IssueQueryServiceInterface
 
         $this->logger->debug("DATA", $row);
 
-        return new IssueData();
+        $hydrator = new IssueWithUserDataHydrator($this->connection->getDatabasePlatform());
+
+        /** @var IssueData[] $results */
+        $results = [];
+
+        $hydrator->hydrate($row, $results);
+        return $results[0];
     }
 }

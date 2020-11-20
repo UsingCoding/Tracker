@@ -13,7 +13,16 @@ class GetIssueOutput
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-
+    public function __construct(string $name, ?string $description, ?AssigneeUserOutput $assigneeUser, BelongingProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->assigneeUser = $assigneeUser;
+        $this->project = $project;
+        $this->comments = $comments;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
 
     /**
      * @return string

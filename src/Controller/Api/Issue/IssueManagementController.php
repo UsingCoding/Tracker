@@ -46,17 +46,38 @@ class IssueManagementController extends ApiController
         }
     }
 
+    /**
+     * @param string $issueCode
+     * @param ApiInterface $issueApi
+     * @return Response
+     * @throws ApiException
+     */
     public function getIssue(string $issueCode, ApiInterface $issueApi): Response
     {
         try
         {
-            $issueApi->getIssue($issueCode);
+            $issue = $issueApi->getIssue($issueCode);
 
-            return $this->json(['just_empty']);
+            if ($issue === null)
+            {
+                return $this->json(['message' => 'issue_not_found'], 404);
+            }
+
+            return $this->json([
+                'name' => $issue->getName(),
+                'description' => $issue->getDescription(),
+                'created_at' => $issue->getCreatedAt(),
+                'updated_at' => $issue->getUpdatedAt()
+            ]);
         }
         catch (ApiException $exception)
         {
-            return $this->json(['ex' => (string) $exception]);
+            if ($exception->getType() === ApiException::INVALID_ISSUE_CODE)
+            {
+                return $this->json(['message' => 'invalid_issue_code']);
+            }
+
+            throw $exception;
         }
     }
 }

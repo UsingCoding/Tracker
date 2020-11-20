@@ -17,8 +17,8 @@ interface ApiInterface
 
     /**
      * @param string $code
-     * @return GetIssueOutput
+     * @return GetIssueOutput|null
      * @throws ApiException
      */
-    public function getIssue(string $code): GetIssueOutput;
+    public function getIssue(string $code): ?GetIssueOutput;
 }
