@@ -2,6 +2,7 @@
 
 namespace App\Module\Issue\Domain\Service;
 
+use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
 use App\Module\Issue\Domain\Adapter\UserAdapterInterface;
 use App\Module\Issue\Domain\Exception\IssueByIdNotFoundException;
@@ -66,11 +67,23 @@ class IssueService
      * @param int $issueId
      * @param string|null $newName
      * @param string|null $newDescription
-     * @throws IssueByIdNotFoundException
+     * @param int|null $newUserId
+     * @param int|null $newProjectId
+     * @param array|null $newFields
+     * @throws IssueByIdNotFoundException|UserToAssigneeIssueNotExistsException|ProjectToAddIssueNotExistsException
      */
-    public function editIssue(int $issueId, ?string $newName, ?string $newDescription): void
+    public function editIssue(
+        int $issueId, 
+        ?string $newName, 
+        ?string $newDescription,
+        ?int $newUserId,
+        ?int $newProjectId,
+        ?array $newFields
+    ): void
     {
         $issue = $this->issueRepo->findById($issueId);
+
+        $updated = false;
 
         if ($issue === null)
         {
@@ -80,22 +93,37 @@ class IssueService
         if ($newName !== null && $newName !== $issue->getName())
         {
             $issue->setName($newName);
+            $updated = true;
         }
-        else
-        {
-            $newName = null;
-        }
+
 
         if ($newDescription !== null && $issue->getDescription() !== $newDescription)
         {
             $issue->setDescription($newDescription);
-        }
-        else
-        {
-            $newDescription = null;
+            $updated = true;
         }
 
-        if ($newName !== null || $newDescription !== null)
+        if ($newUserId !== null && $issue->getUserId() !== $newUserId)
+        {
+            $this->assertUserExists($newUserId);
+            $issue->setUserId($newUserId);
+            $updated = true;
+        }
+
+        if ($newProjectId !== null && $issue->getProjectId() !== $newProjectId)
+        {
+            $this->assertProjectExists($newProjectId);
+            $issue->setProjectId($newProjectId);
+            $updated = true;
+        }
+
+        if ($newFields !== null && $newFields !== $issue->getFields())
+        {
+            $issue->setFields(Arrays::merge($issue->getFields(), $newFields));
+            $updated = true;
+        }
+
+        if ($updated)
         {
             $issue->setUpdatedAt(new \DateTimeImmutable());
         }

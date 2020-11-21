@@ -95,7 +95,8 @@ class IssueManagementController extends ApiController
             $issueApi->editIssue(new EditIssueInput(
                 $request->get('issue_id'),
                 $request->get('name'),
-                $request->get('description')
+                $request->get('description'),
+                $request->get('fields')
             ));
 
             return $this->json(['success' => 1]);

@@ -9,12 +9,14 @@ class EditIssueInput implements EditIssueRequestInterface
     private int $id;
     private ?string $name;
     private ?string $description;
+    private ?array $fields;
 
-    public function __construct(int $id, ?string $name, ?string $description)
+    public function __construct(int $id, ?string $name, ?string $description, ?array $fields)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
+        $this->fields = $fields;
     }
 
     /**
@@ -39,5 +41,13 @@ class EditIssueInput implements EditIssueRequestInterface
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getFields(): ?array
+    {
+        return $this->fields;
     }
 }

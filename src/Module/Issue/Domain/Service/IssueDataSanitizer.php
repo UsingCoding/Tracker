@@ -11,8 +11,8 @@ class IssueDataSanitizer
     private const NAME_MAX_LENGTH = 255;
     private const DESCRIPTION_MAX_LENGTH = 1000;
 
-    private const USER_ID_KEY = 'user_id';
-    private const PROJECT_ID_KEY = 'project_id';
+    public const USER_ID_KEY = 'user_id';
+    public const PROJECT_ID_KEY = 'project_id';
 
     /**
      * @param string $rawName

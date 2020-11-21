@@ -12,13 +12,15 @@ class EditIssueCommand extends AbstractCommand
     public const ISSUE_ID = 'issue_id';
     public const NAME = 'name';
     public const DESCRIPTION = 'description';
+    public const FIELDS = 'fields';
 
     public function __construct(EditIssueRequestInterface $request)
     {
         parent::__construct([
             self::ISSUE_ID => $request->getId(),
             self::NAME => $request->getName(),
-            self::DESCRIPTION => $request->getDescription()
+            self::DESCRIPTION => $request->getDescription(),
+            self::FIELDS => $request->getFields()
         ]);
     }
 }
