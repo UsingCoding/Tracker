@@ -19,3 +19,8 @@ api_get_issue:
 api_create_issue:
   path: /api/issue/create
   controller: App\Controller\Api\Issue\IssueManagementController::createIssue
+
+api_edit_route:
+  path: /api/issue
+  controller: App\Controller\Api\Issue\IssueManagementController::editIssue
+  methods: POST

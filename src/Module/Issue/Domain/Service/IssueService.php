@@ -4,6 +4,7 @@ namespace App\Module\Issue\Domain\Service;
 
 use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
 use App\Module\Issue\Domain\Adapter\UserAdapterInterface;
+use App\Module\Issue\Domain\Exception\IssueByIdNotFoundException;
 use App\Module\Issue\Domain\Exception\ProjectToAddIssueNotExistsException;
 use App\Module\Issue\Domain\Exception\UserToAssigneeIssueNotExistsException;
 use App\Module\Issue\Domain\Model\Issue;
@@ -59,6 +60,45 @@ class IssueService
         $this->issueRepo->add($issue);
 
         return $issue;
+    }
+
+    /**
+     * @param int $issueId
+     * @param string|null $newName
+     * @param string|null $newDescription
+     * @throws IssueByIdNotFoundException
+     */
+    public function editIssue(int $issueId, ?string $newName, ?string $newDescription): void
+    {
+        $issue = $this->issueRepo->findById($issueId);
+
+        if ($issue === null)
+        {
+            throw new IssueByIdNotFoundException('issue not found', ['issue_id' => $issueId]);
+        }
+
+        if ($newName !== null && $newName !== $issue->getName())
+        {
+            $issue->setName($newName);
+        }
+        else
+        {
+            $newName = null;
+        }
+
+        if ($newDescription !== null && $issue->getDescription() !== $newDescription)
+        {
+            $issue->setDescription($newDescription);
+        }
+        else
+        {
+            $newDescription = null;
+        }
+
+        if ($newName !== null || $newDescription !== null)
+        {
+            $issue->setUpdatedAt(new \DateTimeImmutable());
+        }
     }
 
     /**

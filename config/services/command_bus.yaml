@@ -18,6 +18,7 @@ services:
         class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
         calls:
             - [registerHandler, [!php/const App\Module\Issue\App\Command\CreateIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\CreateIssueCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueCommandHandler']]
 
     issue.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus

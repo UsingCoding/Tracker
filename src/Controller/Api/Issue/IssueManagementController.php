@@ -6,6 +6,7 @@ use App\Controller\Api\ApiController;
 use App\Module\Issue\Api\ApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Input\EditIssueInput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -75,6 +76,35 @@ class IssueManagementController extends ApiController
             if ($exception->getType() === ApiException::INVALID_ISSUE_CODE)
             {
                 return $this->json(['message' => 'invalid_issue_code']);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ApiInterface $issueApi
+     * @return Response
+     * @throws ApiException
+     */
+    public function editIssue(Request $request, ApiInterface $issueApi): Response
+    {
+        try
+        {
+            $issueApi->editIssue(new EditIssueInput(
+                $request->get('issue_id'),
+                $request->get('name'),
+                $request->get('description')
+            ));
+
+            return $this->json(['success' => 1]);
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::ISSUE_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['message' => 'issue_not_found'], 404);
             }
 
             throw $exception;

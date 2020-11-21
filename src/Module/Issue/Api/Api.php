@@ -9,9 +9,11 @@ use App\Common\App\Event\AppEventInterface;
 use App\Common\App\Event\AppEventSourceInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\App\Command\CreateIssueCommand;
+use App\Module\Issue\App\Command\EditIssueCommand;
 use App\Module\Issue\App\Event\IssueAddedEvent;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 
@@ -56,6 +58,13 @@ class Api implements ApiInterface
         {
             throw ApiException::from($e);
         }
+    }
+
+    public function editIssue(EditIssueInput $input): void
+    {
+        $command = new EditIssueCommand($input);
+
+        $this->publish($command);
     }
 
     /**
