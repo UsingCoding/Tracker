@@ -3,8 +3,8 @@
         <div v-if="!edit_flag" class="issue_view">
             <div class="issue_view_info">
                 <div class="top_issue_view">
-                    <span class="project_title">Some Project</span>
-                    <span class="created_date">Created {{this.issueInfo.created_at["date"]}}</span>
+                    <span class="project_title">{{this.$route.params.code}}</span>
+                    <span class="created_date">Created {{this.issueInfo.updated_at}}</span>
                 </div>
                 <div class="issue_view_body">
                     <span class="issue_view_title">{{new_title}}</span>
@@ -31,7 +31,7 @@
 
             <div class="tags_rectangle view_tags">
                 <div class="tags">
-                    <!-- <div v-for="(val,key) in issue_details.tags" class="tag" >{{key}}<span class="tag_value"></span>{{val}}</div> -->
+                    <div v-for="(val,key) in issueInfo.fields" class="tag" >{{store.getFieldName(key)}}<span class="tag_value"></span>{{val}}</div>
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@ export default {
   methods: {
     edit_issue: async function() {
         let result = await this.store.updateIssue({
-          "issue_id": this.$route.params.code,
+          "issue_id": this.issueInfo.issue_id,
           "title": this.new_title,
           "description": this.new_description,
           "fields": {

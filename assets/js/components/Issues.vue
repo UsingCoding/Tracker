@@ -2,14 +2,14 @@
   <div class="all_issues">  
     <div v-for="issue in issuesList" class="issue">
       <div class="issue_details">
-        <router-link :to="{name: 'issue_details', params: { code: issue.name }}" class="issue_header" exact>Some project</router-link>
-        <router-link :to="{name: 'issue_details', params: { code: issue.name }}" class="issue_title" exact>{{issue.name}}</router-link>
-        <span class="issue_date">{{issue.created_at["date"]}}</span>
+        <span class="issue_header">{{issue.issue_code}}</span>
+        <router-link :to="{name: 'issue_details', params: { code: issue.issue_code }}" class="issue_title" exact>{{issue.name}}</router-link>
+        <span class="issue_date">{{issue.updated_at}}</span>
       </div>
       <div class="issue_footer">
         <div class="issue_fields">
           <div class="issue_field">
-            <span>{{issue.employee}}</span>
+            <span>{{issue.username}}</span>
           </div>
           <div class="issue_field">
             <span>{{issue.state}}</span>
@@ -53,6 +53,11 @@ export default {
 </script>
 
 <style>
+
+a
+{
+  text-decoration: none;
+}
 
 .router-link-active
 {

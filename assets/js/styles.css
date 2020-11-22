@@ -300,7 +300,6 @@ header
 {
   font: 16px/18px "Montserrat";
   margin-right: 20px;
-  cursor: pointer;
 }
 
 .issue_title
@@ -308,10 +307,10 @@ header
   font: 16px/18px "Montserrat";
   color: #0f5b99;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .issue_title:hover,
-.issue_header:hover,
 .issue_field:hover,
 .return_log_in:hover,
 .project_title:hover

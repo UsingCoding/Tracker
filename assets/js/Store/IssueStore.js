@@ -1,5 +1,11 @@
+import Strings from "../Utils/Strings"
+
 export default class IssueStore
 {
+    _fieldsNamesMap = {
+        project_name: 'Project'
+    }
+
     _serverApi = null;
 
     _name = null;
@@ -16,15 +22,13 @@ export default class IssueStore
         this._serverApi = serverApi;
     }
 
-    // constructor(props = {})
-    // {
-    //     this._name = props.name;
-    //     this._description = props.description;
-    //     this._fields = props.fields;
-    //     this._createdAt = props.createdAt;
-    //     this._updatedAt = props.updatedAt;
-    //     this._serverApi = props.serverApi;
-    // }
+    getFieldName(fieldCode)
+    {
+        if(this._fieldsNamesMap.hasOwnProperty(fieldCode))
+            return this._fieldsNamesMap[fieldCode];
+            
+        return Strings.capitalizeFirstLetter(fieldCode);   
+    }
 
     get isEditState()
     {
