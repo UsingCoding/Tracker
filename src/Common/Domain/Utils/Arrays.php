@@ -38,7 +38,7 @@ class Arrays
     {
         $numberOfParameters = Reflection::getFunctionArgumentsCount($predicate);
 
-        if ($numberOfParameters !== 1 || $numberOfParameters !== 2)
+        if ($numberOfParameters !== 1 && $numberOfParameters !== 2)
         {
             throw new \InvalidArgumentException('Invalid predicate for map');
         }
@@ -76,5 +76,10 @@ class Arrays
     public static function removeByKey(array &$collection, $key): void
     {
         unset($collection[$key]);
+    }
+
+    public static function length(array $collection): int
+    {
+        return count($collection);
     }
 }

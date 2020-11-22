@@ -12,6 +12,7 @@ use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
+use App\Module\Issue\Api\Output\IssuesListOutput;
 use App\Module\Issue\App\Command\CreateIssueCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
 use App\Module\Issue\App\Event\IssueAddedEvent;
@@ -65,6 +66,20 @@ class Api implements ApiInterface
         $command = new EditIssueCommand($input);
 
         $this->publish($command);
+    }
+
+    public function list(string $query): IssuesListOutput
+    {
+        try
+        {
+            $issues = $this->issueQueryService->list($query);
+
+            return IssueOutputMapper::getIssueListOutput($issues);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
+        }
     }
 
     /**

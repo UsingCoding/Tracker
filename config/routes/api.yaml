@@ -24,3 +24,8 @@ api_edit_route:
   path: /api/issue
   controller: App\Controller\Api\Issue\IssueManagementController::editIssue
   methods: POST
+
+api_issues_list:
+  path: /api/issue/search
+  controller: App\Controller\Api\Issue\IssueManagementController::issuesList
+  methods: POST

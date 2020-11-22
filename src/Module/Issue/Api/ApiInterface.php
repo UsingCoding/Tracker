@@ -6,6 +6,7 @@ use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
+use App\Module\Issue\Api\Output\IssuesListOutput;
 
 interface ApiInterface
 {
@@ -28,4 +29,11 @@ interface ApiInterface
      * @throws ApiException
      */
     public function editIssue(EditIssueInput $input): void;
+
+    /**
+     * @param string $query
+     * @return IssuesListOutput
+     * @throws ApiException
+     */
+    public function list(string $query): IssuesListOutput;
 }
