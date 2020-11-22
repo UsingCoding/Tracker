@@ -7,6 +7,8 @@ class GetIssueOutput
     private int $issueId;
     private string $name;
     private ?string $description;
+    private string $projectName;
+    private ?string $username;
     private ?AssigneeUserOutput $assigneeUser;
     private BelongingProjectOutput $project;
     /** @var CommentOutput[] */
@@ -14,11 +16,13 @@ class GetIssueOutput
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(int $issueId, string $name, ?string $description, ?AssigneeUserOutput $assigneeUser, BelongingProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(int $issueId, string $name, ?string $description, string $projectName, ?string $username, ?AssigneeUserOutput $assigneeUser, BelongingProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->issueId = $issueId;
         $this->name = $name;
         $this->description = $description;
+        $this->projectName = $projectName;
+        $this->username = $username;
         $this->assigneeUser = $assigneeUser;
         $this->project = $project;
         $this->comments = $comments;
@@ -48,6 +52,22 @@ class GetIssueOutput
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProjectName(): string
+    {
+        return $this->projectName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUsername(): ?string
+    {
+        return $this->username;
     }
 
     /**

@@ -19,6 +19,8 @@ class IssueOutputMapper
             $data->getIssueId(),
             $data->getName(),
             $data->getDescription(),
+            $data->getProjectName(),
+            $data->getUsername(),
             null,
             new BelongingProjectOutput('formal'),
             [],

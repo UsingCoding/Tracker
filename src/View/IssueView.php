@@ -21,6 +21,8 @@ class IssueView
         return new JsonResponse([
             'issue_id' => $this->issue->getIssueId(),
             'name' => $this->issue->getName(),
+            'project_name' => $this->issue->getProjectName(),
+            'username' => $this->issue->getUsername(),
             'description' => $this->issue->getDescription(),
             'created_at' => $this->issue->getCreatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT),
             'updated_at' => $this->issue->getUpdatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT)
