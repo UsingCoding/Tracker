@@ -1,3 +1,5 @@
+import styles from './styles.css'
+
 import Vue from 'vue';
 
 import Routes from './Router';
