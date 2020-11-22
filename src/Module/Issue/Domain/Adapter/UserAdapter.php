@@ -2,7 +2,7 @@
 
 namespace App\Module\Issue\Domain\Adapter;
 
-use App\Module\Issue\Domain\Model\User;
+use App\Module\User\Domain\Model\User;
 use App\Module\User\Domain\Model\UserRepositoryInterface;
 
 class UserAdapter implements UserAdapterInterface
@@ -17,6 +17,10 @@ class UserAdapter implements UserAdapterInterface
     public function getUserById(int $userId): ?User
     {
         $user = $this->userRepository->findById($userId);
+
+        // To add user reference to issue table need project entity
+
+        return $user;
 
         if ($user === null)
         {
