@@ -73,7 +73,7 @@ class IssueDataSanitizer
             return null;
         }
 
-        if (!ctype_digit($userId))
+        if (!ctype_digit((string) $userId))
         {
             throw new InvalidIssueDataException('User id must be int');
         }
@@ -92,7 +92,7 @@ class IssueDataSanitizer
     {
         $projectId = Arrays::get($fields, self::PROJECT_ID_KEY);
 
-        if ($projectId === null || !ctype_digit($projectId))
+        if ($projectId === null || !ctype_digit((string) $projectId))
         {
             throw new InvalidIssueDataException('No project id provided or it`s invalid', ['project_id' => $projectId]);
         }
