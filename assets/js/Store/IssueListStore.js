@@ -11,12 +11,14 @@ export default class IssueListStore
         this._serverApi = server_api;
     }
 
-    async createIssueList()
+    async getIssueList()
     {
-        let response = await this._serverApi.createIssueList(user_id);
+        let response = await this._serverApi.getIssueList();
 
-        if(response)
-            return await response.json();
+        if(response){
+            this._issueList = await response;
+            return this._issueList;
+        }
     }
     
     get issueList()

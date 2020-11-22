@@ -23,6 +23,7 @@ export default class ServerApi
                     'Content-Type': 'application/json;charset=utf-8'
                 },
                 body: JSON.stringify({
+                    "issue_id": props.issue_id,
                     "name": props.title,
                     "description": props.description,
                     "fields": {
@@ -32,7 +33,7 @@ export default class ServerApi
                 })
             })
     
-            return result = await response.json();
+            return await response.json();
             // if(result === 1){
     
             // }
@@ -57,17 +58,20 @@ export default class ServerApi
                 }
             })
         })
-        return result = await response.json()
+        return await response.json()
     }
 
-    async getIssuesList()
+    async getIssueList()
     {
         let response = await fetch('/api/issue/search',{
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
-            }
+            },
+            body: JSON.stringify({
+                'search_query': ''
+            })
         })
-        return result = await response.json();
+        return await response.json();
     }
 }

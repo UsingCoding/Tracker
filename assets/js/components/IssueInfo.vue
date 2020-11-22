@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="issue_view">
-            <!-- <div class="issue_view_info">
+        <div v-if="!edit_flag" class="issue_view">
+            <div class="issue_view_info">
                 <div class="top_issue_view">
-                    <span class="project_title">{{issue_details.he}}</span>
-                    <span class="created_date">Created {{issue_details.create_date}}</span>
+                    <span class="project_title">Some Project</span>
+                    <span class="created_date">Created {{this.issueInfo.created_at["date"]}}</span>
                 </div>
                 <div class="issue_view_body">
-                    <span class="issue_view_title">{{issue_details.title}}</span>
-                    <p class="issue_view_description">{{issue_details.description}}</p>
+                    <span class="issue_view_title">{{new_title}}</span>
+                    <p class="issue_view_description">{{new_description}}</p>
                     <hr class="issue_border"/>
 
-                    <div class="comments">
+                    <!-- <div class="comments">
                         <div v-for="comment in issue_details.comments" class="comment">
 
                             <div class="user_img">
@@ -23,10 +23,10 @@
                                 <p class="comment_text">{{comment.text}}</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
-            </div> -->
+            </div>
 
 
             <div class="tags_rectangle view_tags">
@@ -35,19 +35,19 @@
                 </div>
             </div>
         </div>
-        <!--<form v-if="edit_flag" class="create_issue" action="index.html" method="post">
+        <form v-if="edit_flag" class="create_issue" action="index.html" method="post">
 
                 <div class="new_issue_body">
                   <div class="width_100">
-                    <input required placeholder="Summary" type="text" class="new_issue_title width_100" v-bind:value="title" name="new_issue_title">
-                    <textarea placeholder="Description" class="new_issue_description width_100" v-bind:value="description" name="new_issue_description"></textarea>
+                    <input required placeholder="Summary" v-model="new_title" type="text" class="new_issue_title width_100" name="new_issue_title">
+                    <textarea placeholder="Description" v-model="new_description" class="new_issue_description width_100" name="new_issue_description"></textarea>
                     <hr class="issue_border"/>
-                    <button v-if="edit_issue_flag" v-on:click="edit_issue()" class="create_button" type="button" name="save">Save</button>
+                    <button v-if="edit_flag" v-on:click="edit_issue()" class="create_button" type="button" name="save">Save</button>
                     <button v-on:click="cancel_edit()" class="create_button" type="button" name="cancel">Cancel</button>
                   </div>
                 </div>
 
-                <div class="tags_rectangle">
+                <!--<div class="tags_rectangle">
                   <div class="tags">
 
                     <label class="tag">Assignee
@@ -86,32 +86,53 @@
                     </label>
 
                   </div>
-                </div>
-              </form>-->
+                </div>-->
+              </form>
     </div>
 </template>
 
 <script>
 
+const user_id = 1;
+const project_id = 1;
 
 export default {
-  props: {
-    edit_flag: {
-      type: Boolean
-    }
-  },
+  props: [
+    'edit_flag',
+    'factory'
+  ],
   data() {
     return {
-      
+      store: this.factory.createIssueStore(),
+      issueInfo: {},
+      new_description: '',
+      new_title: ''
     }
   },
   methods: {
-    edit: function() {
-        
+    edit_issue: async function() {
+        let result = await this.store.updateIssue({
+          "issue_id": this.$route.params.code,
+          "title": this.new_title,
+          "description": this.new_description,
+          "fields": {
+            "user_id": user_id,
+            "project_id": project_id
+          }
+        });
+        this.cancel_edit();
     },
     cancel_edit: function() {
-      this.$emit('goEdit');
+      this.$emit('cancel_edit');
+    },
+    getIssueInfo: async function() {
+      this.issueInfo = await this.store.getIssueInformation(this.$route.params.code);  
     }
+  },
+  async beforeMount() {
+    await this.getIssueInfo();
+    this.new_title = this.issueInfo.name;
+    this.new_description = this.issueInfo.description;
   }
 }
 </script>

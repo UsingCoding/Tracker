@@ -11,15 +11,20 @@ export default class IssueStore
 
     _isEditState = false;
 
-    constructor(props = {})
+    constructor(serverApi)
     {
-        this._name = props.name;
-        this._description = props.description;
-        this._fields = props.fields;
-        this._createdAt = props.createdAt;
-        this._updatedAt = props.updatedAt;
-        this._serverApi = props.serverApi;
+        this._serverApi = serverApi;
     }
+
+    // constructor(props = {})
+    // {
+    //     this._name = props.name;
+    //     this._description = props.description;
+    //     this._fields = props.fields;
+    //     this._createdAt = props.createdAt;
+    //     this._updatedAt = props.updatedAt;
+    //     this._serverApi = props.serverApi;
+    // }
 
     get isEditState()
     {
@@ -31,13 +36,18 @@ export default class IssueStore
         this._isEditState = value;
     }
 
-    async updateIssueInformation(props)
+    async updateIssue(props)
     {
-        const result = await this._serverApi.updateIssue({
-            name: props.name,
-            description: props.description,
-        })
-
+        // const result = await this._serverApi.updateIssue({
+        //     issue_id: props.issue_id,
+        //     name: props.name,
+        //     description: props.description,
+        //     fields: { 
+        //         user_id: props.user_id,
+        //         project_id: props.project_id
+        //     }
+        // })
+        const result = await this._serverApi.updateIssue(props)
         if (result)
         {
             // is fuck was given
@@ -45,6 +55,18 @@ export default class IssueStore
 
         this._name = props.name;
         this.description = props.description;
+    }
+
+    async getIssueInformation(issue_id)
+    {
+        const response = await this._serverApi.getIssue(issue_id);
+        if(response)
+        {
+            this._name = response.name;
+            this._description = response.description;
+            this._createdAt = response.created_at;
+            return response;
+        }
     }
 
     get name()

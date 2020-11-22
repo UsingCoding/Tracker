@@ -68,7 +68,7 @@ import header from "./Header";
 import tools from "./Toolbar";
 
 const user_id = 1;
-// const project_id = 1;
+const project_id = 1;
 
 export default {
     props: ['factory'],
@@ -89,8 +89,8 @@ export default {
         "toolbar": tools
     },
     methods: {
-        create_issue: function() {
-            issue_id = this.store.createIssue({
+        create_issue: async function() {
+            let issue_id = await this.store.createIssue({
                 "title": this.issue_title,
                 "description": this.issue_description,
                 "fields": {
@@ -98,19 +98,12 @@ export default {
                     "project_id": project_id
                 }
             });
-            this.$router.push({ name: 'issue_details', params: { issue_id }});
-            // console.log(this.issue_title);
-            // console.log(this.issue_description);
-            // console.log(this.assignee);
-            // console.log(this.state);
-            // console.log(this.stage);
-            // console.log(this.estimation);
-            // console.log(this.difficulty);
+            // this.$router.push({ path: '/issue/' + issue_id });
+            this.$router.push({ name: 'issue_details', params: { code: issue_id }});
             
         },
 
         cancel: function() {
-            // console.log(sessionStorage.getItem("name"));
             this.$router.push({ name: 'issues' });
         }
     }

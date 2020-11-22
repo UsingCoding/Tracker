@@ -15,11 +15,11 @@ export default class StoreFactory
      *
      * @param {String} issueCode
      */
-    createIssueStore(issueCode)
+    createIssueStore()
     {
-        const issue = this._serverApi.getIssue(issueCode);
+        //const issue = this._serverApi.getIssue(issueCode);
 
-        return  new IssueStore(issue);
+        return  new IssueStore(this._serverApi);
     }
 
     createCreateIssueStore()
@@ -31,9 +31,4 @@ export default class StoreFactory
     {
         return new IssueListStore(this._serverApi);
     }
-
-    /*mush()
-    {
-        console.log("wow, it's working yep")
-    }*/
 }

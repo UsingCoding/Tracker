@@ -14,6 +14,6 @@ export default class CreateIssueStore
         const response = await this._serverApi.createIssue(props); 
 
         if(response)
-            return await response.json().issue_id;
+            return await response.issue_id;
     }
 }
