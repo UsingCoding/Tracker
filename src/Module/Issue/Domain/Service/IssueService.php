@@ -40,11 +40,12 @@ class IssueService
      */
     public function addIssue(string $name, ?string $description, array $fields, int $projectId, ?int $userId): Issue
     {
-        $this->assertProjectExists($projectId);
+        $project = $this->assertProjectExists($projectId);
+        $user = null;
 
         if ($userId !== null)
         {
-            $this->assertUserExists($userId);
+            $user = $this->assertUserExists($userId);
         }
 
         $issue = new Issue(
@@ -52,8 +53,8 @@ class IssueService
             $name,
             $description,
             $fields,
-            $projectId,
-            $userId,
+            $project,
+            $user,
             new \DateTimeImmutable(),
             new \DateTimeImmutable()
         );
@@ -105,15 +106,15 @@ class IssueService
 
         if ($newUserId !== null && $issue->getUserId() !== $newUserId)
         {
-            $this->assertUserExists($newUserId);
-            $issue->setUserId($newUserId);
+            $user = $this->assertUserExists($newUserId);
+            $issue->setUserId($user);
             $updated = true;
         }
 
         if ($newProjectId !== null && $issue->getProjectId() !== $newProjectId)
         {
-            $this->assertProjectExists($newProjectId);
-            $issue->setProjectId($newProjectId);
+            $project = $this->assertProjectExists($newProjectId);
+            $issue->setProjectId($project);
             $updated = true;
         }
 
@@ -132,8 +133,9 @@ class IssueService
     /**
      * @param int $projectId
      * @throws ProjectToAddIssueNotExistsException
+     * @return mixed
      */
-    private function assertProjectExists(int $projectId): void
+    private function assertProjectExists(int $projectId)
     {
         $project = $this->projectAdapter->getProjectById($projectId);
 
@@ -141,13 +143,16 @@ class IssueService
         {
             throw new ProjectToAddIssueNotExistsException('Project not exists', ['project_id' => $projectId]);
         }
+
+        return $project;
     }
 
     /**
      * @param int $userId
      * @throws UserToAssigneeIssueNotExistsException
+     * @return mixed
      */
-    private function assertUserExists(int $userId): void
+    private function assertUserExists(int $userId)
     {
         $user = $this->userAdapter->getUserById($userId);
 
@@ -155,5 +160,7 @@ class IssueService
         {
             throw new UserToAssigneeIssueNotExistsException('User not exists', ['user_id' => $userId]);
         }
+
+        return $user;
     }
 }

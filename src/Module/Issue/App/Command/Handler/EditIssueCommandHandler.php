@@ -34,7 +34,7 @@ class EditIssueCommandHandler implements AppCommandHandlerInterface
         $newName = $rawName !== null ? IssueDataSanitizer::sanitizeName($rawName) : null;
         $newDescription = IssueDataSanitizer::sanitizeDescription($command->getValue(EditIssueCommand::DESCRIPTION));
 
-        $newFields = $command->getValue(EditIssueCommand::FIELDS);
+        $newFields = $command->getValue(EditIssueCommand::FIELDS) ?? [];
 
         $newUserId = IssueDataSanitizer::sanitizeUserId($newFields);
         $newProjectId = Arrays::get($newFields, IssueDataSanitizer::PROJECT_ID_KEY) === null ? null : IssueDataSanitizer::sanitizeProjectId($newFields);

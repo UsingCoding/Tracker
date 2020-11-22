@@ -6,17 +6,23 @@ use App\Module\Issue\App\Query\Data\IssueData;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 use App\Module\Issue\Domain\Service\IssueCodeService;
 use App\Module\Issue\Infrastructure\Hydration\IssueWithUserDataHydrator;
+use App\Module\Issue\Infrastructure\Query\SearchQueryParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class IssueQueryService implements IssueQueryServiceInterface
 {
     private Connection $connection;
+    private SearchQueryParser $queryParser;
+    private EntityManagerInterface $em;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, SearchQueryParser $queryParser, EntityManagerInterface $em)
     {
         $this->connection = $connection;
+        $this->queryParser = $queryParser;
+        $this->em = $em;
     }
 
     public function getIssue(string $code): ?IssueData
@@ -55,5 +61,35 @@ class IssueQueryService implements IssueQueryServiceInterface
 
         $hydrator->hydrate($row, $results);
         return $results[0];
+    }
+
+    public function list(string $query): array
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            // Due to the doctrine bug, all fields were written manually
+            ->addSelect('i.issue_id')
+            ->addSelect('i.name')
+            ->addSelect('i.description')
+            ->addSelect('i.fields')
+            ->addSelect('i.created_at')
+            ->addSelect('i.updated_at')
+            ->from('issue', 'i')
+            ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
+        ;
+
+        $stmt = $queryBuilder->execute();
+        $row = $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        $stmt->closeCursor();
+
+        if ($row === false)
+        {
+            return [];
+        }
+
+        $hydrator = new IssueWithUserDataHydrator($this->connection->getDatabasePlatform());
+
+        return $hydrator->hydrateAll($row);
     }
 }

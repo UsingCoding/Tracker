@@ -7,6 +7,7 @@ use App\Module\Issue\Api\ApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
+use App\View\IssuesListView;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,6 +110,22 @@ class IssueManagementController extends ApiController
             }
 
             throw $exception;
+        }
+    }
+
+    public function issuesList(Request $request, ApiInterface $issueApi): Response
+    {
+        try
+        {
+            $list = $issueApi->list($request->get('search_query'));
+
+            $view = new IssuesListView($list);
+
+            return $view->render();
+        }
+        catch (ApiException $e)
+        {
+            return $this->json(['success' => (string) $e]);
         }
     }
 }

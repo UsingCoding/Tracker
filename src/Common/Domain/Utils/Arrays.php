@@ -34,11 +34,17 @@ class Arrays
         return in_array($value, $collection, true);
     }
 
+    /**
+     * @param array|iterable $collection
+     * @param callable $predicate
+     * @param bool $updateAssocKeys
+     * @return iterable
+     */
     public static function map($collection, callable $predicate, bool $updateAssocKeys = false): iterable
     {
         $numberOfParameters = Reflection::getFunctionArgumentsCount($predicate);
 
-        if ($numberOfParameters !== 1 || $numberOfParameters !== 2)
+        if ($numberOfParameters !== 1 && $numberOfParameters !== 2)
         {
             throw new \InvalidArgumentException('Invalid predicate for map');
         }
@@ -76,5 +82,10 @@ class Arrays
     public static function removeByKey(array &$collection, $key): void
     {
         unset($collection[$key]);
+    }
+
+    public static function length(array $collection): int
+    {
+        return count($collection);
     }
 }

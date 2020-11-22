@@ -40,4 +40,14 @@ class Strings
     {
         return explode($delimiter, $value);
     }
+
+    public static function lower(string $value): string
+    {
+        return strtolower($value);
+    }
+
+    public static function substr(string $string, int $start, ?int $length = null): string
+    {
+        return substr($string, $start, $length);
+    }
 }
