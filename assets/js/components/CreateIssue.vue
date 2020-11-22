@@ -24,7 +24,7 @@
                         <label class="tag">Assignee
                             <select v-model="assignee" class="tag_value" name="assignee">
                         <!--<option v-for="employee in command" value="">{{employee}}</option>-->
-                                <option value="Temp employee">Temp employee</option>
+                                <option value="Unassigned">Unassigned</option>
                             </select>
                         </label>
 
@@ -68,11 +68,12 @@ import header from "./Header";
 import tools from "./Toolbar";
 
 export default {
+    props: ['factory'],
     data() {
         return {
             issue_title: '',
             issue_description: '',
-            assignee: 'Temp',
+            assignee: 'Unassigned',
             state: 'Submited',
             stage: 'Backlog',
             estimation: '3h',
@@ -92,6 +93,15 @@ export default {
             console.log(this.stage);
             console.log(this.estimation);
             console.log(this.difficulty);
+            /*this.factory.mush(props[
+                "name" = this.issue_title,
+                "description" = this.issue_description,
+                "fields" = {
+                    "user_id": user_id,
+                    "project": project
+                }
+            ]);*/
+            this.factory.mush();
             // let response = await fetch('/api/issue/create', {
             //     method: 'POST',
             //     headers: {

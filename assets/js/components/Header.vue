@@ -5,7 +5,7 @@
                 <div class="navbar">
                     <router-link to="/issues" class="menu_link" exact >Issues</router-link>
                     <router-link to="/" class="menu_link" exact >Projects</router-link>
-                    <router-link to="/create_issue" class="menu_link" exact >New issue</router-link>
+                    <router-link to="/create-issue" class="menu_link" exact >New issue</router-link>
                     <!-- <router-link to="/" class="menu_link" exact >New project</router-link> -->
                 </div>
             </div>

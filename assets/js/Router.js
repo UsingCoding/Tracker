@@ -14,7 +14,7 @@ export default new VueRouter({
         { path:'/', name:'home', component: App },
         { path:'/login', name: 'login', component: login },
         { path:'/issues', name:'issues', component: issues },
-        { path:'/create_issue', name:'create_issue', component: create_issue },
-        { path:'/issue_details', name:'issue_details', component: issue_details }
+        { path:'/create-issue', name:'create_issue', component: create_issue },
+        { path:'/issue/:code', name:'issue_details', component: issue_details }
     ]
 });

@@ -43,7 +43,7 @@
                     <textarea placeholder="Description" class="new_issue_description width_100" v-bind:value="description" name="new_issue_description"></textarea>
                     <hr class="issue_border"/>
                     <button v-if="edit_issue_flag" v-on:click="edit_issue()" class="create_button" type="button" name="save">Save</button>
-                    <button v-on:click="edit_flag = !edit_flag" class="create_button" type="button" name="cancel">Cancel</button>
+                    <button v-on:click="cancel_edit()" class="create_button" type="button" name="cancel">Cancel</button>
                   </div>
                 </div>
 
@@ -93,37 +93,24 @@
 
 <script>
 
+
 export default {
-    data() {
-      return {}
-    },
-    methods: {
-      edit: /*async*/ function() {
-        // let response = await fetch('/api/issue/edit', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json;charset=utf-8'
-        //     },
-        //     body: JSON.stringify({
-        //         "title": this.issue_title,
-        //         "description": this.issue_description,
-        //         "fields": JSON.stringify({
-        //             "employee": this.assignee
-        //             // "project": project from class Store
-        //         })       
-        //     })
-        // })
-
-        // let result = await response.json();
-        // if(result === 1){
-
-        // }
-        // else {
-        //     alert("Ooops, something went wrong =(");
-        // }
-        
-      }
+  props: {
+    edit_flag: {
+      type: Boolean
     }
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    edit: function() {
+        
+    },
+    cancel_edit: function() {
+      this.$emit('goEdit');
+    }
+  }
 }
 </script>
 

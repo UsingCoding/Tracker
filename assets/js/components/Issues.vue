@@ -4,8 +4,8 @@
             
               <div v-for-key="issue in issues" class="issue">
                 <div class="issue_details">
-                  <router-link to="/issue_details" class="issue_header">{{issue.he}}</router-link>
-                  <router-link to="/issue_details" class="issue_title">{{issue.title}}</router-link>
+                  <router-link to="/issue/:code" class="issue_header">{{issue.he}}</router-link>
+                  <router-link to="/issue/:code" class="issue_title">{{issue.title}}</router-link>
                   <span class="issue_date">{{issue.date}}</span>
                 </div>
                 <div class="issue_footer">

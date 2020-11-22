@@ -7,7 +7,7 @@
             <i class="tool right_tool fas fa-beer"></i>
         </div>
         <div class="tools second_tools">
-            <i class="tool far fa-edit"></i>
+            <i v-on:click="goEdit()" class="tool far fa-edit"></i>
             <i class="tool right_tool fas fa-trash"></i>
         </div>
     </div>
@@ -16,12 +16,20 @@
 <script>
 
 export default {
+    props: {
+        edit_flag: {
+            type: Boolean
+        }
+    },
     data() {
         return {}
     },
     methods: {
         delete: function(id) {
             console.log(id);
+        },
+        goEdit: function() {
+            this.$emit('changeEdit');
         }
     }
 }

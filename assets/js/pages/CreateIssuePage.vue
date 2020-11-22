@@ -3,7 +3,7 @@
       <app-header></app-header>
       <search-panel></search-panel>
       <toolbar></toolbar>
-      <create-issue-form></create-issue-form>
+      <create-issue-form v-bind:factory="factory"></create-issue-form>
   </div>
 </template>
 
@@ -12,10 +12,17 @@ import tools from "../components/Toolbar";
 import header from "../components/Header";
 import create_issue from "../components/CreateIssue";
 import search_panel from "../components/SearchPanel";
+import StoreFactory from '../Factory/StoreFactory';
+import ServerApi from "../Api/ServerApi";
+
+const server_api = new ServerApi();
+const Afactory = new StoreFactory(server_api);
 
 export default {
     data() {
-        return{}
+        return {
+            factory: Afactory
+        }
     },
     components: {
         "app-header": header,
