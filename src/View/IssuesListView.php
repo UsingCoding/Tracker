@@ -19,7 +19,7 @@ class IssuesListView
 
     public function render(): Response
     {
-        return new JsonResponse(Arrays::map($this->list, static fn(IssueListItemOutput $item) => [
+        return new JsonResponse(Arrays::map($this->list->getItems(), static fn(IssueListItemOutput $item) => [
             'name' => $item->getName(),
             'description' => $item->getDescription(),
             'created_at' => $item->getCreatedAt(),
