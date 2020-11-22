@@ -2,14 +2,13 @@
 
 namespace App\Module\Issue\Infrastructure\Hydration;
 
-use App\Module\Issue\Infrastructure\Adapter\ProjectTableAdapter;
 use App\Module\Issue\Infrastructure\Adapter\UserTableAdapter;
 use Doctrine\DBAL\Types\Types;
 
 class IssueDataMapping
 {
     public const ISSUE_ID = 'issue_id';
-    public const NAME = 'name';
+    public const NAME = 'issue_name';
     public const DESCRIPTION = 'description';
     public const FIELDS = 'fields';
     public const PROJECT_ID = 'project_id';
@@ -17,7 +16,7 @@ class IssueDataMapping
     public const CREATED_AT = 'created_at';
     public const UPDATED_AT = 'updated_at';
     public const USERNAME = UserTableAdapter::USERNAME;
-    public const PROJECT_NAME = ProjectTableAdapter::NAME;
+    public const PROJECT_NAME = 'project_name';
 
     private const TYPES = [
         self::ISSUE_ID => Types::INTEGER,

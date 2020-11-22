@@ -31,12 +31,12 @@ class IssueQueryService implements IssueQueryServiceInterface
 
         $queryBuilder
             ->addSelect('i.issue_id')
-            ->addSelect('i.name')
+            ->addSelect('i.name issue_name')
             ->addSelect('i.description')
             ->addSelect('i.fields')
             ->addSelect('i.created_at')
             ->addSelect('i.updated_at')
-            ->addSelect('p.name')
+            ->addSelect('p.name project_name')
             ->addSelect('ac.username')
             ->from('issue', 'i')
             ->leftJoin('i', 'project', 'p', 'p.name_id = :project_name_id')

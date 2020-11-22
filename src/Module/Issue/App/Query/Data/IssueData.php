@@ -8,7 +8,7 @@ class IssueData
     private string $name;
     private ?string $description;
     private ?string $username;
-    private string $projectNameId;
+    private string $projectName;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
@@ -18,7 +18,7 @@ class IssueData
         $this->name = $name;
         $this->description = $description;
         $this->username = $username;
-        $this->projectNameId = $projectNameId;
+        $this->projectName = $projectNameId;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
@@ -60,7 +60,7 @@ class IssueData
      */
     public function getProjectName(): string
     {
-        return $this->projectNameId;
+        return $this->projectName;
     }
 
     /**
