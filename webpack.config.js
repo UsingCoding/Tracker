@@ -5,6 +5,9 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
+    .configureBabel(function (babelConfig) {
+        babelConfig.plugins.push('transform-class-properties');
+    })
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('app', './assets/js/App.js')
