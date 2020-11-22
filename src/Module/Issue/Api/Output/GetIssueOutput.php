@@ -4,6 +4,7 @@ namespace App\Module\Issue\Api\Output;
 
 class GetIssueOutput
 {
+    private int $issueId;
     private string $name;
     private ?string $description;
     private ?AssigneeUserOutput $assigneeUser;
@@ -13,8 +14,9 @@ class GetIssueOutput
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(string $name, ?string $description, ?AssigneeUserOutput $assigneeUser, BelongingProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(int $issueId, string $name, ?string $description, ?AssigneeUserOutput $assigneeUser, BelongingProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
+        $this->issueId = $issueId;
         $this->name = $name;
         $this->description = $description;
         $this->assigneeUser = $assigneeUser;
@@ -22,6 +24,14 @@ class GetIssueOutput
         $this->comments = $comments;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIssueId(): int
+    {
+        return $this->issueId;
     }
 
     /**
@@ -79,5 +89,4 @@ class GetIssueOutput
     {
         return $this->updatedAt;
     }
-
 }

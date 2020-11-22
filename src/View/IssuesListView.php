@@ -3,6 +3,7 @@
 namespace App\View;
 
 use App\Common\Domain\Utils\Arrays;
+use App\Common\Domain\Utils\Date;
 use App\Module\Issue\Api\Output\IssueListItemOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +28,7 @@ class IssuesListView
             'username' => $item->getAssigneeUsername(),
             'project_name_id' => $item->getProjectNameId(),
             'fields' => $item->getFields(),
-            'updated_at' => $item->getUpdatedAt()->format('d M Y G:i')
+            'updated_at' => $item->getUpdatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT)
         ]));
     }
 }

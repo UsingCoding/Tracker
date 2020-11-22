@@ -16,6 +16,7 @@ class IssueOutputMapper
     public static function getIssueOutput(IssueData $data): GetIssueOutput
     {
         return new GetIssueOutput(
+            $data->getIssueId(),
             $data->getName(),
             $data->getDescription(),
             null,
