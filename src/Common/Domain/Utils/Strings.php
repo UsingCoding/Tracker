@@ -35,4 +35,9 @@ class Strings
     {
         return mb_strlen($value);
     }
+
+    public static function split(string $value, string $delimiter): array
+    {
+        return explode($delimiter, $value);
+    }
 }

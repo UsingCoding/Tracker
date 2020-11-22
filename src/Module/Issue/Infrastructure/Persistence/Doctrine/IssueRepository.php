@@ -25,7 +25,7 @@ class IssueRepository implements IssueRepositoryInterface
 
     public function findById(int $id): ?Issue
     {
-        $this->repo->findOneBy(['id' => $id]);
+        return $this->repo->findOneBy(['id' => $id]);
     }
 
     public function remove(Issue $issue): void

@@ -8,12 +8,12 @@ class Issue
     private string $name;
     private ?string $description;
     private array $fields;
-    private int $projectId;
+    private ?int $projectId;
     private ?int $userId;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(?int $id, string $name, ?string $description, array $fields, int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(?int $id, string $name, ?string $description, array $fields, ?int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
         $this->name = $name;
@@ -58,9 +58,9 @@ class Issue
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getProjectId(): int
+    public function getProjectId(): ?int
     {
         return $this->projectId;
     }
@@ -87,5 +87,69 @@ class Issue
     public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param array $fields
+     */
+    public function setFields(array $fields): void
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * @param int|null $projectId
+     */
+    public function setProjectId(?int $projectId): void
+    {
+        $this->projectId = $projectId;
+    }
+
+    /**
+     * @param int|null $userId
+     */
+    public function setUserId(?int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @param \DateTimeImmutable $createdAt
+     */
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @param \DateTimeImmutable $updatedAt
+     */
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

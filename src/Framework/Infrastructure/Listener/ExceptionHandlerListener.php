@@ -4,6 +4,7 @@ namespace App\Framework\Infrastructure\Listener;
 
 use App\Common\App\Exception\AbstractContextException;
 use App\Common\Domain\Utils\Arrays;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -11,8 +12,23 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ExceptionHandlerListener implements EventSubscriberInterface
 {
+    private bool $catch;
+    private LoggerInterface $logger;
+
+    public function __construct(bool $catch, LoggerInterface $logger)
+    {
+        $this->catch = $catch;
+        $this->logger = $logger;
+    }
+
     public function onKernelException(ExceptionEvent $event): void
     {
+        if (!$this->catch)
+        {
+            $this->logger->debug('Exception passed');
+            return;
+        }
+
         $exception = $event->getThrowable();
 
         $contextException = $this->findContextException($exception);

@@ -33,4 +33,48 @@ class Arrays
     {
         return in_array($value, $collection, true);
     }
+
+    public static function map($collection, callable $predicate, bool $updateAssocKeys = false): iterable
+    {
+        $numberOfParameters = Reflection::getFunctionArgumentsCount($predicate);
+
+        if ($numberOfParameters !== 1 || $numberOfParameters !== 2)
+        {
+            throw new \InvalidArgumentException('Invalid predicate for map');
+        }
+
+        $fn = static fn($item, $key = null) => ($numberOfParameters === 1 || $key === null) ? $predicate($item) : $predicate($key, $item);
+
+        if (is_array($collection))
+        {
+            $mapped = [];
+
+            foreach ($collection as $key => $item)
+            {
+                if ($updateAssocKeys)
+                {
+                    [$newKey, $newVal] = $fn($item, $key);
+                    $mapped[$newKey] = $newVal;
+                }
+                else
+                {
+                    $mapped[$key] = $fn($item, $key);
+                }
+            }
+
+            return $mapped;
+        }
+
+        return (static function() use($collection, $fn) {
+            foreach ($collection as $item)
+            {
+                yield $fn($item);
+            }
+        })();
+    }
+
+    public static function removeByKey(array &$collection, $key): void
+    {
+        unset($collection[$key]);
+    }
 }
