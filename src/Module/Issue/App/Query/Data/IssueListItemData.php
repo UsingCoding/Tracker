@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Module\Issue\Api\Output;
+namespace App\Module\Issue\App\Query\Data;
 
-class IssueListItemOutput
+class IssueListItemData
 {
     private int $issueId;
     private string $name;
     private ?string $description;
     private ?string $assigneeUsername;
     private ?string $projectNameId;
-    private ?string $issueCode;
     private array $fields;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(int $issueId, string $name, ?string $description, ?string $assigneeUsername, ?string $projectNameId, ?string $issueCode, array $fields, \DateTimeImmutable $updatedAt)
+    public function __construct(int $issueId, string $name, ?string $description, ?string $assigneeUsername, ?string $projectNameId, array $fields, \DateTimeImmutable $updatedAt)
     {
         $this->issueId = $issueId;
         $this->name = $name;
         $this->description = $description;
         $this->assigneeUsername = $assigneeUsername;
         $this->projectNameId = $projectNameId;
-        $this->issueCode = $issueCode;
         $this->fields = $fields;
         $this->updatedAt = $updatedAt;
     }
@@ -63,14 +61,6 @@ class IssueListItemOutput
     public function getProjectNameId(): ?string
     {
         return $this->projectNameId;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIssueCode(): ?string
-    {
-        return $this->issueCode;
     }
 
     /**

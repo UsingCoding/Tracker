@@ -8,6 +8,7 @@ use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\View\IssuesListView;
+use App\View\IssueView;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,12 +66,9 @@ class IssueManagementController extends ApiController
                 return $this->json(['message' => 'issue_not_found'], 404);
             }
 
-            return $this->json([
-                'name' => $issue->getName(),
-                'description' => $issue->getDescription(),
-                'created_at' => $issue->getCreatedAt(),
-                'updated_at' => $issue->getUpdatedAt()
-            ]);
+            $view = new IssueView($issue);
+
+            return $view->render();
         }
         catch (ApiException $exception)
         {
