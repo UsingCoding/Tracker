@@ -34,6 +34,12 @@ class Arrays
         return in_array($value, $collection, true);
     }
 
+    /**
+     * @param array|iterable $collection
+     * @param callable $predicate
+     * @param bool $updateAssocKeys
+     * @return iterable
+     */
     public static function map($collection, callable $predicate, bool $updateAssocKeys = false): iterable
     {
         $numberOfParameters = Reflection::getFunctionArgumentsCount($predicate);
