@@ -36,12 +36,15 @@
 <script>
 
 export default {
-    data() {
-        return {}
-    },
-    methods: {
+  props:['factory'],
+  data() {
+      return {
+        store: this.factory.createIssuesListStore()
+      }
+  },
+  methods: {
 
-    }
+  }
 }
 </script>
 

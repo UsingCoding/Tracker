@@ -29,7 +29,7 @@ export default {
             console.log(id);
         },
         goEdit: function() {
-            this.$emit('changeEdit');
+            this.$emit('goEdit');
         }
     }
 }

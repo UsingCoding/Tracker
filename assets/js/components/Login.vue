@@ -30,7 +30,7 @@ export default{
     //'/api/auth?username=jojo%40pidor.com&password=1234'
     methods: {
         login: async function() {
-            let response = await fetch('/api/auth?username=jojo%40pidor.com&password=1234', {
+            let response = await fetch('/api/auth?username=' + encodeURIComponent(this.username) + '&password=' + this.password, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'

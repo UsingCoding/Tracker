@@ -3,7 +3,7 @@
       <app-header></app-header>
       <search-panel></search-panel>
       <toolbar></toolbar>
-      <issues-list></issues-list>
+      <issues-list v-bind:factory="factory"></issues-list>
   </div>
 </template>
 
@@ -14,6 +14,7 @@ import issues from "../components/Issues";
 import search_panel from "../components/SearchPanel";
 
 export default {
+    props: ['factory'],
     data() {
         return {}
     },

@@ -12,16 +12,15 @@ import tools from "../components/Toolbar";
 import header from "../components/Header";
 import create_issue from "../components/CreateIssue";
 import search_panel from "../components/SearchPanel";
-import StoreFactory from '../Factory/StoreFactory';
-import ServerApi from "../Api/ServerApi";
 
-const server_api = new ServerApi();
-const Afactory = new StoreFactory(server_api);
+// const server_api = new ServerApi();
+// const Afactory = new StoreFactory(server_api);
 
 export default {
+    props: ['factory'],
     data() {
         return {
-            factory: Afactory
+            // factory: Afactory
         }
     },
     components: {

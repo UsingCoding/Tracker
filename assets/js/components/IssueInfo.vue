@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="issue_view">
-            <div class="issue_view_info">
+            <!-- <div class="issue_view_info">
                 <div class="top_issue_view">
                     <span class="project_title">{{issue_details.he}}</span>
                     <span class="created_date">Created {{issue_details.create_date}}</span>
@@ -11,7 +11,7 @@
                     <p class="issue_view_description">{{issue_details.description}}</p>
                     <hr class="issue_border"/>
 
-                    <!-- <div class="comments">
+                    <div class="comments">
                         <div v-for="comment in issue_details.comments" class="comment">
 
                             <div class="user_img">
@@ -23,10 +23,10 @@
                                 <p class="comment_text">{{comment.text}}</p>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
 
-            </div>
+            </div> -->
 
 
             <div class="tags_rectangle view_tags">
@@ -101,7 +101,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      
+    }
   },
   methods: {
     edit: function() {

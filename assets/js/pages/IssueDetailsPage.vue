@@ -3,7 +3,7 @@
       <app-header></app-header>
       <search-panel></search-panel>
       <toolbar v-on:goEdit="changeEdit()" v-bind:edit_flag="edit_flag"></toolbar>
-      <issue-info v-on:cancel_edit="changeEdit()" v-bind:edit_flag="edit_flag"></issue-info>
+      <issue-info v-on:cancelEdit="changeEdit()" v-bind:edit_flag="edit_flag"></issue-info>
     </div>
 </template>
 
@@ -14,6 +14,7 @@ import search_panel from "../components/SearchPanel";
 import issue_info from "../components/IssueInfo";
 
 export default {
+    props: ['factory'],
     data() {
         return{
             edit_flag: false
@@ -28,7 +29,6 @@ export default {
     methods: {
         changeEdit: function () {
             this.edit_flag = !this.edit_flag;
-            console.log(this.edit_flag);
         }
     }
 }

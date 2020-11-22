@@ -1,7 +1,7 @@
 <template>
   <div class="all_screen">
-    <!-- <router-view v-bind:factory="factory"></router-view> -->
-    <router-view></router-view>
+    <router-view v-bind:factory="factory"></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -14,12 +14,13 @@ import StoreFactory from '../Factory/StoreFactory';
 import ServerApi from "../Api/ServerApi";
 
 const server_api = new ServerApi();
+const tempFactory = new StoreFactory(server_api);
 
 export default {
   name: "App",
   data() {
     return {
-      //factory: new StoreFactory(server_api)
+      factory: tempFactory
     }
   },
   components: {

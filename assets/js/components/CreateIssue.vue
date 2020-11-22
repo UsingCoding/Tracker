@@ -67,6 +67,9 @@
 import header from "./Header";
 import tools from "./Toolbar";
 
+const user_id = 1;
+// const project_id = 1;
+
 export default {
     props: ['factory'],
     data() {
@@ -77,7 +80,8 @@ export default {
             state: 'Submited',
             stage: 'Backlog',
             estimation: '3h',
-            difficulty: 'Easy'
+            difficulty: 'Easy',
+            store: this.factory.createCreateIssueStore()
         }
     },
     components: {
@@ -85,50 +89,29 @@ export default {
         "toolbar": tools
     },
     methods: {
-        create_issue: /*async*/ function() {
-            console.log(this.issue_title);
-            console.log(this.issue_description);
-            console.log(this.assignee);
-            console.log(this.state);
-            console.log(this.stage);
-            console.log(this.estimation);
-            console.log(this.difficulty);
-            /*this.factory.mush(props[
-                "name" = this.issue_title,
-                "description" = this.issue_description,
-                "fields" = {
+        create_issue: function() {
+            issue_id = this.store.createIssue({
+                "title": this.issue_title,
+                "description": this.issue_description,
+                "fields": {
                     "user_id": user_id,
-                    "project": project
+                    "project_id": project_id
                 }
-            ]);*/
-            this.factory.mush();
-            // let response = await fetch('/api/issue/create', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json;charset=utf-8'
-            //     },
-            //     body: JSON.stringify({
-            //         "title": this.issue_title,
-            //         "description": this.issue_description,
-            //         "fields": JSON.stringify({
-            //             "employee": this.assignee
-            //             // "project": project from class Store
-            //         })       
-            //     })
-            // })
-
-            // let result = await response.json();
-            // if(result === 1){
-
-            // }
-            // else {
-            //     alert("Ooops, something went wrong =(");
-            // }
+            });
+            this.$router.push({ name: 'issue_details', params: { issue_id }});
+            // console.log(this.issue_title);
+            // console.log(this.issue_description);
+            // console.log(this.assignee);
+            // console.log(this.state);
+            // console.log(this.stage);
+            // console.log(this.estimation);
+            // console.log(this.difficulty);
+            
         },
 
         cancel: function() {
             // console.log(sessionStorage.getItem("name"));
-            this.$router.push({path: '/issues'});
+            this.$router.push({ name: 'issues' });
         }
     }
 }
