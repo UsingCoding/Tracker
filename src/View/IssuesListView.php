@@ -20,10 +20,14 @@ class IssuesListView
     public function render(): Response
     {
         return new JsonResponse(Arrays::map($this->list->getItems(), static fn(IssueListItemOutput $item) => [
+            'issue_id' => $item->getIssueId(),
+            'issue_code' => $item->getIssueCode(),
             'name' => $item->getName(),
             'description' => $item->getDescription(),
-            'created_at' => $item->getCreatedAt(),
-            'updated_at' => $item->getUpdatedAt()
+            'username' => $item->getAssigneeUsername(),
+            'project_name_id' => $item->getProjectNameId(),
+            'fields' => $item->getFields(),
+            'updated_at' => $item->getUpdatedAt()->format('d M Y G:i')
         ]));
     }
 }

@@ -26,4 +26,9 @@ class IssueCodeService
 
         return new IssueCode($parts[0], $parts[1]);
     }
+
+    public static function getCode(string $projectNameId, int $issueId): string
+    {
+        return $projectNameId . '-' . $issueId;
+    }
 }

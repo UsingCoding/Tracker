@@ -4,6 +4,7 @@ namespace App\Module\Issue\App\Query;
 
 use App\Module\Issue\App\Exception\SearchQueryParsingException;
 use App\Module\Issue\App\Query\Data\IssueData;
+use App\Module\Issue\App\Query\Data\IssueListItemData;
 use App\Module\Issue\Domain\Exception\InvalidIssueCodeException;
 use Doctrine\DBAL\Exception;
 
@@ -19,7 +20,7 @@ interface IssueQueryServiceInterface
 
     /**
      * @param string $query
-     * @return IssueData[]
+     * @return IssueListItemData[]
      * @throws SearchQueryParsingException
      * @throws Exception
      */

@@ -8,6 +8,8 @@ use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssueListItemOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
 use App\Module\Issue\App\Query\Data\IssueData;
+use App\Module\Issue\App\Query\Data\IssueListItemData;
+use App\Module\Issue\Domain\Service\IssueCodeService;
 
 class IssueOutputMapper
 {
@@ -28,12 +30,15 @@ class IssueOutputMapper
     {
         return new IssuesListOutput((array) Arrays::map(
             $data,
-            static fn(IssueData $data) =>
+            static fn(IssueListItemData $data) =>
             new IssueListItemOutput(
+                $data->getIssueId(),
                 $data->getName(),
                 $data->getDescription(),
-                null,
-                $data->getCreatedAt(),
+                $data->getAssigneeUsername(),
+                $data->getProjectNameId(),
+                IssueCodeService::getCode($data->getProjectNameId(), $data->getIssueId()),
+                $data->getFields(),
                 $data->getUpdatedAt()
             ))
         );
