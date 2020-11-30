@@ -2,7 +2,7 @@
 
 namespace App\Module\Issue\Domain\Adapter;
 
-use App\Module\Project\Domain\Model\Project;
+use App\Module\Issue\Domain\Model\Project;
 
 interface ProjectAdapterInterface
 {

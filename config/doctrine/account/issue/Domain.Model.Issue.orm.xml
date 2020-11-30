@@ -7,12 +7,8 @@
         <field name="name" length="255" column="name" />
         <field name="description" length="1000" column="description" nullable="true" />
         <field name="fields" type="json" column="fields" />
-        <many-to-one field="projectId" target-entity="App\Module\Project\Domain\Model\Project" >
-            <join-column name="project_id" referenced-column-name="project_id" on-delete="CASCADE" nullable="false" />
-        </many-to-one>
-        <many-to-one field="userId" target-entity="App\Module\User\Domain\Model\User">
-            <join-column name="user_id" referenced-column-name="user_id" on-delete="CASCADE" />
-        </many-to-one>
+        <field name="projectId" type="integer" column="project_id" />
+        <field name="userId" type="integer" column="user_id" nullable="true" />
         <field name="createdAt" type="datetime_immutable" column="created_at" />
         <field name="updatedAt" type="datetime_immutable" column="updated_at" />
     </entity>

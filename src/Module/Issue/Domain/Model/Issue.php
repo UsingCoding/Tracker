@@ -2,21 +2,29 @@
 
 namespace App\Module\Issue\Domain\Model;
 
-use App\Module\Project\Domain\Model\Project;
-use App\Module\User\Domain\Model\User;
-
 class Issue
 {
     private ?int $id;
     private string $name;
     private ?string $description;
     private array $fields;
-    private ?Project $projectId;
-    private ?User $userId;
+    private int $projectId;
+    private ?int $userId;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(?int $id, string $name, ?string $description, array $fields, ?Project $projectId, ?User $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    /**
+     * Issue constructor.
+     * @param int|null $id
+     * @param string $name
+     * @param string|null $description
+     * @param array $fields
+     * @param int $projectId
+     * @param int|null $userId
+     * @param \DateTimeImmutable $createdAt
+     * @param \DateTimeImmutable $updatedAt
+     */
+    public function __construct(?int $id, string $name, ?string $description, array $fields, int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
         $this->name = $name;
@@ -93,33 +101,33 @@ class Issue
     }
 
     /**
-     * @return Project|null
+     * @return int
      */
-    public function getProjectId(): ?Project
+    public function getProjectId(): int
     {
         return $this->projectId;
     }
 
     /**
-     * @param Project|null $projectId
+     * @param int $projectId
      */
-    public function setProjectId(?Project $projectId): void
+    public function setProjectId(int $projectId): void
     {
         $this->projectId = $projectId;
     }
 
     /**
-     * @return User|null
+     * @return int|null
      */
-    public function getUserId(): ?User
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
 
     /**
-     * @param User|null $userId
+     * @param int|null $userId
      */
-    public function setUserId(?User $userId): void
+    public function setUserId(?int $userId): void
     {
         $this->userId = $userId;
     }
