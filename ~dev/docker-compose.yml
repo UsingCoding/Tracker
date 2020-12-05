@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   php-fpm:
-#    image: vadimmakerov/symfony5-php-fpm
+    image: vadimmakerov/tracker-app-dev
     build: './'
     container_name: tracker_app
     restart: always
@@ -44,14 +44,17 @@ services:
       POSTGRES_PASSWORD: 1234
 
   fuzzy:
+    image: vadimmakerov/tracker-fuzzy-dev
     build: ../fuzzy/
     container_name: tracker_fuzzy
     volumes:
       - '../fuzzy/:/usr/src/app'
       - '../config/grpc/fuzzy.proto:/usr/src/config/fuzzy.proto'
+    ports:
+      - 9000:9000
     environment:
-      DATABASE_USER: root
-      DATABASE_PASSWORD: 1234
+      PORT: 9000
+      DEBUG: 1
 
 #  redis:
 #    image: redis
