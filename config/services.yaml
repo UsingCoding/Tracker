@@ -8,6 +8,7 @@ imports:
     - { resource: services/security.yaml }
     - { resource: services/command_bus.yaml }
     - { resource: services/redirect.yml }
+    - { resource: services/fuzzy_integration.yaml }
     - { resource: services_parameters.yaml }
 
 parameters:
@@ -74,3 +75,18 @@ services:
 
     environment.json_request_listener:
         alias: '@App\Framework\Infrastructure\Listener\JsonRequestListener'
+
+    App\Framework\Infrastructure\Http\HttpGateway:
+        arguments:
+            $logger: '@monolog.logger.http_client'
+
+    http.gateway:
+        alias: '@App\Framework\Infrastructure\Http\HttpGateway'
+
+    App\Module\FuzzyIntegration\Infrastructure\FuzzyGateway\FuzzyHttpGateway:
+        arguments:
+            $microserviceUrl: '%app.integration.fuzzy.base_url%'
+            $urlsMapping: '%app.integration.fuzzy.urls_mapping%'
+
+    app.integration.fuzzy.http_gateway:
+        alias: App\Module\FuzzyIntegration\Infrastructure\FuzzyGateway\FuzzyHttpGateway

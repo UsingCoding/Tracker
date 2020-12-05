@@ -4,12 +4,10 @@
     "require": {
         "php": "^7.4",
         "ext-ctype": "*",
-        "ext-grpc": "1.0",
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-pgsql": "*",
         "ext-zip": "*",
-        "grpc/grpc": "^v1.3.0",
         "predis/predis": "^1.0",
         "symfony/cache": "5.1.*",
         "symfony/console": "5.1.*",
@@ -21,7 +19,8 @@
         "symfony/security-bundle": "5.1.*",
         "symfony/twig-bundle": "5.1.*",
         "symfony/webpack-encore-bundle": "^1.7",
-        "symfony/yaml": "5.1.*"
+        "symfony/yaml": "5.1.*",
+        "symfony/http-client": "5.1.*"
     },
     "require-dev": {
     },

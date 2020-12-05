@@ -1,0 +1,5 @@
+parameters:
+    app.integration.fuzzy.base_url: '%env(FUZZY_MICROSERVICE_URL)%'
+
+    app.integration.fuzzy.urls_mapping:
+        calculate: /api/calculate
