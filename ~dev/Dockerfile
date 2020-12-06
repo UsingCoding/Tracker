@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
         protobuf-compiler \
         libpq-dev \
         libzip-dev \
-        libcurl4-openssl-dev
+        libcurl4-openssl-dev \
+        make
 
 RUN docker-php-ext-install pgsql && docker-php-ext-configure pgsql && \
     docker-php-ext-install pdo_pgsql && docker-php-ext-configure pdo_pgsql && \
@@ -34,4 +35,4 @@ WORKDIR /var/www
 
 #USER "${USER_ID}:${GROUP_ID}"
 
-CMD ["php-fpm"]
+ENTRYPOINT ["make", "-f", "~dev/Makefile"]
