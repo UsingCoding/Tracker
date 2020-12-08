@@ -30,13 +30,13 @@ class FuzzyLogicService
         $level = $this->gatewayService->calculate($specification->getDifficulty(), $specification->getTime());
 
         [$defuzzycatedLevel, $range] = Arrays::findIf(DeveloperLevel::getRanges(),
-            static fn(int $level, array $range) => Arrays::between($range, $level),
+            static fn(int $developerLevel, array $range) => Arrays::between($range, $level),
             true
         );
 
         if ($defuzzycatedLevel === null)
         {
-            throw new FailedToDefuzzycateException('', ['level' => $level]);
+            throw new FailedToDefuzzycateException('Failed to Defuzzycate level', ['level' => $level]);
         }
 
         return $defuzzycatedLevel;

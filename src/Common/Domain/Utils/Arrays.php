@@ -163,6 +163,6 @@ class Arrays
             throw new \InvalidArgumentException('Incorrect length for between check');
         }
 
-        return $range[0] > $value && $value < $range[$rangeLength - 1];
+        return $value > $range[0] && $value < $range[$rangeLength - 1];
     }
 }
