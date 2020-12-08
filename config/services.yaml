@@ -52,6 +52,10 @@ services:
     app.doctrine.dbal.connection.account: '@doctrine.dbal.account_connection'
     app.doctrine.orm.entity_managers.account: '@doctrine.orm.account_entity_manager'
 
+    App\Command\AppBootCommand:
+        arguments:
+            $isDebug: '%kernel.debug%'
+            $logger: '@monolog.logger.environment'
 
     App\Framework\Infrastructure\Listener\FrontendEnvironmentRequestListener:
         arguments:

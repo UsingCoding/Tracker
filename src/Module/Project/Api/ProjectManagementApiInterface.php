@@ -4,7 +4,7 @@ namespace App\Module\Project\Api;
 
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
-use App\Module\Project\Api\Output\GetProjectOutput;
+use App\Module\Project\Api\Output\ProjectOutput;
 
 interface ProjectManagementApiInterface
 {
@@ -16,8 +16,8 @@ interface ProjectManagementApiInterface
 
     /**
      * @param int $id
-     * @return GetProjectOutput
+     * @return ProjectOutput
      * @throws ApiException
      */
-    public function getProject(int $id): GetProjectOutput;
+    public function getProject(int $id): ProjectOutput;
 }

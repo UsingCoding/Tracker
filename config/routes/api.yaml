@@ -7,6 +7,11 @@ api_get_project:
   requirements:
     id: '\d+'
 
+api_projects_list:
+  path: /api/projects
+  controller: App\Controller\Api\Project\ProjectSettingsController::projectsList
+  methods: GET
+
 api_create_project:
   path: /api/project/create
   controller: App\Controller\Api\Project\ProjectManagementController::createProject

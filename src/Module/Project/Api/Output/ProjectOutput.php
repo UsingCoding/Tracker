@@ -2,7 +2,7 @@
 
 namespace App\Module\Project\Api\Output;
 
-class GetProjectOutput
+class ProjectOutput
 {
     private int $id;
     private string $name;
