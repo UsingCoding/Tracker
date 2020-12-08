@@ -5,6 +5,7 @@ namespace App\Module\Issue\Domain\Model;
 class Issue
 {
     private ?int $id;
+    private int $inProjectId;
     private string $name;
     private ?string $description;
     private array $fields;
@@ -13,20 +14,10 @@ class Issue
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    /**
-     * Issue constructor.
-     * @param int|null $id
-     * @param string $name
-     * @param string|null $description
-     * @param array $fields
-     * @param int $projectId
-     * @param int|null $userId
-     * @param \DateTimeImmutable $createdAt
-     * @param \DateTimeImmutable $updatedAt
-     */
-    public function __construct(?int $id, string $name, ?string $description, array $fields, int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(?int $id, int $inProjectId, string $name, ?string $description, array $fields, int $projectId, ?int $userId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
+        $this->inProjectId = $inProjectId;
         $this->name = $name;
         $this->description = $description;
         $this->fields = $fields;
@@ -50,6 +41,22 @@ class Issue
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInProjectId(): int
+    {
+        return $this->inProjectId;
+    }
+
+    /**
+     * @param int $inProjectId
+     */
+    public function setInProjectId(int $inProjectId): void
+    {
+        $this->inProjectId = $inProjectId;
     }
 
     /**

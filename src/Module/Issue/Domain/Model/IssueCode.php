@@ -5,12 +5,12 @@ namespace App\Module\Issue\Domain\Model;
 class IssueCode
 {
     private string $projectNameId;
-    private int $issueId;
+    private int $issueInProjectId;
 
     public function __construct(string $projectName, int $issueId)
     {
         $this->projectNameId = $projectName;
-        $this->issueId = $issueId;
+        $this->issueInProjectId = $issueId;
     }
 
     public function getProjectNameId(): string
@@ -18,8 +18,8 @@ class IssueCode
         return $this->projectNameId;
     }
 
-    public function getIssueId(): int
+    public function getIssueInProjectId(): int
     {
-        return $this->issueId;
+        return $this->issueInProjectId;
     }
 }

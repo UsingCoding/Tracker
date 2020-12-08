@@ -4,6 +4,7 @@
         <id name="id" type="integer" column="issue_id">
             <generator strategy="IDENTITY" />
         </id>
+        <field name="inProjectId" type="integer" column="in_project_id" />
         <field name="name" length="255" column="name" />
         <field name="description" length="1000" column="description" nullable="true" />
         <field name="fields" type="json" column="fields" />
@@ -11,5 +12,13 @@
         <field name="userId" type="integer" column="user_id" nullable="true" />
         <field name="createdAt" type="datetime_immutable" column="created_at" />
         <field name="updatedAt" type="datetime_immutable" column="updated_at" />
+        
+        <indexes>
+            <index columns="in_project_id"/>
+        </indexes>
+
+        <unique-constraints>
+            <unique-constraint columns="in_project_id,project_id" name="in_project_id_project_id_unique_index"/>
+        </unique-constraints>
     </entity>
 </doctrine-mapping>

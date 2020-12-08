@@ -48,8 +48,11 @@ class IssueService
             $this->assertUserExists($userId);
         }
 
+        $nextInProjectId = $this->issueRepo->getNextInProjectId($projectId);
+
         $issue = new Issue(
             null,
+            $nextInProjectId,
             $name,
             $description,
             $fields,
