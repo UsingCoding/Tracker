@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\Issue\Domain\Model\IssueField" table="issue_field">
+        <id name="id" type="integer" column="issue_id">
+            <generator strategy="IDENTITY" />
+        </id>
+
+        <field name="type" type="smallint" column="type" />
+        <field name="projectId" type="integer" column="project_id" />
+    </entity>
+</doctrine-mapping>
