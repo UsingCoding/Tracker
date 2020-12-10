@@ -52,10 +52,17 @@ services:
     app.doctrine.dbal.connection.account: '@doctrine.dbal.account_connection'
     app.doctrine.orm.entity_managers.account: '@doctrine.orm.account_entity_manager'
 
-    App\Command\AppBootCommand:
+    App\Command\AppBoot\Command:
         arguments:
-            $isDebug: '%kernel.debug%'
+            $environment: '%kernel.environment%'
+            $stages:
+                - '@App\Command\AppBoot\BootStage\ExecuteExternalCommandsBootStage'
             $logger: '@monolog.logger.environment'
+
+    App\Command\AppBoot\BootStage\ExecuteExternalCommandsBootStage:
+        arguments:
+            $logger: '@monolog.logger.environment'
+            $commands: '%app.boot.external_commands%'
 
     App\Framework\Infrastructure\Listener\FrontendEnvironmentRequestListener:
         arguments:

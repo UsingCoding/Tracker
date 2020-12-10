@@ -1,3 +1,9 @@
 parameters:
     app.site_domain: dev.fold.com
     app.catch_exceptions: false
+
+    app.boot.external_commands:
+        - name: doctrine:database:create
+          args:
+            --if-not-exists:
+        - name: doctrine:migrations:migrate
