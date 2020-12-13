@@ -49,3 +49,10 @@ api_delete_issue_field:
   path: /api/issue-field/delete
   controller: App\Controller\Api\Issue\IssueFieldController::deleteField
   methods: POST
+
+api_issue_field_list:
+  path: /api/issue-field/list/{projectId}
+  controller: App\Controller\Api\Issue\IssueFieldController::listForProject
+  methods: GET
+  requirements:
+    projectId: '\d+'

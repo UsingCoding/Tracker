@@ -8,6 +8,7 @@ use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\IssueFieldApiInterface;
+use App\View\IssueFieldListView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -81,7 +82,23 @@ class IssueFieldController extends ApiController
                 return $this->json(['error' => 'issue_field_by_id_not_found']);
             }
 
-            return $this->json(['error' => (string) $exception]);
+            return $this->json(['error' => 'unknown_error']);
+        }
+    }
+
+    public function listForProject(int $projectId, IssueFieldApiInterface $api): Response
+    {
+        try
+        {
+            $list = $api->issueFieldListForProject($projectId);
+
+            $view = new IssueFieldListView($list);
+
+            return $view->render();
+        }
+        catch (ApiException $exception)
+        {
+            return $this->json(['error' => 'unknown_error']);
         }
     }
 }

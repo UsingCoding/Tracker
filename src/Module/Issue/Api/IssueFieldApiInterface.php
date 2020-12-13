@@ -6,6 +6,7 @@ use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
+use App\Module\Issue\Api\Output\IssueFieldListOutput;
 
 interface IssueFieldApiInterface
 {
@@ -27,4 +28,11 @@ interface IssueFieldApiInterface
      * @throws ApiException
      */
     public function deleteIssueField(DeleteIssueFieldInput $input): void;
+
+    /**
+     * @param int $projectId
+     * @return IssueFieldListOutput
+     * @throws ApiException
+     */
+    public function issueFieldListForProject(int $projectId): IssueFieldListOutput;
 }
