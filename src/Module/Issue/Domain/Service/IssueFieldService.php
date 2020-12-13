@@ -69,13 +69,10 @@ class IssueFieldService
             throw new IssueFieldByIdNotFoundException('Issue field not found', ['issue_field_id' => $issueFieldId]);
         }
 
-        if ($newName !== null)
-        {
-            $this->assertIssueFieldIsNotBusy($newName, $issueField->getProjectId());
-        }
-
         if ($newName !== null && $newName !== $issueField->getName())
         {
+            $this->assertIssueFieldIsNotBusy($newName, $issueField->getProjectId());
+
             $issueField->setName($newName);
         }
 
@@ -83,6 +80,8 @@ class IssueFieldService
         {
             $issueField->setType($newType);
         }
+
+        // Dispatch domain event
     }
 
     /**

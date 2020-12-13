@@ -10,6 +10,7 @@ use App\Common\App\Event\AppEventSourceInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
@@ -17,6 +18,7 @@ use App\Module\Issue\Api\Output\IssuesListOutput;
 use App\Module\Issue\App\Command\AddIssueFieldCommand;
 use App\Module\Issue\App\Command\CreateIssueCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
+use App\Module\Issue\App\Command\EditIssueFieldCommand;
 use App\Module\Issue\App\Event\IssueAddedEvent;
 use App\Module\Issue\App\Event\IssueFieldAddedEvent;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
@@ -90,6 +92,13 @@ class Api implements ApiInterface
         $command = new AddIssueFieldCommand($input);
 
         return $this->publishCommandWithAddIssueFieldEventHandler($command);
+    }
+
+    public function editIssueField(EditIssueFieldInput $input): void
+    {
+        $command = new EditIssueFieldCommand($input);
+
+        $this->publish($command);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Module\Issue\Api;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
@@ -44,4 +45,10 @@ interface ApiInterface
      * @throws ApiException
      */
     public function addIssueField(AddIssueFieldInput $input): int;
+
+    /**
+     * @param EditIssueFieldInput $input
+     * @throws ApiException
+     */
+    public function editIssueField(EditIssueFieldInput $input): void;
 }

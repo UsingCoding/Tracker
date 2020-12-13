@@ -39,3 +39,8 @@ api_add_issue_field:
   path: /api/issue-field/add
   controller: App\Controller\Api\Issue\IssueFieldController::addField
   methods: POST
+
+api_edit_issue_field:
+  path: /api/issue-field/edit
+  controller: App\Controller\Api\Issue\IssueFieldController::editField
+  methods: POST
