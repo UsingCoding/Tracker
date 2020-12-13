@@ -5,12 +5,14 @@ namespace App\Module\Issue\Domain\Model;
 class IssueField
 {
     private ?int $id;
+    private string $name;
     private int $type;
     private int $projectId;
 
-    public function __construct(?int $id, int $type, int $projectId)
+    public function __construct(?int $id, string $name, int $type, int $projectId)
     {
         $this->id = $id;
+        $this->name = $name;
         $this->type = $type;
         $this->projectId = $projectId;
     }
@@ -29,6 +31,22 @@ class IssueField
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**

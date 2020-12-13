@@ -28,8 +28,18 @@ class IssueFieldRepository implements IssueFieldRepositoryInterface
         return $this->repo->findOneBy(['id' => $id]);
     }
 
+    public function findByNameInProject(string $name, int $projectId): ?IssueField
+    {
+        return $this->repo->findOneBy(['name' => $name, 'projectId' => $projectId]);
+    }
+
     public function remove(IssueField $issue): void
     {
         $this->entityManager->remove($issue);
+    }
+
+    public function findForProject(int $projectId): array
+    {
+        return $this->repo->findBy(['projectId' => $projectId]);
     }
 }

@@ -5,7 +5,12 @@
             <generator strategy="IDENTITY" />
         </id>
 
+        <field name="name" length="20" column="name" />
         <field name="type" type="smallint" column="type" />
         <field name="projectId" type="integer" column="project_id" />
+
+        <unique-constraints>
+            <unique-constraint columns="name,project_id" name="name_in_project_unique_index"/>
+        </unique-constraints>
     </entity>
 </doctrine-mapping>

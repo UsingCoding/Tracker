@@ -16,16 +16,19 @@ class IssueService
     private IssueRepositoryInterface $issueRepo;
     private ProjectAdapterInterface $projectAdapter;
     private UserAdapterInterface $userAdapter;
+    private IssueFieldService $issueFieldService;
 
     public function __construct(
         IssueRepositoryInterface $issueRepo,
         ProjectAdapterInterface $projectAdapter,
-        UserAdapterInterface $userAdapter
+        UserAdapterInterface $userAdapter,
+        IssueFieldService $issueFieldService
     )
     {
         $this->issueRepo = $issueRepo;
         $this->projectAdapter = $projectAdapter;
         $this->userAdapter = $userAdapter;
+        $this->issueFieldService = $issueFieldService;
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
 use App\Module\Issue\Domain\Exception\InvalidIssueFieldTypeException;
 use App\Module\Issue\Domain\Exception\IssueFieldByIdNotFoundException;
+use App\Module\Issue\Domain\Exception\IssueNameBusyException;
 use App\Module\Issue\Domain\Exception\ProjectToAddFieldNotExistsException;
 use App\Module\Issue\Domain\Model\IssueField;
 use App\Module\Issue\Domain\Model\IssueFieldRepositoryInterface;
@@ -16,20 +17,30 @@ class IssueFieldService
     private IssueFieldRepositoryInterface $issueFieldRepository;
     private ProjectAdapterInterface $projectAdapter;
 
+    public function __construct(IssueFieldRepositoryInterface $issueFieldRepository, ProjectAdapterInterface $projectAdapter)
+    {
+        $this->issueFieldRepository = $issueFieldRepository;
+        $this->projectAdapter = $projectAdapter;
+    }
+
     /**
+     * @param string $name
      * @param int $type
      * @param int $projectId
      * @return IssueField
-     * @throws ProjectToAddFieldNotExistsException
      * @throws InvalidIssueFieldTypeException
+     * @throws ProjectToAddFieldNotExistsException
+     * @throws IssueNameBusyException
      */
-    public function addField(int $type, int $projectId): IssueField
+    public function addField(string $name, int $type, int $projectId): IssueField
     {
         $this->assertProjectExists($projectId);
         $this->assertIssueFieldTypeExists($type);
+        $this->assertIssueFieldIsNotBusy($name, $projectId);
 
         $issueField = new IssueField(
             null,
+            $name,
             $type,
             $projectId
         );
@@ -41,13 +52,15 @@ class IssueFieldService
 
     /**
      * @param int $issueFieldId
-     * @param int $type
+     * @param string|null $newName
+     * @param int|null $newType
      * @throws InvalidIssueFieldTypeException
      * @throws IssueFieldByIdNotFoundException
+     * @throws IssueNameBusyException
      */
-    public function editIssueField(int $issueFieldId, int $type): void
+    public function editIssueField(int $issueFieldId, ?string $newName, ?int $newType): void
     {
-        $this->assertIssueFieldTypeExists($type);
+        $this->assertIssueFieldTypeExists($newType);
 
         $issueField = $this->issueFieldRepository->findById($issueFieldId);
 
@@ -56,7 +69,20 @@ class IssueFieldService
             throw new IssueFieldByIdNotFoundException('Issue field not found', ['issue_field_id' => $issueFieldId]);
         }
 
-        $issueField->setType($type);
+        if ($newName !== null)
+        {
+            $this->assertIssueFieldIsNotBusy($newName, $issueField->getProjectId());
+        }
+
+        if ($newName !== null && $newName !== $issueField->getName())
+        {
+            $issueField->setName($newName);
+        }
+
+        if ($newType !== null && $newType !== $issueField->getType())
+        {
+            $issueField->setType($newType);
+        }
     }
 
     /**
@@ -75,6 +101,16 @@ class IssueFieldService
         $this->issueFieldRepository->remove($issueField);
 
         // Dispatch domain event
+    }
+
+    public function validateIssueFields(int $projectId, array $newFields): void
+    {
+        $issueFields = $this->issueFieldRepository->findForProject($projectId);
+
+        foreach ($newFields as $field)
+        {
+
+        }
     }
 
     /**
@@ -100,6 +136,21 @@ class IssueFieldService
         if (!Arrays::hasValue(IssueFieldType::getTypes(), $fieldType))
         {
             throw new InvalidIssueFieldTypeException('Invalid issue field type provided', ['issue_field_type' => $fieldType]);
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param int $projectId
+     * @throws IssueNameBusyException
+     */
+    private function assertIssueFieldIsNotBusy(string $name, int $projectId): void
+    {
+        $issueField = $this->issueFieldRepository->findByNameInProject($name, $projectId);
+
+        if ($issueField !== null)
+        {
+            throw new IssueNameBusyException('', ['name' => $name, 'projectId' => $projectId]);
         }
     }
 }
