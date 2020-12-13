@@ -44,3 +44,8 @@ api_edit_issue_field:
   path: /api/issue-field/edit
   controller: App\Controller\Api\Issue\IssueFieldController::editField
   methods: POST
+
+api_delete_issue_field:
+  path: /api/issue-field/delete
+  controller: App\Controller\Api\Issue\IssueFieldController::deleteField
+  methods: POST

@@ -21,6 +21,7 @@ services:
             - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\AddIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\AddIssueFieldCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueFieldCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\DeleteIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\DeleteIssueFieldCommandHandler']]
 
     issue.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus

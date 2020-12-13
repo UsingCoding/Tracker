@@ -3,16 +3,17 @@
 namespace App\Controller\Api\Issue;
 
 use App\Controller\Api\ApiController;
-use App\Module\Issue\Api\ApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
+use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
+use App\Module\Issue\Api\IssueFieldApiInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IssueFieldController extends ApiController
 {
-    public function addField(Request $request, ApiInterface $api): Response
+    public function addField(Request $request, IssueFieldApiInterface $api): Response
     {
         try
         {
@@ -35,7 +36,7 @@ class IssueFieldController extends ApiController
         }
     }
 
-    public function editField(Request $request, ApiInterface $api): Response
+    public function editField(Request $request, IssueFieldApiInterface $api): Response
     {
         try
         {
@@ -60,6 +61,27 @@ class IssueFieldController extends ApiController
             }
 
             return $this->json(['error' => 'unknown_error']);
+        }
+    }
+
+    public function deleteField(Request $request, IssueFieldApiInterface $api): Response
+    {
+        try
+        {
+            $api->deleteIssueField(new DeleteIssueFieldInput(
+                $request->get('issue_field_id')
+            ));
+
+            return new Response();
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::ISSUE_FIELD_BY_NOT_FOUND)
+            {
+                return $this->json(['error' => 'issue_field_by_id_not_found']);
+            }
+
+            return $this->json(['error' => (string) $exception]);
         }
     }
 }
