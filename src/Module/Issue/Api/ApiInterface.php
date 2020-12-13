@@ -3,6 +3,7 @@
 namespace App\Module\Issue\Api;
 
 use App\Module\Issue\Api\Exception\ApiException;
+use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
@@ -36,4 +37,11 @@ interface ApiInterface
      * @throws ApiException
      */
     public function list(string $query): IssuesListOutput;
+
+    /**
+     * @param AddIssueFieldInput $input
+     * @return int
+     * @throws ApiException
+     */
+    public function addIssueField(AddIssueFieldInput $input): int;
 }
