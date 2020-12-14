@@ -8,5 +8,6 @@
         <field name="password" type="string" column="password" length="255" />
         <field name="createdAt" type="datetime_immutable" column="created_at" length="255" />
         <field name="email" type="string" column="email" unique="true" length="255"/>
+        <field name="grade" type="smallint" column="grade" length="1" />
     </entity>
 </doctrine-mapping>
