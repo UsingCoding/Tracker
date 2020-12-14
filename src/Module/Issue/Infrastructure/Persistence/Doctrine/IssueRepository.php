@@ -41,6 +41,11 @@ class IssueRepository implements IssueRepositoryInterface
         return $issuesInProject[0]->getInProjectId() + self::INCREMENT_INDEX;
     }
 
+    public function findForProject(int $projectId): array
+    {
+        return $this->repo->findBy(['projectId' => $projectId]);
+    }
+
     public function findById(int $id): ?Issue
     {
         return $this->repo->findOneBy(['id' => $id]);

@@ -2,8 +2,10 @@
 
 namespace App\Module\Issue\Domain\Service;
 
+use App\Common\Domain\Event\DomainEventDispatcherInterface;
 use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
+use App\Module\Issue\Domain\Event\IssueFieldAdded;
 use App\Module\Issue\Domain\Exception\InvalidIssueFieldTypeException;
 use App\Module\Issue\Domain\Exception\IssueFieldByIdNotFoundException;
 use App\Module\Issue\Domain\Exception\IssueNameBusyException;
@@ -16,11 +18,17 @@ class IssueFieldService
 {
     private IssueFieldRepositoryInterface $issueFieldRepository;
     private ProjectAdapterInterface $projectAdapter;
+    private DomainEventDispatcherInterface $eventDispatcher;
 
-    public function __construct(IssueFieldRepositoryInterface $issueFieldRepository, ProjectAdapterInterface $projectAdapter)
+    public function __construct(
+        IssueFieldRepositoryInterface $issueFieldRepository,
+        ProjectAdapterInterface $projectAdapter,
+        DomainEventDispatcherInterface $eventDispatcher
+    )
     {
         $this->issueFieldRepository = $issueFieldRepository;
         $this->projectAdapter = $projectAdapter;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -46,6 +54,13 @@ class IssueFieldService
         );
 
         $this->issueFieldRepository->add($issueField);
+
+        $this->eventDispatcher->dispatch(new IssueFieldAdded(
+            $issueField->getId(),
+            $issueField->getName(),
+            $issueField->getType(),
+            $issueField->getProjectId()
+        ));
 
         return $issueField;
     }

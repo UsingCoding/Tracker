@@ -10,5 +10,11 @@ interface IssueRepositoryInterface
 
     public function findById(int $id): ?Issue;
 
+    /**
+     * @param int $projectId
+     * @return Issue[]
+     */
+    public function findForProject(int $projectId): array;
+
     public function remove(Issue $issue): void;
 }

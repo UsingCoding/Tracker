@@ -7,6 +7,7 @@
 imports:
     - { resource: services/security.yaml }
     - { resource: services/command_bus.yaml }
+    - { resource: services/event_dispatcher.yaml }
     - { resource: services/redirect.yml }
     - { resource: services/fuzzy_integration.yaml }
     - { resource: services_parameters.yaml }
