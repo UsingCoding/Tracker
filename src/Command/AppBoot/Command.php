@@ -45,7 +45,7 @@ class Command extends SymfonyCommand implements ApplicationProviderInterface
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($this->environment === self::PROD_ENV && $input->getOption('force') === false)
+        if ($this->environment !== self::PROD_ENV && $input->getOption('force') === false)
         {
             $this->logger->info('No environment bootstrap executed');
 

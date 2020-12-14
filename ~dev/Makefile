@@ -1,4 +1,8 @@
-all: boot-env boot-app
+all: build boot-env boot-app
+
+.PHONY: build
+build:
+	composer install & (yarn install && yarn run dev)
 
 .PHONY: boot-env
 boot-env:
