@@ -6,6 +6,8 @@ use App\Common\Domain\Event\DomainEventDispatcherInterface;
 use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
 use App\Module\Issue\Domain\Event\IssueFieldAdded;
+use App\Module\Issue\Domain\Event\IssueFieldDeleted;
+use App\Module\Issue\Domain\Event\IssueFieldEdited;
 use App\Module\Issue\Domain\Exception\InvalidIssueFieldTypeException;
 use App\Module\Issue\Domain\Exception\IssueFieldByIdNotFoundException;
 use App\Module\Issue\Domain\Exception\IssueNameBusyException;
@@ -96,7 +98,12 @@ class IssueFieldService
             $issueField->setType($newType);
         }
 
-        // Dispatch domain event
+        $this->eventDispatcher->dispatch(new IssueFieldEdited(
+            $issueFieldId,
+            $newName,
+            $newType,
+            $issueField->getProjectId()
+        ));
     }
 
     /**
@@ -114,7 +121,11 @@ class IssueFieldService
 
         $this->issueFieldRepository->remove($issueField);
 
-        // Dispatch domain event
+        $this->eventDispatcher->dispatch(new IssueFieldDeleted(
+            $issueFieldId,
+            $issueField->getProjectId(),
+            $issueField->getName()
+        ));
     }
 
     public function validateIssueFields(int $projectId, array $newFields): void
