@@ -12,6 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends ApiController
 {
+    /**
+     * @param Request $request
+     * @param ApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
     public function addUser(Request $request, ApiInterface $api): Response
     {
         try
@@ -47,10 +53,16 @@ class UserController extends ApiController
                 return $this->json(['error' => 'invalid_user_data']);
             }
 
-            return $this->json(['error' => 'unknown_error']);
+            throw $exception;
         }
     }
 
+    /**
+     * @param Request $request
+     * @param ApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
     public function editUser(Request $request, ApiInterface $api): Response
     {
         try
@@ -92,7 +104,7 @@ class UserController extends ApiController
                 return $this->json(['error' => 'invalid_user_data']);
             }
 
-            return $this->json(['error' => 'unknown_error']);
+            throw $exception;
         }
     }
 }

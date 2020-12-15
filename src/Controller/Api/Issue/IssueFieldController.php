@@ -42,6 +42,12 @@ class IssueFieldController extends ApiController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param IssueFieldApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
     public function editField(Request $request, IssueFieldApiInterface $api): Response
     {
         try
@@ -71,10 +77,16 @@ class IssueFieldController extends ApiController
                 return $this->json(['error' => 'invalid_issue_data']);
             }
 
-            return $this->json(['error' => 'unknown_error']);
+            throw $exception;
         }
     }
 
+    /**
+     * @param Request $request
+     * @param IssueFieldApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
     public function deleteField(Request $request, IssueFieldApiInterface $api): Response
     {
         try
@@ -92,10 +104,17 @@ class IssueFieldController extends ApiController
                 return $this->json(['error' => 'issue_field_by_id_not_found']);
             }
 
-            return $this->json(['error' => 'unknown_error']);
+            throw $exception;
         }
     }
 
+
+    /**
+     * @param int $projectId
+     * @param IssueFieldApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
     public function listForProject(int $projectId, IssueFieldApiInterface $api): Response
     {
         try
@@ -108,7 +127,7 @@ class IssueFieldController extends ApiController
         }
         catch (ApiException $exception)
         {
-            return $this->json(['error' => 'unknown_error']);
+            throw $exception;
         }
     }
 }
