@@ -41,8 +41,8 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->from('issue', 'i')
             ->leftJoin('i', 'project', 'p', 'p.name_id = :project_name_id')
             ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
-            ->andWhere($queryBuilder->expr()->eq('issue_id', ':issue_id'))
-            ->setParameter('issue_id', $issueCode->getIssueId(), ParameterType::INTEGER)
+            ->andWhere($queryBuilder->expr()->eq('in_project_id', ':in_project_id'))
+            ->setParameter('in_project_id', $issueCode->getIssueInProjectId(), ParameterType::INTEGER)
             ->setParameter('project_name_id', $issueCode->getProjectNameId(), ParameterType::STRING)
         ;
 

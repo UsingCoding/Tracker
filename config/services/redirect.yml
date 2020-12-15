@@ -6,6 +6,3 @@ services:
         autowire: true
         autoconfigure: true
         public: false
-
-    redirect.access_denied_url_provider:
-        class: App\Framework\Infrastructure\Redirect\AccessDeniedRedirectUrlProvider

@@ -3,6 +3,7 @@
 namespace App\Module\User\Api;
 
 use App\Module\User\Api\Exception\ApiException;
+use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Output\UserOutput;
 
 interface ApiInterface
@@ -28,4 +29,10 @@ interface ApiInterface
      * @throws ApiException
      */
     public function getUserByUsername(string $userName): UserOutput;
+
+    /**
+     * @param AddUserInput $input
+     * @throws ApiException
+     */
+    public function addUser(AddUserInput $input): void;
 }

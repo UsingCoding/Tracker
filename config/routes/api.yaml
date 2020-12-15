@@ -7,6 +7,11 @@ api_get_project:
   requirements:
     id: '\d+'
 
+api_projects_list:
+  path: /api/projects
+  controller: App\Controller\Api\Project\ProjectSettingsController::projectsList
+  methods: GET
+
 api_create_project:
   path: /api/project/create
   controller: App\Controller\Api\Project\ProjectManagementController::createProject
@@ -29,3 +34,29 @@ api_issues_list:
   path: /api/issue/search
   controller: App\Controller\Api\Issue\IssueManagementController::issuesList
   methods: POST
+
+api_add_issue_field:
+  path: /api/issue-field/add
+  controller: App\Controller\Api\Issue\IssueFieldController::addField
+  methods: POST
+
+api_edit_issue_field:
+  path: /api/issue-field/edit
+  controller: App\Controller\Api\Issue\IssueFieldController::editField
+  methods: POST
+
+api_delete_issue_field:
+  path: /api/issue-field/delete
+  controller: App\Controller\Api\Issue\IssueFieldController::deleteField
+  methods: POST
+
+api_issue_field_list:
+  path: /api/issue-field/list/{projectId}
+  controller: App\Controller\Api\Issue\IssueFieldController::listForProject
+  methods: GET
+  requirements:
+    projectId: '\d+'
+
+api_add_user:
+  path: /api/user/add
+  controller: App\Controller\Api\User\UserController::addUser

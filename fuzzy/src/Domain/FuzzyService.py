@@ -7,6 +7,9 @@ class FuzzyService:
 
     def calculate(self, diff, time):
 
+        if not isinstance(diff, int) or not isinstance(time, int):
+            raise ValueError('')
+
         difficulty = np.arange(0, 11, 1)
         requiredTime = np.arange(0, 41, 1)
         employeeLevel  = np.arange(0, 11, 1)

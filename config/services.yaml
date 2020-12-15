@@ -7,7 +7,9 @@
 imports:
     - { resource: services/security.yaml }
     - { resource: services/command_bus.yaml }
+    - { resource: services/event_dispatcher.yaml }
     - { resource: services/redirect.yml }
+    - { resource: services/fuzzy_integration.yaml }
     - { resource: services_parameters.yaml }
 
 parameters:
@@ -25,6 +27,8 @@ services:
             Doctrine\ORM\EntityManagerInterface $accountEntityManager: '@app.doctrine.orm.entity_managers.account'
             App\Common\App\Command\Bus\AppCommandBusInterface $projectCommandBus: '@project.command_bus'
             App\Common\App\Command\Bus\AppCommandBusInterface $issueCommandBus: '@issue.command_bus'
+            App\Common\App\Command\Bus\AppCommandBusInterface $userCommandBus: '@user.command_bus'
+            App\Common\Domain\Event\DomainEventDispatcherInterface: '@app.event.domain_event_dispatcher'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -51,6 +55,17 @@ services:
     app.doctrine.dbal.connection.account: '@doctrine.dbal.account_connection'
     app.doctrine.orm.entity_managers.account: '@doctrine.orm.account_entity_manager'
 
+    App\Command\AppBoot\Command:
+        arguments:
+            $environment: '%kernel.environment%'
+            $stages:
+                - '@App\Command\AppBoot\BootStage\ExecuteExternalCommandsBootStage'
+            $logger: '@monolog.logger.environment'
+
+    App\Command\AppBoot\BootStage\ExecuteExternalCommandsBootStage:
+        arguments:
+            $logger: '@monolog.logger.environment'
+            $commands: '%app.boot.external_commands%'
 
     App\Framework\Infrastructure\Listener\FrontendEnvironmentRequestListener:
         arguments:
@@ -74,3 +89,18 @@ services:
 
     environment.json_request_listener:
         alias: '@App\Framework\Infrastructure\Listener\JsonRequestListener'
+
+    App\Framework\Infrastructure\Http\HttpGateway:
+        arguments:
+            $logger: '@monolog.logger.http_client'
+
+    http.gateway:
+        alias: '@App\Framework\Infrastructure\Http\HttpGateway'
+
+    App\Module\FuzzyIntegration\Infrastructure\FuzzyGateway\FuzzyHttpGateway:
+        arguments:
+            $microserviceUrl: '%app.integration.fuzzy.base_url%'
+            $urlsMapping: '%app.integration.fuzzy.urls_mapping%'
+
+    app.integration.fuzzy.http_gateway:
+        alias: App\Module\FuzzyIntegration\Infrastructure\FuzzyGateway\FuzzyHttpGateway

@@ -1,27 +1,33 @@
-import grpc
-from concurrent import futures
-import time
-import sys
+from flask import Flask, jsonify, request, abort
+import sys, os
 
 sys.path.insert(1, '/usr/src/app/src/Domain')
-sys.path.insert(1, '/usr/src/app/src/Infrastructure/GRpcServer')
-sys.path.insert(1, '/usr/src/app/src/Infrastructure/GRpcServer/Generated')
-
-import algorithm_pb2
-import algorithm_pb2_grpc
 from FuzzyService import FuzzyService
-from Server import Server
 
-if __name__ == '__main__':
-    service = FuzzyService()
+app = Flask(__name__)
 
-    print(service.calculate(5, 40))
+service = FuzzyService()
 
-#     server = Server()
-#     server.start()
+@app.route('/api/calculate', methods=['POST'])
+def index():
+    data = request.json
+
+    if not data or not 'difficulty' in data or not 'time' in data:
+        abort(400)
 
     try:
-        while True:
-            time.sleep(20)
-    except KeyboardInterrupt:
-        pass
+        result = service.calculate(data['difficulty'], data['time'])
+
+        return jsonify({'result' : result}), 200
+    except ValueError:
+        return '', 409
+    except:
+        return '', 500
+
+
+if __name__ == '__main__':
+    app.run(
+        debug=os.environ.get('DEBUG') == '1',
+        host='0.0.0.0',
+        port=os.environ.get('PORT')
+    )

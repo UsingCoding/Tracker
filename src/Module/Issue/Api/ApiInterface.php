@@ -8,7 +8,7 @@ use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
 
-interface ApiInterface
+interface ApiInterface extends IssueFieldApiInterface
 {
     /**
      * @param CreateIssueInput $input

@@ -2,7 +2,7 @@
 
 namespace App\Module\Issue\Domain\Adapter;
 
-use App\Module\User\Domain\Model\User;
+use App\Module\Issue\Domain\Model\User;
 
 interface UserAdapterInterface
 {

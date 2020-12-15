@@ -8,32 +8,46 @@ use App\Common\App\Event\AppEventHandlerInterface;
 use App\Common\App\Event\AppEventInterface;
 use App\Common\App\Event\AppEventSourceInterface;
 use App\Module\Issue\Api\Exception\ApiException;
+use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
+use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
+use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
+use App\Module\Issue\Api\Mapper\IssueFieldOutputMapper;
 use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
+use App\Module\Issue\Api\Output\IssueFieldListOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
+use App\Module\Issue\App\Command\AddIssueFieldCommand;
 use App\Module\Issue\App\Command\CreateIssueCommand;
+use App\Module\Issue\App\Command\DeleteIssueFieldCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
+use App\Module\Issue\App\Command\EditIssueFieldCommand;
 use App\Module\Issue\App\Event\IssueAddedEvent;
+use App\Module\Issue\App\Event\IssueFieldAddedEvent;
+use App\Module\Issue\App\Query\IssueFieldQueryServiceInterface;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 
 class Api implements ApiInterface
 {
     private AppCommandBusInterface $issueCommandBus;
     private IssueQueryServiceInterface $issueQueryService;
+    private IssueFieldQueryServiceInterface $issueFieldQueryService;
     private AppEventSourceInterface $eventSource;
 
     public function __construct(
         AppCommandBusInterface $issueCommandBus,
         IssueQueryServiceInterface $issueQueryService,
+        IssueFieldQueryServiceInterface $issueFieldQueryService,
         AppEventSourceInterface $eventSource
     )
     {
         $this->issueCommandBus = $issueCommandBus;
         $this->issueQueryService = $issueQueryService;
+        $this->issueFieldQueryService = $issueFieldQueryService;
         $this->eventSource = $eventSource;
     }
+
 
     public function createIssue(CreateIssueInput $input): int
     {
@@ -82,6 +96,41 @@ class Api implements ApiInterface
         }
     }
 
+    public function addIssueField(AddIssueFieldInput $input): int
+    {
+        $command = new AddIssueFieldCommand($input);
+
+        return $this->publishCommandWithAddIssueFieldEventHandler($command);
+    }
+
+    public function editIssueField(EditIssueFieldInput $input): void
+    {
+        $command = new EditIssueFieldCommand($input);
+
+        $this->publish($command);
+    }
+
+    public function deleteIssueField(DeleteIssueFieldInput $input): void
+    {
+        $command = new DeleteIssueFieldCommand($input);
+
+        $this->publish($command);
+    }
+
+    public function issueFieldListForProject(int $projectId): IssueFieldListOutput
+    {
+        try
+        {
+            $list = $this->issueFieldQueryService->listForProject($projectId);
+
+            return IssueFieldOutputMapper::getIssueFieldListOutput($list);
+        }
+        catch (\Throwable $exception)
+        {
+            throw ApiException::from($exception);
+        }
+    }
+
     /**
      * @param CommandInterface $command
      * @return int
@@ -118,6 +167,44 @@ class Api implements ApiInterface
         }
 
         return $handler->getIssueId();
+    }
+
+    /**
+     * @param CommandInterface $command
+     * @return int
+     * @throws ApiException
+     */
+    public function publishCommandWithAddIssueFieldEventHandler(CommandInterface $command): int
+    {
+        $handler = new class implements AppEventHandlerInterface {
+            private int $issueFieldId;
+
+            public function handle(AppEventInterface $event): void
+            {
+                if ($event instanceof IssueFieldAddedEvent)
+                {
+                    $this->issueFieldId = $event->getIssueFieldId();
+                }
+            }
+
+            public function getIssueFieldId(): int
+            {
+                return $this->issueFieldId;
+            }
+        };
+
+        $this->eventSource->subscribe($handler);
+
+        try
+        {
+            $this->publish($command);
+        }
+        finally
+        {
+            $this->eventSource->unsubscribe($handler);
+        }
+
+        return $handler->getIssueFieldId();
     }
 
     /**

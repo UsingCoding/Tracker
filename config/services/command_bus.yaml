@@ -19,8 +19,21 @@ services:
         calls:
             - [registerHandler, [!php/const App\Module\Issue\App\Command\CreateIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\CreateIssueCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\AddIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\AddIssueFieldCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueFieldCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\DeleteIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\DeleteIssueFieldCommandHandler']]
 
     issue.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus
         arguments:
             $commandHandlerRegistry: '@issue.command_handler_registry'
+
+    user.command_handler_registry:
+        class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
+        calls:
+            - [ registerHandler, [ !php/const App\Module\User\App\Command\AddUserCommand::TYPE, '@App\Module\User\App\Command\Handler\AddUserCommandHandler' ] ]
+
+    user.command_bus:
+        class: App\Common\App\Command\Bus\AppCommandBus
+        arguments:
+            $commandHandlerRegistry: '@user.command_handler_registry'
