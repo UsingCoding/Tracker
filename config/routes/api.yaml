@@ -15,6 +15,12 @@ api_projects_list:
 api_create_project:
   path: /api/project/create
   controller: App\Controller\Api\Project\ProjectManagementController::createProject
+  methods: POST
+
+api_delete_project:
+  path: /api/project/delete
+  controller: App\Controller\Api\Project\ProjectManagementController::deleteProject
+  methods: POST
 
 api_edit_project:
   path: /api/project/edit

@@ -12,6 +12,7 @@ use App\Module\Project\Api\Mapper\ProjectMapper;
 use App\Module\Project\Api\Output\ProjectOutput;
 use App\Module\Project\Api\Output\ProjectsListOutput;
 use App\Module\Project\App\Command\CreateProjectCommand;
+use App\Module\Project\App\Command\DeleteProjectCommand;
 use App\Module\Project\App\Command\EditProjectCommand;
 use App\Module\Project\App\Query\ProjectQueryService;
 use App\Module\Project\App\Query\ProjectQueryServiceInterface;
@@ -68,6 +69,14 @@ class Api implements ApiInterface
 
         $this->publish($command);
     }
+
+    public function deleteProject(int $projectId): void
+    {
+        $command = new DeleteProjectCommand($projectId);
+
+        $this->publish($command);
+    }
+
 
     /**
      * @param CommandInterface $command

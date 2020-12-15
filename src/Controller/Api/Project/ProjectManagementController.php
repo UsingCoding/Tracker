@@ -98,4 +98,29 @@ class ProjectManagementController extends ApiController
             throw $exception;
         }
     }
+
+    /**
+     * @param Request $request
+     * @param ProjectManagementApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
+    public function deleteProject(Request $request, ProjectManagementApiInterface $api): Response
+    {
+        try
+        {
+            $api->deleteProject($request->get('project_id'));
+
+            return new Response();
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::PROJECT_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['error' => 'project_by_id_not_found']);
+            }
+
+            throw $exception;
+        }
+    }
 }

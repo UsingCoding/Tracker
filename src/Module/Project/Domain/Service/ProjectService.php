@@ -65,6 +65,22 @@ class ProjectService
     }
 
     /**
+     * @param int $projectId
+     * @throws ProjectByIdNotFoundException
+     */
+    public function deleteProject(int $projectId): void
+    {
+        $project = $this->projectRepository->findById($projectId);
+
+        if ($project === null)
+        {
+            throw new ProjectByIdNotFoundException('', ['project_id' => $projectId]);
+        }
+
+        $this->projectRepository->remove($project);
+    }
+
+    /**
      * @param string $nameId
      * @throws DuplicateProjectNameIdException
      */

@@ -27,4 +27,10 @@ interface ProjectManagementApiInterface
      * @throws ApiException
      */
     public function editProject(EditProjectInput $input): void;
+
+    /**
+     * @param int $projectId
+     * @throws ApiException
+     */
+    public function deleteProject(int $projectId): void;
 }
