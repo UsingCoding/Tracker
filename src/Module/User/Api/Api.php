@@ -6,9 +6,11 @@ use App\Common\App\Command\Bus\AppCommandBusInterface;
 use App\Common\App\Command\CommandInterface;
 use App\Module\User\Api\Exception\ApiException;
 use App\Module\User\Api\Input\AddUserInput;
+use App\Module\User\Api\Input\EditUserInput;
 use App\Module\User\Api\Mapper\UserMapper;
 use App\Module\User\Api\Output\UserOutput;
 use App\Module\User\App\Command\AddUserCommand;
+use App\Module\User\App\Command\EditUserCommand;
 use App\Module\User\App\Query\UserQueryServiceInterface;
 use App\Module\User\App\Service\AuthenticationService;
 
@@ -68,6 +70,13 @@ class Api implements ApiInterface
     public function addUser(AddUserInput $input): void
     {
         $command = new AddUserCommand($input);
+
+        $this->publish($command);
+    }
+
+    public function editUser(EditUserInput $input): void
+    {
+        $command = new EditUserCommand($input);
 
         $this->publish($command);
     }

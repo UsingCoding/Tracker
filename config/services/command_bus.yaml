@@ -32,6 +32,7 @@ services:
         class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
         calls:
             - [ registerHandler, [ !php/const App\Module\User\App\Command\AddUserCommand::TYPE, '@App\Module\User\App\Command\Handler\AddUserCommandHandler' ] ]
+            - [ registerHandler, [ !php/const App\Module\User\App\Command\EditUserCommand::TYPE, '@App\Module\User\App\Command\Handler\EditUserCommandHandler' ] ]
 
     user.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus

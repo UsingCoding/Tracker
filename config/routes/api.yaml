@@ -60,3 +60,9 @@ api_issue_field_list:
 api_add_user:
   path: /api/user/add
   controller: App\Controller\Api\User\UserController::addUser
+  methods: POST
+
+api_edit_user:
+  path: /api/user/edit
+  controller: App\Controller\Api\User\UserController::editUser
+  methods: POST

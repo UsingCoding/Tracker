@@ -6,6 +6,7 @@ use App\Module\User\App\Data\UserData;
 use App\Module\User\Domain\Exception\DuplicateUserEmailException;
 use App\Module\User\Domain\Exception\DuplicateUsernameException;
 use App\Module\User\Domain\Exception\UnknownUserGradeException;
+use App\Module\User\Domain\Exception\UserByIdNotFoundException;
 use App\Module\User\Domain\Model\Mapper\UserMapper;
 use App\Module\User\Domain\Model\User;
 use App\Module\User\Domain\Model\UserGrade;
@@ -74,6 +75,50 @@ class UserService
         $this->userRepository->add($user);
 
         return $user;
+    }
+
+    /**
+     * @param int $userId
+     * @param string|null $newEmail
+     * @param string|null $newUsername
+     * @param string|null $newPassword
+     * @param int|null $newGrade
+     * @throws DuplicateUserEmailException
+     * @throws DuplicateUsernameException
+     * @throws UnknownUserGradeException
+     * @throws UserByIdNotFoundException
+     */
+    public function editUser(int $userId, ?string $newEmail, ?string $newUsername, ?string $newPassword, ?int $newGrade): void
+    {
+        $user = $this->userRepository->findById($userId);
+
+        if ($user === null)
+        {
+            throw new UserByIdNotFoundException('', ['user_id' => $userId]);
+        }
+
+        if ($newGrade !== null && $user->getGrade() !== $newGrade)
+        {
+            $this->assertGradeCorrect($newGrade);
+            $user->setGrade($newGrade);
+        }
+
+        if ($newEmail !== null && $user->getEmail() !== $newEmail)
+        {
+            $this->assertNoDuplicateEmail($newEmail);
+            $user->setEmail($newEmail);
+        }
+
+        if ($newPassword !== null && $user->getPassword() !== $newPassword)
+        {
+            $user->setPassword($newPassword);
+        }
+
+        if ($newUsername !== null && $user->getUsername() !== $newUsername)
+        {
+            $this->assertNoDuplicateUsername($newUsername);
+            $user->setUsername($newUsername);
+        }
     }
 
     /**

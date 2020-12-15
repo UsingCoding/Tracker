@@ -8,7 +8,9 @@ use App\Module\User\App\Exception\IncorrectUserPasswordException;
 use App\Module\User\App\Exception\UserNotFoundException;
 use App\Module\User\Domain\Exception\DuplicateUserEmailException;
 use App\Module\User\Domain\Exception\DuplicateUsernameException;
+use App\Module\User\Domain\Exception\InvalidUserDataException;
 use App\Module\User\Domain\Exception\UnknownUserGradeException;
+use App\Module\User\Domain\Exception\UserByIdNotFoundException;
 
 class ApiException extends AbstractApiException
 {
@@ -18,6 +20,9 @@ class ApiException extends AbstractApiException
     public const DUPLICATE_EMAIL = 3;
     public const DUPLICATE_USERNAME = 4;
     public const UNKNOWN_GRADE = 5;
+
+    public const USER_BY_ID_NOT_FOUND = 6;
+    public const INVALID_USER_DATA = 7;
 
     protected static function getSelf(): string
     {
@@ -31,7 +36,9 @@ class ApiException extends AbstractApiException
             IncorrectUserPasswordException::class => self::INCORRECT_PASSWORD,
             DuplicateUserEmailException::class => self::DUPLICATE_EMAIL,
             DuplicateUsernameException::class => self::DUPLICATE_USERNAME,
-            UnknownUserGradeException::class => self::UNKNOWN_GRADE
+            UnknownUserGradeException::class => self::UNKNOWN_GRADE,
+            UserByIdNotFoundException::class => self::USER_BY_ID_NOT_FOUND,
+            InvalidUserDataException::class => self::INVALID_USER_DATA
         ];
     }
 }
