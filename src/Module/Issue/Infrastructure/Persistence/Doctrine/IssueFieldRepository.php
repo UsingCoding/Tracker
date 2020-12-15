@@ -21,6 +21,7 @@ class IssueFieldRepository implements IssueFieldRepositoryInterface
     public function add(IssueField $issue): void
     {
         $this->entityManager->persist($issue);
+        $this->entityManager->flush();
     }
 
     public function findById(int $id): ?IssueField

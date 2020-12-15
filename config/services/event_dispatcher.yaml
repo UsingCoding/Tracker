@@ -4,23 +4,24 @@ services:
         autoconfigure: true
         public: false
 
-    event.handler.issue.domain.issue_field_added:
+    app.event.handler.issue.domain.issue_field_added:
         class: 'App\Module\Issue\App\Event\Domain\Handler\IssueFieldAddedEventHandler'
         arguments:
             $type: !php/const App\Module\Issue\Domain\Event\IssueFieldAdded::TYPE
 
-    event.handler.issue.domain.issue_field_edited:
+    app.event.handler.issue.domain.issue_field_edited:
         class: 'App\Module\Issue\App\Event\Domain\Handler\IssueFieldEditedEventHandler'
         arguments:
             $type: !php/const App\Module\Issue\Domain\Event\IssueFieldEdited::TYPE
 
-    event.handler.issue.domain.issue_field_deleted:
+    app.event.handler.issue.domain.issue_field_deleted:
         class: 'App\Module\Issue\App\Event\Domain\Handler\IssueFieldDeletedEventHandler'
         arguments:
             $type: !php/const App\Module\Issue\Domain\Event\IssueFieldDeleted::TYPE
 
-    App\Common\App\Event\DomainEventDispatcher:
+    app.event.domain_event_dispatcher:
+        class: App\Common\App\Event\DomainEventDispatcher
         calls:
-            - [subscribe, ['@event.handler.issue.domain.issue_field_added']]
-            - [subscribe, ['@event.handler.issue.domain.issue_field_edited']]
-            - [subscribe, ['@event.handler.issue.domain.issue_field_deleted']]
+            - [subscribe, ['@app.event.handler.issue.domain.issue_field_added']]
+            - [subscribe, ['@app.event.handler.issue.domain.issue_field_edited']]
+            - [subscribe, ['@app.event.handler.issue.domain.issue_field_deleted']]

@@ -6,7 +6,7 @@ use App\Common\Domain\Event\DomainEventInterface;
 
 class IssueFieldEdited implements DomainEventInterface
 {
-    private const TYPE = 'issue_field.edited';
+    public const TYPE = 'issue_field.edited';
 
     private int $id;
     private ?string $name;

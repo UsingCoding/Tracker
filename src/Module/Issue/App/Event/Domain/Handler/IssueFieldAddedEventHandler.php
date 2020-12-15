@@ -10,6 +10,8 @@ use App\Module\Issue\Domain\Service\IssueService;
 
 class IssueFieldAddedEventHandler extends TypedDomainEventHandler
 {
+    private const NEW_FIELD_DEFAULT_VALUE = 'null';
+
     private IssueService $issueService;
     private IssueRepositoryInterface $repo;
 
@@ -38,7 +40,7 @@ class IssueFieldAddedEventHandler extends TypedDomainEventHandler
                 null,
                 null,
                 null,
-                [$event->getName() => $event->getFieldType()],
+                [$event->getId() => self::NEW_FIELD_DEFAULT_VALUE]
             );
         }
     }

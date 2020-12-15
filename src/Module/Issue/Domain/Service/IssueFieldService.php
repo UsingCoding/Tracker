@@ -15,6 +15,7 @@ use App\Module\Issue\Domain\Exception\ProjectToAddFieldNotExistsException;
 use App\Module\Issue\Domain\Model\IssueField;
 use App\Module\Issue\Domain\Model\IssueFieldRepositoryInterface;
 use App\Module\Issue\Domain\Model\IssueFieldType;
+use Exception;
 
 class IssueFieldService
 {
@@ -41,6 +42,7 @@ class IssueFieldService
      * @throws InvalidIssueFieldTypeException
      * @throws ProjectToAddFieldNotExistsException
      * @throws IssueNameBusyException
+     * @throws Exception
      */
     public function addField(string $name, int $type, int $projectId): IssueField
     {
@@ -74,6 +76,7 @@ class IssueFieldService
      * @throws InvalidIssueFieldTypeException
      * @throws IssueFieldByIdNotFoundException
      * @throws IssueNameBusyException
+     * @throws Exception
      */
     public function editIssueField(int $issueFieldId, ?string $newName, ?int $newType): void
     {
@@ -109,6 +112,7 @@ class IssueFieldService
     /**
      * @param int $issueFieldId
      * @throws IssueFieldByIdNotFoundException
+     * @throws Exception
      */
     public function deleteIssueField(int $issueFieldId): void
     {
