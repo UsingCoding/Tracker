@@ -4,6 +4,7 @@ namespace App\Module\Issue\Api\Exception;
 
 use App\Common\Api\Exception\AbstractApiException;
 use App\Module\Issue\Domain\Exception\InvalidIssueCodeException;
+use App\Module\Issue\Domain\Exception\InvalidIssueFieldDataException;
 use App\Module\Issue\Domain\Exception\IssueByIdNotFoundException;
 use App\Module\Issue\Domain\Exception\IssueFieldByIdNotFoundException;
 use App\Module\Issue\Domain\Exception\IssueNameBusyException;
@@ -19,6 +20,7 @@ class ApiException extends AbstractApiException
 
     public const ISSUE_FIELD_NAME_BUSY = 5;
     public const ISSUE_FIELD_BY_NOT_FOUND = 6;
+    public const INVALID_ISSUE_FIELD_DATA = 7;
 
     protected static function getSelf(): string
     {
@@ -33,7 +35,8 @@ class ApiException extends AbstractApiException
             UserToAssigneeIssueNotExistsException::class => self::USER_TO_ASSIGNEE_ISSUE_NOT_EXISTS,
             IssueByIdNotFoundException::class => self::ISSUE_BY_ID_NOT_FOUND,
             IssueNameBusyException::class => self::ISSUE_FIELD_NAME_BUSY,
-            IssueFieldByIdNotFoundException::class => self::ISSUE_FIELD_BY_NOT_FOUND
+            IssueFieldByIdNotFoundException::class => self::ISSUE_FIELD_BY_NOT_FOUND,
+            InvalidIssueFieldDataException::class => self::INVALID_ISSUE_FIELD_DATA
         ];
     }
 }

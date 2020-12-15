@@ -33,6 +33,11 @@ class IssueFieldController extends ApiController
                 return $this->json(['error'=> 'issue_filed_name_busy']);
             }
 
+            if ($e->getType() === ApiException::INVALID_ISSUE_FIELD_DATA)
+            {
+                return $this->json(['error' => 'invalid_issue_data']);
+            }
+
             return $this->json(['error' => 'unknown_error']);
         }
     }
@@ -59,6 +64,11 @@ class IssueFieldController extends ApiController
             if ($exception->getType() === ApiException::ISSUE_FIELD_NAME_BUSY)
             {
                 return $this->json(['error' => 'issue_field_name_busy']);
+            }
+
+            if ($exception->getType() === ApiException::INVALID_ISSUE_FIELD_DATA)
+            {
+                return $this->json(['error' => 'invalid_issue_data']);
             }
 
             return $this->json(['error' => 'unknown_error']);
