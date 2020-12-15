@@ -9,15 +9,16 @@ class UserData
     private string $password;
     private \DateTimeImmutable $createdAt;
     private string $email;
+    private int $grade;
 
-
-    public function __construct(int $id, string $username, string $password, \DateTimeImmutable $createdAt, string $email)
+    public function __construct(int $id, string $username, string $password, \DateTimeImmutable $createdAt, string $email, int $grade)
     {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->createdAt = $createdAt;
         $this->email = $email;
+        $this->grade = $grade;
     }
 
     /**
@@ -58,5 +59,13 @@ class UserData
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGrade(): int
+    {
+        return $this->grade;
     }
 }

@@ -57,6 +57,11 @@ api_issue_field_list:
   requirements:
     projectId: '\d+'
 
+api_user_list:
+  path: /api/users
+  controller: App\Controller\Api\User\UserController::list
+  methods: GET
+
 api_add_user:
   path: /api/user/add
   controller: App\Controller\Api\User\UserController::addUser

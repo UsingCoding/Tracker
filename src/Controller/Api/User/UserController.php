@@ -7,6 +7,7 @@ use App\Module\User\Api\ApiInterface;
 use App\Module\User\Api\Exception\ApiException;
 use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Input\EditUserInput;
+use App\View\UserListView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -106,5 +107,19 @@ class UserController extends ApiController
 
             throw $exception;
         }
+    }
+
+    /**
+     * @param ApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
+    public function list(ApiInterface $api): Response
+    {
+        $list = $api->list();
+
+        $view = new UserListView($list);
+
+        return $view->render();
     }
 }

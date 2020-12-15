@@ -8,6 +8,7 @@ use App\Module\User\Api\Exception\ApiException;
 use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Input\EditUserInput;
 use App\Module\User\Api\Mapper\UserMapper;
+use App\Module\User\Api\Output\UserListOutput;
 use App\Module\User\Api\Output\UserOutput;
 use App\Module\User\App\Command\AddUserCommand;
 use App\Module\User\App\Command\EditUserCommand;
@@ -79,6 +80,20 @@ class Api implements ApiInterface
         $command = new EditUserCommand($input);
 
         $this->publish($command);
+    }
+
+    public function list(): UserListOutput
+    {
+        try
+        {
+            $list = $this->userQueryService->getList();
+
+            return UserMapper::getUserListOutput($list);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
+        }
     }
 
     private function publish(CommandInterface $command): void
