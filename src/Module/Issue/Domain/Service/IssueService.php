@@ -144,7 +144,7 @@ class IssueService
         {
             $fields = $issue->getFields();
 
-            Arrays::merge($fields, [$fieldId => self::FIELD_DEFAULT_VALUE]);
+            $fields = Arrays::merge($fields, [$fieldId => self::FIELD_DEFAULT_VALUE]);
 
             $issue->setFields($fields);
         }
