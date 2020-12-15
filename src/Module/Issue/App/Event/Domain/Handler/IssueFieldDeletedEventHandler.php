@@ -5,20 +5,16 @@ namespace App\Module\Issue\App\Event\Domain\Handler;
 use App\Common\Domain\Event\DomainEventInterface;
 use App\Common\Domain\Event\TypedDomainEventHandler;
 use App\Module\Issue\Domain\Event\IssueFieldDeleted;
-use App\Module\Issue\Domain\Model\IssueRepositoryInterface;
+use App\Module\Issue\Domain\Service\IssueService;
 
 class IssueFieldDeletedEventHandler extends TypedDomainEventHandler
 {
-    private IssueRepositoryInterface $issueRepo;
+    private IssueService $issueService;
 
-    public function __construct(
-        string $type,
-        IssueRepositoryInterface $issueRepo
-    )
+    public function __construct(string $type, IssueService $issueService)
     {
         parent::__construct($type);
-
-       $this->issueRepo = $issueRepo;
+        $this->issueService = $issueService;
     }
 
     public function handle(DomainEventInterface $event): void
@@ -28,6 +24,6 @@ class IssueFieldDeletedEventHandler extends TypedDomainEventHandler
             return;
         }
 
-        $issues =  $this->issueRepo->findForProject($event->getProjectId());
+        $this->issueService->deleteFieldFromIssues($event->getId(), $event->getProjectId());
     }
 }

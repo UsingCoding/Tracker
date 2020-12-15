@@ -80,7 +80,10 @@ class IssueFieldService
      */
     public function editIssueField(int $issueFieldId, ?string $newName, ?int $newType): void
     {
-        $this->assertIssueFieldTypeExists($newType);
+        if ($newType !== null)
+        {
+            $this->assertIssueFieldTypeExists($newType);
+        }
 
         $issueField = $this->issueFieldRepository->findById($issueFieldId);
 

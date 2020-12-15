@@ -2,6 +2,7 @@
 
 namespace App\Module\Issue\Domain\Service;
 
+use App\Common\Domain\Exception\ModelCorruptedException;
 use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\Domain\Adapter\ProjectAdapterInterface;
 use App\Module\Issue\Domain\Adapter\UserAdapterInterface;
@@ -13,22 +14,21 @@ use App\Module\Issue\Domain\Model\IssueRepositoryInterface;
 
 class IssueService
 {
+    private const FIELD_DEFAULT_VALUE = 'null';
+
     private IssueRepositoryInterface $issueRepo;
     private ProjectAdapterInterface $projectAdapter;
     private UserAdapterInterface $userAdapter;
-    private IssueFieldService $issueFieldService;
 
     public function __construct(
         IssueRepositoryInterface $issueRepo,
         ProjectAdapterInterface $projectAdapter,
-        UserAdapterInterface $userAdapter,
-        IssueFieldService $issueFieldService
+        UserAdapterInterface $userAdapter
     )
     {
         $this->issueRepo = $issueRepo;
         $this->projectAdapter = $projectAdapter;
         $this->userAdapter = $userAdapter;
-        $this->issueFieldService = $issueFieldService;
     }
 
     /**
@@ -133,6 +133,61 @@ class IssueService
         if ($updated)
         {
             $issue->setUpdatedAt(new \DateTimeImmutable());
+        }
+    }
+
+    public function addFieldToIssues(int $fieldId, int $projectId): void
+    {
+        $issues = $this->issueRepo->findForProject($projectId);
+
+        foreach ($issues as $issue)
+        {
+            $fields = $issue->getFields();
+
+            Arrays::merge($fields, [$fieldId => self::FIELD_DEFAULT_VALUE]);
+
+            $issue->setFields($fields);
+        }
+    }
+
+    /**
+     * @param int $fieldId
+     * @param int $projectId
+     * @throws ModelCorruptedException
+     */
+    public function editFieldInIssues(int $fieldId, int $projectId): void
+    {
+        $issues = $this->issueRepo->findForProject($projectId);
+
+        foreach ($issues as $issue)
+        {
+            $fields = $issue->getFields();
+
+            if (!Arrays::hasKey($fields, $fieldId))
+            {
+                throw new ModelCorruptedException('Issue Field name not found is issue fields', [
+                    'issue_id' => $issue->getId(),
+                    'issue_field_id' => $fieldId
+                ]);
+            }
+
+            $fields[$fieldId] = self::FIELD_DEFAULT_VALUE;
+
+            $issue->setFields($fields);
+        }
+    }
+
+    public function deleteFieldFromIssues(int $fieldId, int $projectId): void
+    {
+        $issues =  $this->issueRepo->findForProject($projectId);
+
+        foreach ($issues as $issue)
+        {
+            $fields = $issue->getFields();
+
+            Arrays::removeByKey($fields, $fieldId);
+
+            $issue->setFields($fields);
         }
     }
 
