@@ -2,6 +2,7 @@
 
 namespace App\Module\Project\Domain\Service;
 
+use App\Module\Project\App\Exception\ProjectByIdNotFoundException;
 use App\Module\Project\Domain\Exception\DuplicateProjectNameIdException;
 use App\Module\Project\Domain\Model\Project;
 use App\Module\Project\Domain\Model\ProjectRepositoryInterface;
@@ -35,6 +36,32 @@ class ProjectService
         $this->projectRepository->add($project);
 
         return $project;
+    }
+
+    /**
+     * @param int $projectId
+     * @param string|null $newName
+     * @param string|null $newDescription
+     * @throws ProjectByIdNotFoundException
+     */
+    public function editProject(int $projectId, ?string $newName, ?string $newDescription): void
+    {
+        $project = $this->projectRepository->findById($projectId);
+
+        if ($project === null)
+        {
+            throw new ProjectByIdNotFoundException('', ['project_id' => $projectId]);
+        }
+
+        if ($newName !== null && $newName !== $project->getName())
+        {
+            $project->setName($newName);
+        }
+
+        if ($newDescription !== null && $newDescription !== $project->getDescription())
+        {
+            $project->setDescription($newDescription);
+        }
     }
 
     /**

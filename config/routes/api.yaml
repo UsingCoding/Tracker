@@ -16,6 +16,10 @@ api_create_project:
   path: /api/project/create
   controller: App\Controller\Api\Project\ProjectManagementController::createProject
 
+api_edit_project:
+  path: /api/project/edit
+  controller: App\Controller\Api\Project\ProjectManagementController::editProject
+
 api_get_issue:
   path: /api/issue/{issueCode}
   controller: App\Controller\Api\Issue\IssueManagementController::getIssue
