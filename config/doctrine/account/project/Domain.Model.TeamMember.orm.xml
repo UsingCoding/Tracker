@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\Project\Domain\Model\TeamMember" table="team_member">
+        <id name="id" type="integer" column="team_member_id">
+            <generator strategy="IDENTITY" />
+        </id>
+
+        <field name="projectId" type="integer" />
+        <field name="userId" type="integer" />
+    </entity>
+</doctrine-mapping>

@@ -10,6 +10,8 @@ services:
             - [registerHandler, [!php/const App\Module\Project\App\Command\CreateProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\CreateProjectCommandHandler']]
             - [registerHandler, [!php/const App\Module\Project\App\Command\EditProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\EditProjectCommandHandler']]
             - [registerHandler, [!php/const App\Module\Project\App\Command\DeleteProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\DeleteProjectCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Project\App\Command\AddTeamMemberCommand::TYPE, '@App\Module\Project\App\Command\Handler\AddTeamMemberCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Project\App\Command\RemoveTeamMemberCommand::TYPE, '@App\Module\Project\App\Command\Handler\RemoveTeamMemberCommandHandler']]
 
     project.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus
