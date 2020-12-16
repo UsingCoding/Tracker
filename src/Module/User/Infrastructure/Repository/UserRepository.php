@@ -18,34 +18,6 @@ class UserRepository implements UserRepositoryInterface
         $this->repo = $this->accountEntityManager->getRepository(User::class);
     }
 
-    public function getUserByEmail(string $email): void
-    {
-//        $query = $this->entityManager->createQuery('select * from client where email = :email limit 1')->setParameter('email', $email);
-//
-//        $result = $query->getResult();
-//
-//        $this->logger->debug('RESULT', [$result]);
-
-//        $this->logger->debug("URL", [$this->parameterBag->get('app.url')]);
-
-        $connection = $this->accountEntityManager->getConnection();
-
-        $sql = 'select * from client where email = :email limit 1';
-
-        $stmt = $connection->prepare($sql);
-        $stmt->execute(['email' => $email]);
-
-        $this->logger->debug("DATA", [$stmt->fetchOne()]);
-
-//        $dbconn = pg_connect("host=db dbname=main user=root password=1234");
-//
-//        $res = pg_query($sql);
-//
-//        $line = pg_fetch_array($res, null, PGSQL_ASSOC);
-//
-//        $this->logger->debug('RESULT', [$line]);
-    }
-
     public function add(User $user): void
     {
         $this->accountEntityManager->persist($user);

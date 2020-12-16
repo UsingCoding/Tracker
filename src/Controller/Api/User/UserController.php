@@ -110,6 +110,31 @@ class UserController extends ApiController
     }
 
     /**
+     * @param Request $request
+     * @param ApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
+    public function deleteUser(Request $request, ApiInterface $api): Response
+    {
+        try
+        {
+            $api->deleteUser($request->get('user_id'));
+
+            return new Response();
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::USER_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['error' => 'user_not_found']);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
      * @param ApiInterface $api
      * @return Response
      * @throws ApiException

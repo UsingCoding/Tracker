@@ -122,6 +122,22 @@ class UserService
     }
 
     /**
+     * @param int $userId
+     * @throws UserByIdNotFoundException
+     */
+    public function deleteUser(int $userId): void
+    {
+        $user = $this->userRepository->findById($userId);
+
+        if ($user === null)
+        {
+            throw new UserByIdNotFoundException('', ['user_id' => $userId]);
+        }
+
+        $this->userRepository->remove($user);
+    }
+
+    /**
      * @param string $email
      * @throws DuplicateUserEmailException
      */

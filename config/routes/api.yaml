@@ -81,3 +81,8 @@ api_edit_user:
   path: /api/user/edit
   controller: App\Controller\Api\User\UserController::editUser
   methods: POST
+
+api_delete_user:
+  path: /api/user/delete
+  controller: App\Controller\Api\User\UserController::deleteUser
+  methods: POST

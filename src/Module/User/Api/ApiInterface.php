@@ -45,6 +45,12 @@ interface ApiInterface
     public function editUser(EditUserInput $input): void;
 
     /**
+     * @param int $userId
+     * @throws ApiException
+     */
+    public function deleteUser(int $userId): void;
+
+    /**
      * @return UserListOutput
      * @throws ApiException
      */

@@ -11,6 +11,7 @@ use App\Module\User\Api\Mapper\UserMapper;
 use App\Module\User\Api\Output\UserListOutput;
 use App\Module\User\Api\Output\UserOutput;
 use App\Module\User\App\Command\AddUserCommand;
+use App\Module\User\App\Command\DeleteUserCommand;
 use App\Module\User\App\Command\EditUserCommand;
 use App\Module\User\App\Query\UserQueryServiceInterface;
 use App\Module\User\App\Service\AuthenticationService;
@@ -95,6 +96,14 @@ class Api implements ApiInterface
             throw ApiException::from($throwable);
         }
     }
+
+    public function deleteUser(int $userId): void
+    {
+        $command = new DeleteUserCommand($userId);
+
+        $this->publish($command);
+    }
+
 
     private function publish(CommandInterface $command): void
     {
