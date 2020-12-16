@@ -11,7 +11,6 @@ interface BootStageInterface
     /**
      * @param OutputInterface $output
      * @param ApplicationProviderInterface $applicationProvider
-     * @return mixed
      * @throws BootStageExecutionFailedException
      */
     public function execute(OutputInterface $output, ApplicationProviderInterface $applicationProvider): void;

@@ -60,12 +60,17 @@ services:
             $environment: '%kernel.environment%'
             $stages:
                 - '@App\Command\AppBoot\BootStage\ExecuteExternalCommandsBootStage'
+                - '@App\Command\AppBoot\BootStage\CreateDefaultContentBootStage'
             $logger: '@monolog.logger.environment'
 
     App\Command\AppBoot\BootStage\ExecuteExternalCommandsBootStage:
         arguments:
             $logger: '@monolog.logger.environment'
             $commands: '%app.boot.external_commands%'
+
+    App\Command\AppBoot\BootStage\CreateDefaultContentBootStage:
+        arguments:
+            $logger: '@monolog.logger.environment'
 
     App\Framework\Infrastructure\Listener\FrontendEnvironmentRequestListener:
         arguments:

@@ -10,7 +10,7 @@ class CreateProjectInput implements CreateProjectRequestInterface
     private string $nameId;
     private ?string $description;
 
-    public function __construct(string $name, string $nameId, ?string $description)
+    public function __construct(string $name, string $nameId, ?string $description = null)
     {
         $this->name = $name;
         $this->nameId = $nameId;
