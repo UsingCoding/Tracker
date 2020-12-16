@@ -9,14 +9,16 @@ class UserOutput
     private string $password;
     private string $email;
     private \DateTimeImmutable $createdAt;
+    private int $grade;
 
-    public function __construct(int $userId, string $username, string $password, string $email, \DateTimeImmutable $createdAt)
+    public function __construct(int $userId, string $username, string $password, string $email, \DateTimeImmutable $createdAt, int $grade)
     {
         $this->userId = $userId;
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
         $this->createdAt = $createdAt;
+        $this->grade = $grade;
     }
 
     /**
@@ -57,5 +59,13 @@ class UserOutput
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getGrade(): int
+    {
+        return $this->grade;
     }
 }

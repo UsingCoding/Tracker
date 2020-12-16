@@ -15,6 +15,16 @@ api_projects_list:
 api_create_project:
   path: /api/project/create
   controller: App\Controller\Api\Project\ProjectManagementController::createProject
+  methods: POST
+
+api_delete_project:
+  path: /api/project/delete
+  controller: App\Controller\Api\Project\ProjectManagementController::deleteProject
+  methods: POST
+
+api_edit_project:
+  path: /api/project/edit
+  controller: App\Controller\Api\Project\ProjectManagementController::editProject
 
 api_get_issue:
   path: /api/issue/{issueCode}
@@ -57,6 +67,32 @@ api_issue_field_list:
   requirements:
     projectId: '\d+'
 
+api_user_list:
+  path: /api/users
+  controller: App\Controller\Api\User\UserController::list
+  methods: GET
+
 api_add_user:
   path: /api/user/add
   controller: App\Controller\Api\User\UserController::addUser
+  methods: POST
+
+api_edit_user:
+  path: /api/user/edit
+  controller: App\Controller\Api\User\UserController::editUser
+  methods: POST
+
+api_delete_user:
+  path: /api/user/delete
+  controller: App\Controller\Api\User\UserController::deleteUser
+  methods: POST
+
+api_add_team_member:
+  path: /api/team-member/add
+  controller: App\Controller\Api\Project\TeamController::addMember
+  methods: POST
+
+api_remove_team_member:
+  path: /api/team-member/remove
+  controller: App\Controller\Api\Project\TeamController::removeMember
+  methods: POST

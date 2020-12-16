@@ -37,6 +37,6 @@ class ProjectRepository implements ProjectRepositoryInterface
 
     public function remove(Project $project): void
     {
-        $this->entityManager->persist($project);
+        $this->entityManager->remove($project);
     }
 }

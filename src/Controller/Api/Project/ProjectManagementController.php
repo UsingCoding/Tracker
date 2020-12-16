@@ -5,6 +5,7 @@ namespace App\Controller\Api\Project;
 use App\Controller\Api\ApiController;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
+use App\Module\Project\Api\Input\EditProjectInput;
 use App\Module\Project\Api\ProjectManagementApiInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,6 +67,60 @@ class ProjectManagementController extends ApiController
             }
 
             throw $e;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ProjectManagementApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
+    public function editProject(Request $request, ProjectManagementApiInterface $api): Response
+    {
+        try
+        {
+            $api->editProject(new EditProjectInput(
+                $request->get('project_id'),
+                $request->get('name'),
+                $request->get('description')
+            ));
+
+            return new Response();
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::PROJECT_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['error' => 'project_by_id_not_found']);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ProjectManagementApiInterface $api
+     * @return Response
+     * @throws ApiException
+     */
+    public function deleteProject(Request $request, ProjectManagementApiInterface $api): Response
+    {
+        try
+        {
+            $api->deleteProject($request->get('project_id'));
+
+            return new Response();
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::PROJECT_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['error' => 'project_by_id_not_found']);
+            }
+
+            throw $exception;
         }
     }
 }

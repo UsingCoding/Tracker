@@ -6,9 +6,13 @@ use App\Common\App\Command\Bus\AppCommandBusInterface;
 use App\Common\App\Command\CommandInterface;
 use App\Module\User\Api\Exception\ApiException;
 use App\Module\User\Api\Input\AddUserInput;
+use App\Module\User\Api\Input\EditUserInput;
 use App\Module\User\Api\Mapper\UserMapper;
+use App\Module\User\Api\Output\UserListOutput;
 use App\Module\User\Api\Output\UserOutput;
 use App\Module\User\App\Command\AddUserCommand;
+use App\Module\User\App\Command\DeleteUserCommand;
+use App\Module\User\App\Command\EditUserCommand;
 use App\Module\User\App\Query\UserQueryServiceInterface;
 use App\Module\User\App\Service\AuthenticationService;
 
@@ -71,6 +75,35 @@ class Api implements ApiInterface
 
         $this->publish($command);
     }
+
+    public function editUser(EditUserInput $input): void
+    {
+        $command = new EditUserCommand($input);
+
+        $this->publish($command);
+    }
+
+    public function list(): UserListOutput
+    {
+        try
+        {
+            $list = $this->userQueryService->getList();
+
+            return UserMapper::getUserListOutput($list);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
+        }
+    }
+
+    public function deleteUser(int $userId): void
+    {
+        $command = new DeleteUserCommand($userId);
+
+        $this->publish($command);
+    }
+
 
     private function publish(CommandInterface $command): void
     {

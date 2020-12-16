@@ -8,6 +8,10 @@ services:
         class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
         calls:
             - [registerHandler, [!php/const App\Module\Project\App\Command\CreateProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\CreateProjectCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Project\App\Command\EditProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\EditProjectCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Project\App\Command\DeleteProjectCommand::TYPE, '@App\Module\Project\App\Command\Handler\DeleteProjectCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Project\App\Command\AddTeamMemberCommand::TYPE, '@App\Module\Project\App\Command\Handler\AddTeamMemberCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Project\App\Command\RemoveTeamMemberCommand::TYPE, '@App\Module\Project\App\Command\Handler\RemoveTeamMemberCommandHandler']]
 
     project.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus
@@ -32,6 +36,8 @@ services:
         class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
         calls:
             - [ registerHandler, [ !php/const App\Module\User\App\Command\AddUserCommand::TYPE, '@App\Module\User\App\Command\Handler\AddUserCommandHandler' ] ]
+            - [ registerHandler, [ !php/const App\Module\User\App\Command\EditUserCommand::TYPE, '@App\Module\User\App\Command\Handler\EditUserCommandHandler' ] ]
+            - [ registerHandler, [ !php/const App\Module\User\App\Command\DeleteUserCommand::TYPE, '@App\Module\User\App\Command\Handler\DeleteUserCommandHandler' ] ]
 
     user.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus

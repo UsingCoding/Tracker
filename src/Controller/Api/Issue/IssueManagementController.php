@@ -111,19 +111,18 @@ class IssueManagementController extends ApiController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param ApiInterface $issueApi
+     * @return Response
+     * @throws ApiException
+     */
     public function issuesList(Request $request, ApiInterface $issueApi): Response
     {
-        try
-        {
-            $list = $issueApi->list($request->get('search_query'));
+        $list = $issueApi->list($request->get('search_query'));
 
-            $view = new IssuesListView($list);
+        $view = new IssuesListView($list);
 
-            return $view->render();
-        }
-        catch (ApiException $e)
-        {
-            return $this->json(['success' => (string) $e]);
-        }
+        return $view->render();
     }
 }
