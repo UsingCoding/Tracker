@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\Project;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\AddTeamMemberInput;
@@ -65,12 +66,10 @@ class TeamController extends ApiController
         }
     }
 
-    public function list(Request $request, TeamApiInterface $api): Response
+    public function list(Request $request, TeamApiInterface $api): RenderableViewInterface
     {
         $list = $api->list($request->get('project_id'));
 
-        $view = new TeamMemberListView($list);
-
-        return $view->render();
+        return new TeamMemberListView($list);
     }
 }

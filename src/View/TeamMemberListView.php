@@ -2,13 +2,14 @@
 
 namespace App\View;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Common\Domain\Utils\Arrays;
 use App\Module\Project\Api\Output\TeamMemberListOutput;
 use App\Module\Project\Api\Output\TeamMemberOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class TeamMemberListView
+class TeamMemberListView implements RenderableViewInterface
 {
     private TeamMemberListOutput $list;
 
