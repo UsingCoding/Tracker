@@ -4,6 +4,7 @@ namespace App\Module\Project\Api;
 
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\AddTeamMemberInput;
+use App\Module\Project\Api\Output\TeamMemberListOutput;
 
 interface TeamApiInterface
 {
@@ -18,4 +19,6 @@ interface TeamApiInterface
      * @throws ApiException
      */
     public function removeMember(int $teamMemberId): void;
+
+    public function list(int $projectId): TeamMemberListOutput;
 }

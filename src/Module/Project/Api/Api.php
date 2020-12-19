@@ -10,8 +10,10 @@ use App\Module\Project\Api\Input\AddTeamMemberInput;
 use App\Module\Project\Api\Input\CreateProjectInput;
 use App\Module\Project\Api\Input\EditProjectInput;
 use App\Module\Project\Api\Mapper\ProjectMapper;
+use App\Module\Project\Api\Mapper\TeamMemberMapper;
 use App\Module\Project\Api\Output\ProjectOutput;
 use App\Module\Project\Api\Output\ProjectsListOutput;
+use App\Module\Project\Api\Output\TeamMemberListOutput;
 use App\Module\Project\App\Command\AddTeamMemberCommand;
 use App\Module\Project\App\Command\CreateProjectCommand;
 use App\Module\Project\App\Command\DeleteProjectCommand;
@@ -19,18 +21,21 @@ use App\Module\Project\App\Command\EditProjectCommand;
 use App\Module\Project\App\Command\RemoveTeamMemberCommand;
 use App\Module\Project\App\Query\ProjectQueryService;
 use App\Module\Project\App\Query\ProjectQueryServiceInterface;
+use App\Module\Project\App\Query\TeamMemberQueryServiceInterface;
 
 class Api implements ApiInterface
 {
     private ProjectQueryService $projectQueryServiceRepo;
     private ProjectQueryServiceInterface $projectQueryService;
+    private TeamMemberQueryServiceInterface $teamMemberQueryService;
     private AppCommandBusInterface $projectCommandBus;
 
-    public function __construct(ProjectQueryService $projectQueryServiceRepo, ProjectQueryServiceInterface $projectQueryService, AppCommandBusInterface $projectCommandBus)
+    public function __construct(ProjectQueryService $projectQueryServiceRepo, ProjectQueryServiceInterface $projectQueryService, AppCommandBusInterface $projectCommandBus, TeamMemberQueryServiceInterface $teamMemberQueryService)
     {
         $this->projectQueryServiceRepo = $projectQueryServiceRepo;
         $this->projectQueryService = $projectQueryService;
         $this->projectCommandBus = $projectCommandBus;
+        $this->teamMemberQueryService = $teamMemberQueryService;
     }
 
     public function createProject(CreateProjectInput $input): void
@@ -92,6 +97,20 @@ class Api implements ApiInterface
         $command = new RemoveTeamMemberCommand($teamMemberId);
 
         $this->publish($command);
+    }
+
+    public function list(int $projectId): TeamMemberListOutput
+    {
+        try
+        {
+            $list = $this->teamMemberQueryService->getList($projectId);
+
+            return TeamMemberMapper::getList($list);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
+        }
     }
 
     /**

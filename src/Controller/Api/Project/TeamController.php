@@ -6,6 +6,7 @@ use App\Controller\Api\ApiController;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\AddTeamMemberInput;
 use App\Module\Project\Api\TeamApiInterface;
+use App\View\TeamMemberListView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -62,5 +63,14 @@ class TeamController extends ApiController
 
             throw $exception;
         }
+    }
+
+    public function list(Request $request, TeamApiInterface $api): Response
+    {
+        $list = $api->list($request->get('project_id'));
+
+        $view = new TeamMemberListView($list);
+
+        return $view->render();
     }
 }

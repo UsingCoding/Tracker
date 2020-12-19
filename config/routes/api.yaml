@@ -96,3 +96,8 @@ api_remove_team_member:
   path: /api/team-member/remove
   controller: App\Controller\Api\Project\TeamController::removeMember
   methods: POST
+
+ap_team_member_list:
+  path: /api/team-members
+  controller: App\Controller\Api\Project\TeamController::list
+  methods: GET
