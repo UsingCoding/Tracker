@@ -1,0 +1,78 @@
+<template>
+  <div class="project_view_width">
+      <h1 class="administration_path">{{projectInfo.name}} <i class="arrow fas fa-chevron-right"></i> Settings</h1>
+      <form class="create_project">
+            <div class="create_project_label">
+                <label for="name">Name</label>
+                <input v-model="new_project_title" class="project_input project_input_margin" type="text" id="name">
+            </div>
+
+            <div class="create_project_label">
+                <label for="id">ID</label>
+                <div class="has_description">
+                    <input v-model="new_project_id" class="project_input" type="text" id="id">
+                    <span class="description_label">Must be in uppercase</span>
+                </div>
+            </div>
+
+            <div class="create_project_label">
+                <label for="owner">Owner</label>
+                <select v-model="project_owner" class="owner_input project_input" type="text" id="owner">
+                    <option value="root">root</option>
+                </select>        
+            </div>
+            
+            <div class="create_project_label description_project">
+                <label for="description">Description</label>
+                <textarea v-model="new_project_description" class="new_project_description" name="new_project_description" id="description"></textarea>
+            </div>
+            <button v-on:click="editProject()" type="button" class="project_form_btn create_project_btn">Save</button>
+            <button v-on:click="cancel()" type="button" class="project_form_btn cancel_btn">Cancel</button>
+        </form>
+  </div>
+</template>
+
+<script>
+
+export default {
+    props: ['factory'],
+    data() {
+        return {
+            store: this.factory.createProjectStore(),
+            new_project_title: '',
+            new_project_description: '',
+            new_project_id: '',
+            project_owner: 'root',
+            projectInfo: {}
+        }
+    },
+    methods: {
+        getProjectInfo: async function() {
+            this.projectInfo = await this.store.getProjectInfo(this.$route.params.code);
+        },
+        editProject: async function() {
+            let result = await this.store.updateProject({
+                'project_id': this.$route.params.code,
+                'name': this.new_project_title,
+                'description': this.new_project_description 
+            });
+            console.log(this.new_project_title);
+            if(result.ok)
+                this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } })
+        },
+        cancel: function() {
+            this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } });
+        }
+    },
+    async beforeMount() {
+        await this.getProjectInfo();
+        this.new_project_title = this.projectInfo.name;
+        this.new_project_id = this.projectInfo.nameId;
+        this.new_project_description = this.projectInfo.description;
+    }
+}
+</script>
+
+<style>
+
+</style>

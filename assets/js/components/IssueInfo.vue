@@ -10,20 +10,6 @@
                     <span class="issue_view_title">{{new_title}}</span>
                     <p class="issue_view_description">{{new_description}}</p>
                     <hr class="issue_border"/>
-
-                    <!-- <div class="comments">
-                        <div v-for="comment in issue_details.comments" class="comment">
-
-                            <div class="user_img">
-                                <div class="user_img_test"></div>
-                            </div>
-
-                            <div class="comment_content">
-                                <span class="comment_owner">{{comment.user}} commented {{comment.date}}</span>
-                                <p class="comment_text">{{comment.text}}</p>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
 
             </div>
@@ -31,7 +17,12 @@
 
             <div class="tags_rectangle view_tags">
                 <div class="tags">
-                    <div v-for="(val,key) in issueInfo.fields" class="tag" >{{store.getFieldName(key)}}<span class="tag_value"></span>{{val}}</div>
+                  <table class="tags_table">
+                    <tr v-for="(val, key) in issueInfo.fields" class="tag_row">
+                      <td>{{store.getFieldName(key)}}</td>
+                      <td class="tag_value">{{val}}</td>
+                    </tr>
+                  </table>
                 </div>
             </div>
         </div>
@@ -47,46 +38,31 @@
                   </div>
                 </div>
 
-                <!--<div class="tags_rectangle">
+                <div class="tags_rectangle">
                   <div class="tags">
+                    <table class="tags_table">
+                      <tr class="tag_row">
+                        <td><label class="tag" for="project">Project</label></td>
+                        <td>
+                          <select v-model="project" class="tag_value" name="project" id="project">
+                            <option value="Own Tracker">Own Tracker</option>
+                          </select>
+                        </td>
+                      </tr>
+                      
+                      <tr class="tag_row">
+                        <td><label class="tag" for="assignee">Assignee</label></td>
+                        <td>
+                          <select class="tag_value" name="assignee" id="assignee">
+                            <option value="jojo">jojo</option>
+                            <option value="Unassigned">Unassigned</option>
+                          </select>
+                        </td>
+                      </tr>
 
-                    <label class="tag">Assignee
-                      <select v-model="assignee" v-bind="assignee" class="tag_value" name="assignee">
-                        <option v-for="employee in command" value="">{{employee}}</option>
-                        <option value="Temp employee">Temp employee</option>
-                      </select>
-                    </label>
-
-                    <label class="tag">State
-                      <select v-model="state" v-bind="state" class="tag_value" name="state">
-                        <option value="Submited">Submited</option>
-                        <option value="Open">Open</option>
-                        <option value="In Progress">In Progress</option>
-                      </select>
-                    </label>
-
-                    <label class="tag">Stage
-                      <select v-model="stage" v-bind="stage" class="tag_value" name="stage">
-                        <option value="Backlog">Backlog</option>
-                        <option value="Test">Test</option>
-                        <option value="Develop">Develop</option>
-                      </select>
-                    </label>
-
-                    <label class="tag">Estimation
-                      <input v-model="estimation" v-bind="estimation" class="estimation" type="text" name="estimation">
-                    </label>
-
-                    <label class="tag">Difficulty
-                      <select v-model="difficulty" v-bind="difficulty" class="tag_value" name="difficulty">
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
-                      </select>
-                    </label>
-
+                    </table>
                   </div>
-                </div>-->
+                </div>
               </form>
     </div>
 </template>
@@ -106,7 +82,9 @@ export default {
       store: this.factory.createIssueStore(),
       issueInfo: {},
       new_description: '',
-      new_title: ''
+      new_title: '',
+      assignee: '',
+      project: ''
     }
   },
   methods: {
@@ -133,6 +111,8 @@ export default {
     await this.getIssueInfo();
     this.new_title = this.issueInfo.name;
     this.new_description = this.issueInfo.description;
+    this.assignee = this.issueInfo.fields.assignee;
+    this.project = this.issueInfo.fields.project_name;
   }
 }
 </script>

@@ -42,15 +42,6 @@ export default class IssueStore
 
     async updateIssue(props)
     {
-        // const result = await this._serverApi.updateIssue({
-        //     issue_id: props.issue_id,
-        //     name: props.name,
-        //     description: props.description,
-        //     fields: { 
-        //         user_id: props.user_id,
-        //         project_id: props.project_id
-        //     }
-        // })
         const result = await this._serverApi.updateIssue(props)
         if (result)
         {
@@ -83,6 +74,11 @@ export default class IssueStore
         return this._description;
     }
 
+    set description(value)
+    {
+        this._description = value;
+    }
+    
     get fields()
     {
         return this._fields;

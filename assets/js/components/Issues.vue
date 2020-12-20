@@ -1,5 +1,5 @@
 <template>
-  <div class="all_issues">  
+  <div class="list_view">  
     <div v-for="issue in issuesList" class="issue">
       <div class="issue_details">
         <span class="issue_header">{{issue.issue_code}}</span>
@@ -8,20 +8,11 @@
       </div>
       <div class="issue_footer">
         <div class="issue_fields">
+          <!-- <div v-for="field in issue.fields" class="issue_field">
+            <span>{{field}}</span>
+          </div> -->
           <div class="issue_field">
             <span>{{issue.username}}</span>
-          </div>
-          <div class="issue_field">
-            <span>{{issue.state}}</span>
-          </div>
-          <div class="issue_field">
-            <span>{{issue.stage}}</span>
-          </div>
-          <div class="issue_field">
-            <span>{{issue.time}}</span>
-          </div>
-          <div class="issue_field difficulty">
-            <span>{{issue.difficulty}}</span>
           </div>
         </div>
       </div>
@@ -31,6 +22,7 @@
 </template>
 
 <script>
+import Strings from "../Utils/Strings";
 
 export default {
   props:['factory'],

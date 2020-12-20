@@ -2,12 +2,11 @@
     <div class="toolbar">
         <div class="tools">
             <i class="tool fas fa-rocket"></i>
-            <!-- <i class="tool fas fa-mobile"></i> -->
             <i class="tool fas fa-user-alt"></i>
             <i class="tool right_tool fas fa-beer"></i>
         </div>
         <div class="tools second_tools">
-            <i v-on:click="goEdit()" class="tool far fa-edit"></i>
+            <i v-if="this.$route.name != 'issues'" v-on:click="goEdit()" class="tool far fa-edit"></i>
             <i class="tool right_tool fas fa-trash"></i>
         </div>
     </div>

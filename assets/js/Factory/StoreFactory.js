@@ -1,6 +1,15 @@
 import CreateIssueStore from "../Store/CreateIssueStore";
 import IssueStore from "../Store/IssueStore";
 import IssueListStore from "../Store/IssueListStore";
+import CreateProjectStore from "../Store/CreateProjectStore";
+import ProjectStore from "../Store/ProjectStore";
+import UserStore from "../Store/UserStore";
+import ProjectsListStore from "../Store/ProjectsListStore";
+import FieldStore from "../Store/FieldStore";
+import CreateFieldStore from "../Store/CreateFieldStore";
+import FieldsListStore from "../Store/FieldsListStore";
+import MemberStore from "../Store/MemberStore";
+import UsersListStore from "../Store/UsersListStore";
 
 export default class StoreFactory
 {
@@ -17,8 +26,6 @@ export default class StoreFactory
      */
     createIssueStore()
     {
-        //const issue = this._serverApi.getIssue(issueCode);
-
         return  new IssueStore(this._serverApi);
     }
 
@@ -30,5 +37,50 @@ export default class StoreFactory
     createIssuesListStore()
     {
         return new IssueListStore(this._serverApi);
+    }
+
+    createProjectsListStore()
+    {
+        return new ProjectsListStore(this._serverApi);
+    }
+
+    createCreateProjectStore()
+    {
+        return new CreateProjectStore(this._serverApi);
+    }
+
+    createProjectStore()
+    {   
+        return new ProjectStore(this._serverApi);
+    }
+
+    createUserStore()
+    {
+        return new UserStore(this._serverApi);
+    }
+
+    createFieldStore()
+    {
+        return new FieldStore(this._serverApi);
+    }
+
+    createCreateFieldStore()
+    {
+        return new CreateFieldStore(this._serverApi);
+    }
+
+    createFieldsListStore()
+    {
+        return new FieldsListStore(this._serverApi);
+    }
+
+    createMemberStore()
+    {
+        return new MemberStore(this._serverApi);
+    }
+
+    createUsersListStore()
+    {
+        return new UsersListStore(this._serverApi);
     }
 }

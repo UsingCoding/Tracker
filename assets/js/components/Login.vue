@@ -24,10 +24,11 @@ export default{
         return {
             sign_up_flag: false,
             username: "",
-            password: ""
+            email: '',
+            confirm_password: '',
+            password: ''
         }
     },
-    //'/api/auth?username=jojo%40pidor.com&password=1234'
     methods: {
         login: async function() {
             let response = await fetch('/api/auth?username=' + encodeURIComponent(this.username) + '&password=' + this.password, {
@@ -35,21 +36,19 @@ export default{
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
                 }
-                // body: JSON.stringify({
-                //     'username' : encodeURIComponent(this.username),
-                //     'password' : this.password
-                // })
             });
 
             let result = await response.json();
             if(result.isLogin === 1) {
                 console.log("woooo! You inside =)");
                 this.$router.push({path: '/issues'});
-                // sessionStorage.setItem("name", "test");
             }
             else {
                 alert("Wrong username or password!");
             }
+        },
+        register: async function() {
+            
         }
     }
 

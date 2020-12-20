@@ -20,42 +20,28 @@
 
                 <div class="tags_rectangle">
                     <div class="tags">
+                            
+                        <table class="tags_table">
+                            <tr class="tag_row">
+                                <td><label class="tag" for="project">Project</label></td>
+                                <td>
+                                    <select v-model="project_id" class="tag_value" name="project" id="project">
+                                        <option v-for="project in projects" :value="projects.id">{{project.name}}</option>
+                                    </select>
+                                </td>
+                            </tr>
 
-                        <label class="tag">Assignee
-                            <select v-model="assignee" class="tag_value" name="assignee">
-                        <!--<option v-for="employee in command" value="">{{employee}}</option>-->
-                                <option value="Unassigned">Unassigned</option>
-                            </select>
-                        </label>
+                            <!-- <tr class="tag_row">
+                                <td><label class="tag" for="assignee">Assignee</label></td>
+                                <td>
+                                    <select v-model="assignee" class="tag_value" name="assignee" id="assignee">
+                                        <option value="jojo">jojo</option>
+                                        <option value="Unassigned">Unassigned</option>
+                                    </select>
+                                </td>
+                            </tr> -->
 
-                        <label class="tag">State
-                            <select v-model="state" class="tag_value" name="state">
-                                <option value="Submited">Submited</option>
-                                <option value="Open">Open</option>
-                                <option value="In Progress">In Progress</option>
-                            </select>
-                        </label>
-
-                        <label class="tag">Stage
-                            <select v-model="stage" class="tag_value" name="stage">
-                                <option value="Backlog">Backlog</option>
-                                <option value="Test">Test</option>
-                                <option value="Develop">Develop</option>
-                            </select>
-                        </label>
-
-                        <label class="tag">Estimation
-                            <input v-model="estimation" class="estimation" type="text" name="estimation">
-                        </label>
-
-                        <label class="tag">Difficulty
-                            <select v-model="difficulty" class="tag_value" name="difficulty">
-                                <option value="Easy">Easy</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Hard">Hard</option>
-                            </select>
-                        </label>
-
+                        </table>
                     </div>
                 </div>
             </form>
@@ -64,11 +50,9 @@
 </template>
 
 <script>
-import header from "./Header";
-import tools from "./Toolbar";
 
-const user_id = 1;
-const project_id = 1;
+const user_id = 2;
+// const project_id = 1;
 
 export default {
     props: ['factory'],
@@ -77,35 +61,33 @@ export default {
             issue_title: '',
             issue_description: '',
             assignee: 'Unassigned',
-            state: 'Submited',
-            stage: 'Backlog',
-            estimation: '3h',
-            difficulty: 'Easy',
-            store: this.factory.createCreateIssueStore()
+            project_id: 1,
+            store: this.factory.createCreateIssueStore(),
+            projects: []
         }
-    },
-    components: {
-        "app-header": header,
-        "toolbar": tools
     },
     methods: {
         create_issue: async function() {
-            let issue_id = await this.store.createIssue({
+            let issue_code = await this.store.createIssue({
                 "title": this.issue_title,
                 "description": this.issue_description,
                 "fields": {
                     "user_id": user_id,
-                    "project_id": project_id
+                    "project_id": this.project_id
                 }
             });
-            // this.$router.push({ path: '/issue/' + issue_id });
-            this.$router.push({ name: 'issue_details', params: { code: issue_id }});
+            
+            this.$router.push({ name: 'issue_details', params: { code: "HIPPO-" + issue_code }});
             
         },
 
         cancel: function() {
             this.$router.push({ name: 'issues' });
         }
+    },
+    async beforeMount() {
+        let projectsStore = this.factory.createProjectsListStore();
+        this.projects = await projectsStore.getProjectsList();
     }
 }
 </script>

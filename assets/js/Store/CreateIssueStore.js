@@ -1,4 +1,3 @@
-// import serverApi from "../Api/ServerApi";
 
 export default class CreateIssueStore
 {
