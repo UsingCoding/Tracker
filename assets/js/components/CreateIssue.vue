@@ -26,7 +26,7 @@
                                 <td><label class="tag" for="project">Project</label></td>
                                 <td>
                                     <select v-model="project_id" class="tag_value" name="project" id="project">
-                                        <option v-for="project in projects" :value="projects.id">{{project.name}}</option>
+                                        <option v-for="project in projects" :value="project.project_id">{{project.name}}</option>
                                     </select>
                                 </td>
                             </tr>
@@ -61,7 +61,7 @@ export default {
             issue_title: '',
             issue_description: '',
             assignee: 'Unassigned',
-            project_id: 1,
+            project_id: '',
             store: this.factory.createCreateIssueStore(),
             projects: []
         }
@@ -77,8 +77,7 @@ export default {
                 }
             });
             
-            this.$router.push({ name: 'issue_details', params: { code: "HIPPO-" + issue_code }});
-            
+            this.$router.push({ name: 'issue_details', params: { code: "KEK-" + issue_code }});
         },
 
         cancel: function() {
@@ -88,6 +87,7 @@ export default {
     async beforeMount() {
         let projectsStore = this.factory.createProjectsListStore();
         this.projects = await projectsStore.getProjectsList();
+        this.project_id = this.projects[0].project_id;
     }
 }
 </script>

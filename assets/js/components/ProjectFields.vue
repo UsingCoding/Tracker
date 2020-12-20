@@ -2,11 +2,15 @@
   <div class="project_view_width">
         <h1 class="administration_path">Own Tracker <i class="fas fa-chevron-right arrow"></i> Fields</h1>
         <div>
-          <div class="edit_team_btns">
+            <span class="autoassigneeWarning" >
+                Auto assignee feature will be available if project exist fields
+                with names and types extimation - Time interval, difficulty - String
+            </span>
+            <div class="edit_team_btns">
                 <button v-on:click="addFlag = true" type="button" class="project_form_btn add_member">Add field</button>
                 <button v-on:click="deleteFields()" type="button" class="project_form_btn delete_field">Delete</button>
-          </div>
-          <div class="project_team">
+            </div>
+            <div class="project_team">
                 <form v-if="addFlag" class="edited_field">
                     <div class="name_block">
                         <label class="field_name">Name</label>
@@ -28,12 +32,12 @@
                 </form>
 
                 <div v-for="field in projectFields" class="member_div">
-                    <div v-if="!edit">
+                    <div v-if="field_id != field.id">
                         <input v-on:click="map.set(field.id, map.get(field.id)*-1)" class="member_checkbox" type="checkbox" :id="field.fieldId"/> 
                         <span v-on:click="openEdit(field)" class="team_member">{{field.name}}</span>
                     </div>
 
-                    <form v-if="edit" class="edited_field">
+                    <form v-if="field_id == field.id" class="edited_field">
                         <div class="name_block">
                             <label class="field_name">Name</label>
                             <input v-model="name" class="name_input" type="text"/>
@@ -55,8 +59,8 @@
                     </form>
 
                 </div>
-          </div>
-      </div>
+            </div>
+        </div>
   </div>
 </template>
 
@@ -70,7 +74,7 @@ export default {
             createFieldStore: this.factory.createCreateFieldStore(),
             fieldStore: this.factory.createFieldStore(),
             addFlag: false,
-            edit: false,
+            field_id: '',
             name: '',
             type: '',
             map: new Map()
@@ -100,23 +104,26 @@ export default {
             this.type = '';
             this.addFlag = false;
         },
-        editField: async function(fieldId) {
-            // let response = await this.fieldStore.editField({
-            //     'name': this.name,
-            //     'type': this.type,
-            //     'issue_field_id': fieldId
-            // });
+        editField: async function() {
+            let response = await this.fieldStore.editField({
+                'name': this.name,
+                'type': this.type,
+                'issue_field_id': this.field_id
+            });
+            
+            await this.getFieldsList();
 
+            this.cancelEdit();
         },
         openEdit: function (field) {
-            this.edit = true;
+            this.field_id = field.id;
             this.name = field.name;
             this.type = field.type;
         },
         cancelEdit: function() {
             this.name = '';
             this.type = '';
-            this.edit = false;
+            this.field_id = '';
         },
         deleteFields: async function() {
             for(var [key, val] of this.map)
@@ -127,22 +134,32 @@ export default {
                     this.map.delete(key);
                 }
             }
+            // await this.getFieldsList();
         },
         getFieldsList: async function() {
             this.projectFields = await this.fieldListStore.getFields(this.$route.params.code);
+            for(var field of this.projectFields)
+            {
+                this.map.set(field.id, -1);
+            }
         }
     },
     async beforeMount() {
         await this.getFieldsList();
-        for(var field of this.projectFields)
-        {
-            this.map.set(field.id, -1);
-        }
     }
 }
 </script>
 
 <style>
+
+.autoassigneeWarning
+{
+    font: 14px/17px "Montserrat";
+    color: #6f6f6f;
+    display: block;
+    width: 481px;
+    margin-top: 1.5%;
+}
 
 .team_member:hover
 {

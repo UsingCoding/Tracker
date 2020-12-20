@@ -23,10 +23,10 @@
             <div class="create_project_label grade_div">
                 <label for="grade">Grade</label>
                 <select v-model="grade" class="project_input grade" type="text" id="grade">
-                    <option value="junior">Junior</option>
-                    <option value="middle">Middle</option>
-                    <option value="senior">Senior</option>
-                    <option value="architect">Architect</option>
+                    <option value="0">Junior</option>
+                    <option value="1">Middle</option>
+                    <option value="2">Senior</option>
+                    <option value="3">Architect</option>
                 </select>
             </div>
 
@@ -67,13 +67,14 @@ export default {
             }
         },
         cancel: function() {
-            this.$router.push({ name: 'project_team', params: { code: this.$route.params.code } });
+            this.$router.push({ name: 'users_list'});
         },
         getUserInfo: async function() {
             this.username = "root";
             this.email = "root@gmail.com";
             this.grade = "Junior";
             this.password = "1234";
+            this.grade = 0;
         }
     },
     async beforeMount() {

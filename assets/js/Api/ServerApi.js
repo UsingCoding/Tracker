@@ -257,7 +257,7 @@ export default class ServerApi
             body: JSON.stringify({
                 'name': props.name,
                 'type': props.type,
-                'issue_field_id': props.field_id
+                'issue_field_id': props.issue_field_id
             })
         });
         

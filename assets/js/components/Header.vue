@@ -5,6 +5,7 @@
                 <div class="navbar">
                     <router-link to="/issues" class="menu_link" exact >Issues</router-link>
                     <router-link to="/projects" class="menu_link" exact >Projects</router-link>
+                    <router-link to="/users" class="menu_link" exact >Users</router-link>
                     <router-link to="/create-issue" class="menu_link" exact >New issue</router-link>
                     <router-link v-if="this.$route.name == 'projects_list'" to="/create-project" class="menu_link" exact >Create Project</router-link>
                 </div>
