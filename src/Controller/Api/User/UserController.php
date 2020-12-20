@@ -2,11 +2,13 @@
 
 namespace App\Controller\Api\User;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
 use App\Module\User\Api\ApiInterface;
 use App\Module\User\Api\Exception\ApiException;
 use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Input\EditUserInput;
+use App\View\UserInfoView;
 use App\View\UserListView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -128,6 +130,31 @@ class UserController extends ApiController
             if ($exception->getType() === ApiException::USER_BY_ID_NOT_FOUND)
             {
                 return $this->json(['error' => 'user_not_found']);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ApiInterface $api
+     * @return RenderableViewInterface
+     * @throws ApiException
+     */
+    public function user(Request $request, ApiInterface $api): RenderableViewInterface
+    {
+        try
+        {
+            $user = $api->getUserById($request->get('user_id'));
+
+            return new UserInfoView($user);
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::USER_BY_ID_NOT_FOUND)
+            {
+                return $this->renderableJson(['error' => 'user_by_id_not_found']);
             }
 
             throw $exception;

@@ -46,6 +46,6 @@ class CreateIssueCommandHandler implements AppCommandHandlerInterface
         /** @var Issue $issue */
         $issue = $this->synchronization->transaction(fn() => $this->issueService->addIssue($name, $description, $fields, $projectId, $userId));
 
-        $this->eventDispatcher->dispatch(new IssueAddedEvent($issue->getId()));
+        $this->eventDispatcher->dispatch(new IssueAddedEvent($issue->getInProjectId()));
     }
 }

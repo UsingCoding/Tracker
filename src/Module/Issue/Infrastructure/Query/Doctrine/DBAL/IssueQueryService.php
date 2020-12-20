@@ -6,6 +6,7 @@ use App\Module\Issue\App\Query\Data\IssueData;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 use App\Module\Issue\Domain\Service\IssueCodeService;
 use App\Module\Issue\Infrastructure\Hydration\IssueListWithUserAndProjectDataHydrator;
+use App\Module\Issue\Infrastructure\Hydration\IssueWithFieldsHydrator;
 use App\Module\Issue\Infrastructure\Hydration\IssueWithUserDataHydrator;
 use App\Module\Issue\Infrastructure\Query\SearchQueryParser;
 use Doctrine\DBAL\Connection;
@@ -36,12 +37,14 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->addSelect('i.fields')
             ->addSelect('i.created_at')
             ->addSelect('i.updated_at')
+            ->addSelect('i.in_project_id')
             ->addSelect('p.name project_name')
             ->addSelect('ac.username')
             ->from('issue', 'i')
             ->leftJoin('i', 'project', 'p', 'p.name_id = :project_name_id')
             ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
             ->andWhere($queryBuilder->expr()->eq('in_project_id', ':in_project_id'))
+            ->andWhere($queryBuilder->expr()->eq('i.project_id', 'p.project_id'))
             ->setParameter('in_project_id', $issueCode->getIssueInProjectId(), ParameterType::INTEGER)
             ->setParameter('project_name_id', $issueCode->getProjectNameId(), ParameterType::STRING)
         ;
@@ -75,6 +78,7 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->addSelect('i.description')
             ->addSelect('i.fields')
             ->addSelect('i.updated_at')
+            ->addSelect('i.in_project_id')
             ->addSelect('p.name_id')
             ->addSelect('ac.username')
             ->from('issue', 'i')
@@ -94,5 +98,33 @@ class IssueQueryService implements IssueQueryServiceInterface
         $hydrator = new IssueListWithUserAndProjectDataHydrator($this->connection->getDatabasePlatform());
 
         return $hydrator->hydrateAll($row);
+    }
+
+    public function getIssueForProject(int $projectId): array
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->addSelect('i.issue_id')
+            ->addSelect('i.fields')
+            ->addSelect('i.project_id')
+            ->from('issue', 'i')
+            ->where($queryBuilder->expr()->eq('project_id', ':project_id'))
+            ->setParameter('project_id', $projectId, ParameterType::INTEGER)
+        ;
+
+
+        $stmt = $queryBuilder->execute();
+        $rows = $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        $stmt->closeCursor();
+
+        if ($rows === false)
+        {
+            return [];
+        }
+
+        $hydrator = new IssueWithFieldsHydrator($this->connection->getDatabasePlatform());
+
+        return $hydrator->hydrateAll($rows);
     }
 }

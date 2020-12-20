@@ -139,19 +139,19 @@ class Api implements ApiInterface
     private function publishCommandWithAddIssueEventHandler(CommandInterface $command): int
     {
         $handler = new class implements AppEventHandlerInterface {
-            private int $issueId;
+            private int $inProjectId;
 
             public function handle(AppEventInterface $event): void
             {
                 if ($event instanceof IssueAddedEvent)
                 {
-                    $this->issueId = $event->getIssueId();
+                    $this->inProjectId = $event->getInProjectId();
                 }
             }
 
-            public function getIssueId(): int
+            public function getInProjectId(): int
             {
-                return $this->issueId;
+                return $this->inProjectId;
             }
         };
 
@@ -166,7 +166,7 @@ class Api implements ApiInterface
             $this->eventSource->unsubscribe($handler);
         }
 
-        return $handler->getIssueId();
+        return $handler->getInProjectId();
     }
 
     /**

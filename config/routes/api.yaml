@@ -87,6 +87,11 @@ api_delete_user:
   controller: App\Controller\Api\User\UserController::deleteUser
   methods: POST
 
+api_get_user:
+  path: /api/user
+  controller: App\Controller\Api\User\UserController::user
+  methods: POST
+
 api_add_team_member:
   path: /api/team-member/add
   controller: App\Controller\Api\Project\TeamController::addMember
@@ -96,3 +101,8 @@ api_remove_team_member:
   path: /api/team-member/remove
   controller: App\Controller\Api\Project\TeamController::removeMember
   methods: POST
+
+ap_team_member_list:
+  path: /api/team-members
+  controller: App\Controller\Api\Project\TeamController::list
+  methods: GET

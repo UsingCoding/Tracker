@@ -5,6 +5,7 @@ namespace App\Module\Issue\Api\Output;
 class IssueListItemOutput
 {
     private int $issueId;
+    private int $inProjectId;
     private string $name;
     private ?string $description;
     private ?string $assigneeUsername;
@@ -13,9 +14,10 @@ class IssueListItemOutput
     private array $fields;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(int $issueId, string $name, ?string $description, ?string $assigneeUsername, ?string $projectNameId, ?string $issueCode, array $fields, \DateTimeImmutable $updatedAt)
+    public function __construct(int $issueId, int $inProjectId, string $name, ?string $description, ?string $assigneeUsername, ?string $projectNameId, ?string $issueCode, array $fields, \DateTimeImmutable $updatedAt)
     {
         $this->issueId = $issueId;
+        $this->inProjectId = $inProjectId;
         $this->name = $name;
         $this->description = $description;
         $this->assigneeUsername = $assigneeUsername;
@@ -31,6 +33,14 @@ class IssueListItemOutput
     public function getIssueId(): int
     {
         return $this->issueId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInProjectId(): int
+    {
+        return $this->inProjectId;
     }
 
     /**

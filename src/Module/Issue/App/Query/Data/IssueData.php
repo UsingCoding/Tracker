@@ -5,6 +5,7 @@ namespace App\Module\Issue\App\Query\Data;
 class IssueData
 {
     private int $issueId;
+    private int $inProjectId;
     private string $name;
     private ?string $description;
     private ?string $username;
@@ -12,13 +13,14 @@ class IssueData
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(int $issueId, string $name, ?string $description, ?string $username, string $projectNameId, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(int $issueId, int $inProjectId, string $name, ?string $description, ?string $username, string $projectName, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->issueId = $issueId;
+        $this->inProjectId = $inProjectId;
         $this->name = $name;
         $this->description = $description;
         $this->username = $username;
-        $this->projectName = $projectNameId;
+        $this->projectName = $projectName;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
@@ -29,6 +31,14 @@ class IssueData
     public function getIssueId(): int
     {
         return $this->issueId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInProjectId(): int
+    {
+        return $this->inProjectId;
     }
 
     /**

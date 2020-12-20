@@ -17,16 +17,19 @@ class IssueDataMapping
     public const UPDATED_AT = 'updated_at';
     public const USERNAME = UserTableAdapter::USERNAME;
     public const PROJECT_NAME = 'project_name';
+    public const IN_PROJECT_ID = 'in_project_id';
 
     private const TYPES = [
         self::ISSUE_ID => Types::INTEGER,
         self::NAME => Types::STRING,
         self::DESCRIPTION => Types::STRING,
         self::FIELDS => Types::JSON,
+        self::PROJECT_ID => Types::INTEGER,
         self::PROJECT_NAME => Types::STRING,
         self::USERNAME => Types::STRING,
         self::CREATED_AT => Types::DATETIME_IMMUTABLE,
-        self::UPDATED_AT => Types::DATETIME_IMMUTABLE
+        self::UPDATED_AT => Types::DATETIME_IMMUTABLE,
+        self::IN_PROJECT_ID => Types::INTEGER
     ];
 
     public static function getColumnTypeName(string $columnName): string
