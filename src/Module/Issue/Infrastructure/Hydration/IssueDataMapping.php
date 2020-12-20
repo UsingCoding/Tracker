@@ -23,6 +23,7 @@ class IssueDataMapping
         self::NAME => Types::STRING,
         self::DESCRIPTION => Types::STRING,
         self::FIELDS => Types::JSON,
+        self::PROJECT_ID => Types::INTEGER,
         self::PROJECT_NAME => Types::STRING,
         self::USERNAME => Types::STRING,
         self::CREATED_AT => Types::DATETIME_IMMUTABLE,

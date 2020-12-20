@@ -6,11 +6,13 @@ use App\Module\Issue\App\Query\Data\IssueData;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 use App\Module\Issue\Domain\Service\IssueCodeService;
 use App\Module\Issue\Infrastructure\Hydration\IssueListWithUserAndProjectDataHydrator;
+use App\Module\Issue\Infrastructure\Hydration\IssueWithFieldsHydrator;
 use App\Module\Issue\Infrastructure\Hydration\IssueWithUserDataHydrator;
 use App\Module\Issue\Infrastructure\Query\SearchQueryParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
+use function Doctrine\DBAL\Query\QueryBuilder;
 
 class IssueQueryService implements IssueQueryServiceInterface
 {
@@ -94,5 +96,33 @@ class IssueQueryService implements IssueQueryServiceInterface
         $hydrator = new IssueListWithUserAndProjectDataHydrator($this->connection->getDatabasePlatform());
 
         return $hydrator->hydrateAll($row);
+    }
+
+    public function getIssueForProject(int $projectId): array
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->addSelect('i.issue_id')
+            ->addSelect('i.fields')
+            ->addSelect('i.project_id')
+            ->from('issue', 'i')
+            ->where($queryBuilder->expr()->eq('project_id', ':project_id'))
+            ->setParameter('project_id', $projectId, ParameterType::INTEGER)
+        ;
+
+
+        $stmt = $queryBuilder->execute();
+        $rows = $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        $stmt->closeCursor();
+
+        if ($rows === false)
+        {
+            return [];
+        }
+
+        $hydrator = new IssueWithFieldsHydrator($this->connection->getDatabasePlatform());
+
+        return $hydrator->hydrateAll($rows);
     }
 }

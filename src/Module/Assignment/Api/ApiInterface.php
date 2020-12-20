@@ -3,7 +3,6 @@
 namespace App\Module\Assignment\Api;
 
 use App\Module\Assignment\Api\Exception\ApiException;
-use App\Module\Assignment\Api\Input\AutoAssignInput;
 
 interface ApiInterface
 {
@@ -15,8 +14,9 @@ interface ApiInterface
     public function isAutoAssigmentAvailable(int $projectId): bool;
 
     /**
-     * @param AutoAssignInput $input
+     * @param int $projectId
+     * @return int
      * @throws ApiException
      */
-    public function autoAssign(AutoAssignInput $input): void;
+    public function autoAssignIssuesInProject(int $projectId): int;
 }

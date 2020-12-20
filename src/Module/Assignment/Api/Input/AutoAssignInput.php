@@ -2,29 +2,31 @@
 
 namespace App\Module\Assignment\Api\Input;
 
-class AutoAssignInput
-{
-    private int $issueId;
-    private int $projectId;
+use App\Module\Assignment\App\Data\AutoAssignSpecificationInterface;
 
-    public function __construct(int $issueId, int $projectId)
+class AutoAssignInput implements AutoAssignSpecificationInterface
+{
+    private ?int $issueId;
+    private ?int $projectId;
+
+    public function __construct(?int $issueId, ?int $projectId)
     {
         $this->issueId = $issueId;
         $this->projectId = $projectId;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIssueId(): int
+    public function getIssueId(): ?int
     {
         return $this->issueId;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getProjectId(): int
+    public function getProjectId(): ?int
     {
         return $this->projectId;
     }
