@@ -22,6 +22,7 @@ class IssuesListView
     {
         return new JsonResponse(Arrays::map($this->list->getItems(), static fn(IssueListItemOutput $item) => [
             'issue_id' => $item->getIssueId(),
+            'in_project_id' => $item->getInProjectId(),
             'issue_code' => $item->getIssueCode(),
             'name' => $item->getName(),
             'description' => $item->getDescription(),

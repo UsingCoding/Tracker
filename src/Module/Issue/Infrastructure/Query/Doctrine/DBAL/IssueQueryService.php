@@ -12,7 +12,6 @@ use App\Module\Issue\Infrastructure\Query\SearchQueryParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
-use function Doctrine\DBAL\Query\QueryBuilder;
 
 class IssueQueryService implements IssueQueryServiceInterface
 {
@@ -38,6 +37,7 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->addSelect('i.fields')
             ->addSelect('i.created_at')
             ->addSelect('i.updated_at')
+            ->addSelect('i.in_project_id')
             ->addSelect('p.name project_name')
             ->addSelect('ac.username')
             ->from('issue', 'i')
@@ -78,6 +78,7 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->addSelect('i.description')
             ->addSelect('i.fields')
             ->addSelect('i.updated_at')
+            ->addSelect('i.in_project_id')
             ->addSelect('p.name_id')
             ->addSelect('ac.username')
             ->from('issue', 'i')

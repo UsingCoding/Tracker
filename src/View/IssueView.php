@@ -20,6 +20,7 @@ class IssueView
     {
         return new JsonResponse([
             'issue_id' => $this->issue->getIssueId(),
+            'in_project_id' => $this->issue->getInProjectId(),
             'name' => $this->issue->getName(),
             'description' => $this->issue->getDescription(),
             'created_at' => $this->issue->getCreatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT),

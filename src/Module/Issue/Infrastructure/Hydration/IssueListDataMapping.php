@@ -15,6 +15,7 @@ class IssueListDataMapping
     public const UPDATED_AT = 'updated_at';
     public const USERNAME = UserTableAdapter::USERNAME;
     public const PROJECT_NAME_ID = ProjectTableAdapter::NAME_ID;
+    public const IN_PROJECT_ID = 'in_project_id';
 
     private const TYPES = [
         self::ISSUE_ID => Types::INTEGER,
@@ -23,7 +24,8 @@ class IssueListDataMapping
         self::FIELDS => Types::JSON,
         self::UPDATED_AT => Types::DATETIME_IMMUTABLE,
         self::USERNAME => Types::STRING,
-        self::PROJECT_NAME_ID => Types::STRING
+        self::PROJECT_NAME_ID => Types::STRING,
+        self::IN_PROJECT_ID => Types::INTEGER
     ];
 
     public static function getColumnTypeName(string $columnName): string

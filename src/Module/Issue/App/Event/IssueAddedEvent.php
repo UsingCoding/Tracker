@@ -6,18 +6,18 @@ use App\Common\App\Event\AppEventInterface;
 
 class IssueAddedEvent implements AppEventInterface
 {
-    private int $issueId;
+    private int $inProjectId;
 
     public function __construct(int $issueId)
     {
-        $this->issueId = $issueId;
+        $this->inProjectId = $issueId;
     }
 
     /**
      * @return int
      */
-    public function getIssueId(): int
+    public function getInProjectId(): int
     {
-        return $this->issueId;
+        return $this->inProjectId;
     }
 }

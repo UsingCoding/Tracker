@@ -16,6 +16,7 @@ class IssueWithUserDataHydrator extends AbstractDbalHydrator
     {
         $result[] = new IssueData(
             $this->convertValue(IssueDataMapping::ISSUE_ID, $row),
+            $this->convertValue(IssueDataMapping::IN_PROJECT_ID, $row),
             $this->convertValue(IssueDataMapping::NAME, $row),
             $this->convertValue(IssueDataMapping::DESCRIPTION, $row),
             $this->convertValue(IssueDataMapping::USERNAME, $row),

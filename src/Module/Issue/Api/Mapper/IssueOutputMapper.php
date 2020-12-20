@@ -17,6 +17,7 @@ class IssueOutputMapper
     {
         return new GetIssueOutput(
             $data->getIssueId(),
+            $data->getInProjectId(),
             $data->getName(),
             $data->getDescription(),
             $data->getProjectName(),
@@ -36,11 +37,12 @@ class IssueOutputMapper
             static fn(IssueListItemData $data) =>
             new IssueListItemOutput(
                 $data->getIssueId(),
+                $data->getInProjectId(),
                 $data->getName(),
                 $data->getDescription(),
                 $data->getAssigneeUsername(),
                 $data->getProjectNameId(),
-                IssueCodeService::getCode($data->getProjectNameId(), $data->getIssueId()),
+                IssueCodeService::getCode($data->getProjectNameId(), $data->getInProjectId()),
                 $data->getFields(),
                 $data->getUpdatedAt()
             ))
