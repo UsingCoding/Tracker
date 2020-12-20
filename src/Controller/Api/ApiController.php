@@ -2,9 +2,11 @@
 
 namespace App\Controller\Api;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\Exception\NoLoggedUserException;
 use App\Framework\Infrastructure\Security\User\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 abstract class ApiController extends AbstractController
@@ -43,5 +45,24 @@ abstract class ApiController extends AbstractController
         }
 
         throw $exception;
+    }
+
+    protected function renderableJson($data, int $status = 200, array $headers = [], array $context = []): RenderableViewInterface
+    {
+        $response = $this->json($data, $status, $headers, $context);
+
+        return new class($response) implements RenderableViewInterface {
+            protected Response $response;
+
+            public function __construct(Response $response)
+            {
+                $this->response = $response;
+            }
+
+            public function render(): Response
+            {
+                return $this->response;
+            }
+        };
     }
 }
