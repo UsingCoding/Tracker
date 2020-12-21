@@ -51,7 +51,7 @@
 
 <script>
 
-const user_id = 2;
+const user_id = 1;
 // const project_id = 1;
 
 export default {
@@ -77,7 +77,7 @@ export default {
                 }
             });
             
-            this.$router.push({ name: 'issue_details', params: { code: "KEK-" + issue_code }});
+            this.$router.push({ name: 'issue_details', params: { code: "PANDA-" + issue_code }});
         },
 
         cancel: function() {
