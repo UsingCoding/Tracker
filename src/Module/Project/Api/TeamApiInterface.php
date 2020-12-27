@@ -20,5 +20,10 @@ interface TeamApiInterface
      */
     public function removeMember(int $teamMemberId): void;
 
-    public function list(int $projectId): TeamMemberListOutput;
+    /**
+     * @param int $projectId
+     * @return TeamMemberListOutput
+     * @throws ApiException
+     */
+    public function teamMemberList(int $projectId): TeamMemberListOutput;
 }

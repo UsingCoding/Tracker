@@ -99,7 +99,7 @@ class Api implements ApiInterface
         $this->publish($command);
     }
 
-    public function list(int $projectId): TeamMemberListOutput
+    public function teamMemberList(int $projectId): TeamMemberListOutput
     {
         try
         {

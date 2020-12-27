@@ -2,12 +2,15 @@
 
 namespace App\Controller\Api\Issue;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
-use App\Module\Issue\Api\Exception\ApiException;
+use App\Module\Issue\Api\Exception\ApiException as IssueApiException;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\IssueFieldApiInterface;
+use App\Module\Project\Api\Exception\ApiException as ProjectApiException;
+use App\Module\Project\Api\ProjectManagementApiInterface;
 use App\View\IssueFieldListView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,14 +29,14 @@ class IssueFieldController extends ApiController
 
             return $this->json(['issue_field_id' => $issueFieldId]);
         }
-        catch (ApiException $e)
+        catch (IssueApiException $e)
         {
-            if ($e->getType() === ApiException::ISSUE_FIELD_NAME_BUSY)
+            if ($e->getType() === IssueApiException::ISSUE_FIELD_NAME_BUSY)
             {
                 return $this->json(['error'=> 'issue_filed_name_busy']);
             }
 
-            if ($e->getType() === ApiException::INVALID_ISSUE_FIELD_DATA)
+            if ($e->getType() === IssueApiException::INVALID_ISSUE_FIELD_DATA)
             {
                 return $this->json(['error' => 'invalid_issue_data']);
             }
@@ -46,7 +49,7 @@ class IssueFieldController extends ApiController
      * @param Request $request
      * @param IssueFieldApiInterface $api
      * @return Response
-     * @throws ApiException
+     * @throws IssueApiException
      */
     public function editField(Request $request, IssueFieldApiInterface $api): Response
     {
@@ -60,19 +63,19 @@ class IssueFieldController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (IssueApiException $exception)
         {
-            if ($exception->getType() === ApiException::ISSUE_FIELD_BY_NOT_FOUND)
+            if ($exception->getType() === IssueApiException::ISSUE_FIELD_BY_NOT_FOUND)
             {
                 return $this->json(['error' => 'issue_field_by_id_not_found']);
             }
 
-            if ($exception->getType() === ApiException::ISSUE_FIELD_NAME_BUSY)
+            if ($exception->getType() === IssueApiException::ISSUE_FIELD_NAME_BUSY)
             {
                 return $this->json(['error' => 'issue_field_name_busy']);
             }
 
-            if ($exception->getType() === ApiException::INVALID_ISSUE_FIELD_DATA)
+            if ($exception->getType() === IssueApiException::INVALID_ISSUE_FIELD_DATA)
             {
                 return $this->json(['error' => 'invalid_issue_data']);
             }
@@ -85,7 +88,7 @@ class IssueFieldController extends ApiController
      * @param Request $request
      * @param IssueFieldApiInterface $api
      * @return Response
-     * @throws ApiException
+     * @throws IssueApiException
      */
     public function deleteField(Request $request, IssueFieldApiInterface $api): Response
     {
@@ -97,9 +100,9 @@ class IssueFieldController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (IssueApiException $exception)
         {
-            if ($exception->getType() === ApiException::ISSUE_FIELD_BY_NOT_FOUND)
+            if ($exception->getType() === IssueApiException::ISSUE_FIELD_BY_NOT_FOUND)
             {
                 return $this->json(['error' => 'issue_field_by_id_not_found']);
             }
@@ -111,23 +114,21 @@ class IssueFieldController extends ApiController
 
     /**
      * @param int $projectId
-     * @param IssueFieldApiInterface $api
-     * @return Response
-     * @throws ApiException
+     * @param IssueFieldApiInterface $issueFieldApi
+     * @param ProjectManagementApiInterface $projectManagementApi
+     * @return RenderableViewInterface
+     * @throws IssueApiException
+     * @throws ProjectApiException
      */
-    public function listForProject(int $projectId, IssueFieldApiInterface $api): Response
+    public function listForProject(
+        int $projectId,
+        IssueFieldApiInterface $issueFieldApi,
+        ProjectManagementApiInterface $projectManagementApi
+    ): RenderableViewInterface
     {
-        try
-        {
-            $list = $api->issueFieldListForProject($projectId);
+        $list = $issueFieldApi->issueFieldListForProject($projectId);
+        $project = $projectManagementApi->getProject($projectId);
 
-            $view = new IssueFieldListView($list);
-
-            return $view->render();
-        }
-        catch (ApiException $exception)
-        {
-            throw $exception;
-        }
+        return new IssueFieldListView($list, $project);
     }
 }
