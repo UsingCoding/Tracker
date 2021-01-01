@@ -50,6 +50,16 @@ api_issues_list:
   controller: App\Controller\Api\Issue\IssueManagementController::issuesList
   methods: POST
 
+api_add_comment:
+  path: /api/issue/comment/add
+  controller: App\Controller\Api\Issue\CommentController::addComment
+  methods: POST
+
+api_delete_comment:
+  path: /api/issue/comment/delete
+  controller: App\Controller\Api\Issue\CommentController::deleteComment
+  methods: POST
+
 api_add_issue_field:
   path: /api/issue-field/add
   controller: App\Controller\Api\Issue\IssueFieldController::addField

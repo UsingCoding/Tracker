@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\Issue\Domain\Model\Comment" table="comment">
+        <id name="id" type="integer" column="comment_id">
+            <generator strategy="IDENTITY" />
+        </id>
+
+        <field name="issueId" type="integer" />
+        <field name="userId" type="integer" />
+        <field name="content" length="1000" />
+    </entity>
+</doctrine-mapping>
