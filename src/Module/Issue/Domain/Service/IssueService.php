@@ -136,6 +136,22 @@ class IssueService
         }
     }
 
+    /**
+     * @param int $issueId
+     * @throws IssueByIdNotFoundException
+     */
+    public function deleteIssue(int $issueId): void
+    {
+        $issue = $this->issueRepo->findById($issueId);
+
+        if ($issue === null)
+        {
+            throw new IssueByIdNotFoundException('', ['issue_id' => $issueId]);
+        }
+
+        $this->issueRepo->remove($issue);
+    }
+
     public function addFieldToIssues(int $fieldId, int $projectId): void
     {
         $issues = $this->issueRepo->findForProject($projectId);

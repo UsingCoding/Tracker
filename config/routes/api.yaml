@@ -35,9 +35,14 @@ api_create_issue:
   path: /api/issue/create
   controller: App\Controller\Api\Issue\IssueManagementController::createIssue
 
-api_edit_route:
+api_edit_issue:
   path: /api/issue
   controller: App\Controller\Api\Issue\IssueManagementController::editIssue
+  methods: POST
+
+api_delete_issue:
+  path: /api/issue/delete
+  controller: App\Controller\Api\Issue\IssueManagementController::deleteIssue
   methods: POST
 
 api_issues_list:

@@ -31,6 +31,12 @@ interface ApiInterface extends IssueFieldApiInterface
     public function editIssue(EditIssueInput $input): void;
 
     /**
+     * @param int $issueId
+     * @throws ApiException
+     */
+    public function deleteIssue(int $issueId): void;
+
+    /**
      * @param string $query
      * @return IssuesListOutput
      * @throws ApiException

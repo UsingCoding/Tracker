@@ -20,6 +20,7 @@ use App\Module\Issue\Api\Output\IssueFieldListOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
 use App\Module\Issue\App\Command\AddIssueFieldCommand;
 use App\Module\Issue\App\Command\CreateIssueCommand;
+use App\Module\Issue\App\Command\DeleteIssueCommand;
 use App\Module\Issue\App\Command\DeleteIssueFieldCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
 use App\Module\Issue\App\Command\EditIssueFieldCommand;
@@ -78,6 +79,13 @@ class Api implements ApiInterface
     public function editIssue(EditIssueInput $input): void
     {
         $command = new EditIssueCommand($input);
+
+        $this->publish($command);
+    }
+
+    public function deleteIssue(int $issueId): void
+    {
+        $command = new DeleteIssueCommand($issueId);
 
         $this->publish($command);
     }
