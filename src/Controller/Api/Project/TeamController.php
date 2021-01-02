@@ -4,6 +4,7 @@ namespace App\Controller\Api\Project;
 
 use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
+use App\Module\Project\Api\ApiInterface;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\AddTeamMemberInput;
 use App\Module\Project\Api\TeamApiInterface;
@@ -66,10 +67,19 @@ class TeamController extends ApiController
         }
     }
 
-    public function list(Request $request, TeamApiInterface $api): RenderableViewInterface
+    /**
+     * @param Request $request
+     * @param ApiInterface $projectApi
+     * @return RenderableViewInterface
+     * @throws ApiException
+     */
+    public function list(Request $request, ApiInterface $projectApi): RenderableViewInterface
     {
-        $list = $api->list($request->get('project_id'));
+        $projectId = $request->get('project_id');
 
-        return new TeamMemberListView($list);
+        $list = $projectApi->teamMemberList($projectId);
+        $project = $projectApi->getProject($projectId);
+
+        return new TeamMemberListView($list, $project);
     }
 }

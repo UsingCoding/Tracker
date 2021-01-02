@@ -23,9 +23,12 @@ services:
         calls:
             - [registerHandler, [!php/const App\Module\Issue\App\Command\CreateIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\CreateIssueCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\DeleteIssueCommand::TYPE, '@App\Module\Issue\App\Command\Handler\DeleteIssueCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\AddIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\AddIssueFieldCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\EditIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\EditIssueFieldCommandHandler']]
             - [registerHandler, [!php/const App\Module\Issue\App\Command\DeleteIssueFieldCommand::TYPE, '@App\Module\Issue\App\Command\Handler\DeleteIssueFieldCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\AddCommentCommand::TYPE, '@App\Module\Issue\App\Command\Handler\AddCommentCommandHandler']]
+            - [registerHandler, [!php/const App\Module\Issue\App\Command\DeleteCommentCommand::TYPE, '@App\Module\Issue\App\Command\Handler\DeleteCommentCommandHandler']]
 
     issue.command_bus:
         class: App\Common\App\Command\Bus\AppCommandBus

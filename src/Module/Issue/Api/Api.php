@@ -8,6 +8,7 @@ use App\Common\App\Event\AppEventHandlerInterface;
 use App\Common\App\Event\AppEventInterface;
 use App\Common\App\Event\AppEventSourceInterface;
 use App\Module\Issue\Api\Exception\ApiException;
+use App\Module\Issue\Api\Input\AddCommentInput;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
@@ -18,11 +19,15 @@ use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssueFieldListOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
+use App\Module\Issue\App\Command\AddCommentCommand;
 use App\Module\Issue\App\Command\AddIssueFieldCommand;
 use App\Module\Issue\App\Command\CreateIssueCommand;
+use App\Module\Issue\App\Command\DeleteCommentCommand;
+use App\Module\Issue\App\Command\DeleteIssueCommand;
 use App\Module\Issue\App\Command\DeleteIssueFieldCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
 use App\Module\Issue\App\Command\EditIssueFieldCommand;
+use App\Module\Issue\App\Event\CommentAddedEvent;
 use App\Module\Issue\App\Event\IssueAddedEvent;
 use App\Module\Issue\App\Event\IssueFieldAddedEvent;
 use App\Module\Issue\App\Query\IssueFieldQueryServiceInterface;
@@ -82,6 +87,13 @@ class Api implements ApiInterface
         $this->publish($command);
     }
 
+    public function deleteIssue(int $issueId): void
+    {
+        $command = new DeleteIssueCommand($issueId);
+
+        $this->publish($command);
+    }
+
     public function list(string $query): IssuesListOutput
     {
         try
@@ -131,6 +143,20 @@ class Api implements ApiInterface
         }
     }
 
+    public function addComment(AddCommentInput $input): int
+    {
+        $command = new AddCommentCommand($input);
+
+        return $this->publishCommandWithCommentAddedEventHandler($command);
+    }
+
+    public function deleteComment(int $commentId): void
+    {
+        $command = new DeleteCommentCommand($commentId);
+
+        $this->publish($command);
+    }
+
     /**
      * @param CommandInterface $command
      * @return int
@@ -167,6 +193,44 @@ class Api implements ApiInterface
         }
 
         return $handler->getInProjectId();
+    }
+
+    /**
+     * @param CommandInterface $command
+     * @return int
+     * @throws ApiException
+     */
+    private function publishCommandWithCommentAddedEventHandler(CommandInterface $command): int
+    {
+        $handler = new class implements AppEventHandlerInterface {
+            private int $commentId;
+
+            public function handle(AppEventInterface $event): void
+            {
+                if ($event instanceof CommentAddedEvent)
+                {
+                    $this->commentId = $event->getCommentId();
+                }
+            }
+
+            public function getCommentId(): int
+            {
+                return $this->commentId;
+            }
+        };
+
+        $this->eventSource->subscribe($handler);
+
+        try
+        {
+            $this->publish($command);
+        }
+        finally
+        {
+            $this->eventSource->unsubscribe($handler);
+        }
+
+        return $handler->getCommentId();
     }
 
     /**

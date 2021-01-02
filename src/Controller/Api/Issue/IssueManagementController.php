@@ -117,6 +117,31 @@ class IssueManagementController extends ApiController
      * @return Response
      * @throws ApiException
      */
+    public function deleteIssue(Request $request, ApiInterface $issueApi): Response
+    {
+        try
+        {
+            $issueApi->deleteIssue($request->get('issue_id'));
+
+            return new Response();
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::ISSUE_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['error' => 'issue_not_found'], 404);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ApiInterface $issueApi
+     * @return Response
+     * @throws ApiException
+     */
     public function issuesList(Request $request, ApiInterface $issueApi): Response
     {
         $list = $issueApi->list($request->get('search_query'));

@@ -35,14 +35,29 @@ api_create_issue:
   path: /api/issue/create
   controller: App\Controller\Api\Issue\IssueManagementController::createIssue
 
-api_edit_route:
+api_edit_issue:
   path: /api/issue
   controller: App\Controller\Api\Issue\IssueManagementController::editIssue
+  methods: POST
+
+api_delete_issue:
+  path: /api/issue/delete
+  controller: App\Controller\Api\Issue\IssueManagementController::deleteIssue
   methods: POST
 
 api_issues_list:
   path: /api/issue/search
   controller: App\Controller\Api\Issue\IssueManagementController::issuesList
+  methods: POST
+
+api_add_comment:
+  path: /api/issue/comment/add
+  controller: App\Controller\Api\Issue\CommentController::addComment
+  methods: POST
+
+api_delete_comment:
+  path: /api/issue/comment/delete
+  controller: App\Controller\Api\Issue\CommentController::deleteComment
   methods: POST
 
 api_add_issue_field:
@@ -102,7 +117,7 @@ api_remove_team_member:
   controller: App\Controller\Api\Project\TeamController::removeMember
   methods: POST
 
-ap_team_member_list:
+api_team_member_list:
   path: /api/team-members
   controller: App\Controller\Api\Project\TeamController::list
-  methods: GET
+  methods: POST

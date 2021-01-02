@@ -8,7 +8,7 @@ use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
 
-interface ApiInterface extends IssueFieldApiInterface
+interface ApiInterface extends IssueFieldApiInterface, CommentApiInterface
 {
     /**
      * @param CreateIssueInput $input
@@ -29,6 +29,12 @@ interface ApiInterface extends IssueFieldApiInterface
      * @throws ApiException
      */
     public function editIssue(EditIssueInput $input): void;
+
+    /**
+     * @param int $issueId
+     * @throws ApiException
+     */
+    public function deleteIssue(int $issueId): void;
 
     /**
      * @param string $query
