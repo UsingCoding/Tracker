@@ -7,8 +7,8 @@
                 <i class="tool right_tool fas fa-beer"></i>
             </div>
             <div class="tools second_tools">
-                <i v-if="this.$route.name != 'issues'" v-on:click="goEdit()" class="tool far fa-edit"></i>
-                <i class="tool right_tool fas fa-trash"></i>
+                <i v-if="this.$route.name == 'issue_details'" v-on:click="goEdit()" class="tool far fa-edit"></i>
+                <i v-on:click="deleteIssue()" class="tool right_tool fas fa-trash"></i>
             </div>
         </div>
         <div v-if="modalFlag" class="modalWindow">
@@ -46,17 +46,19 @@ export default {
         }
     },
     methods: {
-        delete: function(id) {
-            console.log(id);
-        },
         goEdit: function() {
             this.$emit('goEdit');
         },
         openModal: function() {
-            this.modalFlag = true;
+            if(this.$route.name == 'issues')
+                this.modalFlag = true;
         },
         closeModal: function() {
             this.modalFlag = false;
+        },
+        deleteIssue: async function() {
+            if(this.$route.name == 'issue_details')
+                await this.$emit('delete');
         }
     }
 }

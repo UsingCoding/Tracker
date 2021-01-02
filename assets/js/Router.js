@@ -13,6 +13,7 @@ import project_settings from "./pages/ProjectSettingsPage";
 import project_team from "./pages/ProjectTeamPage";
 import user_info from "./pages/UserPage";
 import users_list from "./pages/UsersListPage";
+import access_denied from "./pages/AccessDeniedPage";
 
 Vue.use(VueRouter);
 
@@ -32,6 +33,7 @@ export default new VueRouter({
         { path: '/project/:code/team', name: 'project_team', component: project_team},
         { path: '/user/:code', name: 'user_info', component: user_info},
         { path: '/add/user', name: 'create_user', component: user_info},
-        { path: '/users', name: 'users_list', component: users_list}
+        { path: '/users', name: 'users_list', component: users_list},
+        { path: '/access-denied', name: 'access_denied', component: access_denied}
     ]
 });

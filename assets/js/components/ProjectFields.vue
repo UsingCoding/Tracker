@@ -1,6 +1,6 @@
 <template>
   <div class="project_view_width">
-        <h1 class="administration_path">Own Tracker <i class="fas fa-chevron-right arrow"></i> Fields</h1>
+        <h1 class="administration_path">{{projectFields.project_name}} <i class="fas fa-chevron-right arrow"></i> Fields</h1>
         <div>
             <span class="autoassigneeWarning" >
                 Auto assignee feature will be available if project exist fields
@@ -31,7 +31,7 @@
                     </div>
                 </form>
 
-                <div v-for="field in projectFields" class="member_div">
+                <div v-for="field in projectFields.fields" class="member_div">
                     <div v-if="field_id != field.id">
                         <input v-on:click="map.set(field.id, map.get(field.id)*-1)" class="member_checkbox" type="checkbox" :id="field.fieldId"/> 
                         <span v-on:click="openEdit(field)" class="team_member">{{field.name}}</span>
@@ -88,7 +88,7 @@ export default {
                 'project_id': this.$route.params.code 
             });
 
-            if(response)
+            if(response.ok)
             {
                 this.projectFields.push({ 
                     'name': this.name,
@@ -96,8 +96,8 @@ export default {
                     'id': response.issue_field_id
                 });
                 this.map.set(response.issue_field_id, -1);
+                this.cancel();
             }
-            this.cancel();
         },
         cancel: function() {
             this.name = '';
@@ -111,7 +111,8 @@ export default {
                 'issue_field_id': this.field_id
             });
             
-            await this.getFieldsList();
+            if(response.ok)
+                await this.getFieldsList();
 
             this.cancelEdit();
         },
@@ -131,10 +132,11 @@ export default {
                 if(val == 1)
                 {
                     this.fieldStore.deleteField(key);
-                    this.map.delete(key);
                 }
             }
-            // await this.getFieldsList();
+            this.map.clear();
+
+            await this.getFieldsList();
         },
         getFieldsList: async function() {
             this.projectFields = await this.fieldListStore.getFields(this.$route.params.code);

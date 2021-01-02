@@ -3,7 +3,8 @@
       <app-header></app-header>
       <search-panel></search-panel>
       <toolbar></toolbar>
-      <create-issue-form v-bind:factory="factory"></create-issue-form>
+      <create-issue-form v-bind:factory="factory" v-on:error="changeFlag()"></create-issue-form>
+      <pop-up v-bind:popupFlag="popupFlag" v-on:close="changeFlag()"></pop-up>
   </div>
 </template>
 
@@ -12,25 +13,26 @@ import tools from "../components/Toolbar";
 import header from "../components/Header";
 import create_issue from "../components/CreateIssue";
 import search_panel from "../components/SearchPanel";
-
-// const server_api = new ServerApi();
-// const Afactory = new StoreFactory(server_api);
+import popup from "../components/Popup";
 
 export default {
     props: ['factory'],
     data() {
         return {
-            // factory: Afactory
+            popupFlag: false           
         }
     },
     components: {
         "app-header": header,
         "search-panel": search_panel,
         "toolbar": tools,
-        "create-issue-form": create_issue
+        "create-issue-form": create_issue,
+        "pop-up": popup
     },
     methods: {
-
+        changeFlag: function() {
+            this.popupFlag = !this.popupFlag;
+        }
     }
 }
 </script>

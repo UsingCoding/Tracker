@@ -1,6 +1,6 @@
 <template>
   <div class="project_view_width">
-      <h1 class="administration_path">Own Tracker <i class="arrow fas fa-chevron-right"></i> Team</h1>
+      <h1 class="administration_path">{{team.project_name}} <i class="arrow fas fa-chevron-right"></i> Team</h1>
       <div>
           <div class="edit_team_btns">
               <button v-on:click="addFlag = true" class="project_form_btn add_member">Add members</button>
@@ -12,7 +12,7 @@
                     <div class="name_block">
                         <label class="field_name" id="username">Username</label>
                         <select v-model="userId" class="type_options" name="username" id="username">
-                            <option v-for="user in users" :value="user.id">{{user.username}}</option>
+                            <option v-for="user in team.team_members" :value="user.id">{{user.username}}</option>
                         </select>
                     </div>
                 
@@ -22,7 +22,7 @@
                     </div>
                 </form>
               
-                <div v-for="user in users" class="member_div">
+                <div v-for="user in team.team_members" class="member_div">
                     <input v-on:click="map.set(user.id, map.get(user.id)*-1)" class="member_checkbox" type="checkbox"/> 
                     <span class="team_member">{{user.username}}</span>
                 </div>
@@ -37,24 +37,24 @@ export default {
     data() {
         return {
             memberStore: this.factory.createMemberStore(),
-            usersListStore: this.factory.createUsersListStore(),
+            membersListStore: this.factory.createMembersListStore(),
             addFlag: false,
             userId: '',
-            users: [],
+            team: [],
             map: new Map(),
         }
     },
     methods: {
-        getUsers: async function() {
-            this.users = await this.usersListStore.getUsers();
+        getMembers: async function() {
+            this.team = await this.membersListStore.getMembersList(this.$route.params.code);
         },
         addMember: async function() {
-                    // this.memberStore.addMember({
-                    //     'user_id': this.userId,
-                    //     'project_id': this.$route.params.code
-                    // })
-                    // await this.getMembers();
-                console.log(this.userId);
+            this.memberStore.addMember({
+                'user_id': this.userId,
+                'project_id': this.$route.params.code
+            })
+            await this.getMembers();
+                // console.log(this.userId);
         },
         removeMembers: async function() {
             for(var [key, val] of this.map)
@@ -65,7 +65,7 @@ export default {
 
                 }
             }
-            // await this.getMembers();
+            await this.getMembers();
         },
         cancel: function() {
             this.addFlag = false;
@@ -73,10 +73,10 @@ export default {
         }
     },
     async beforeMount() {
-        await this.getUsers();
-        for(var user of this.users)
+        await this.getMembers();
+        for(var member of this.team.team_members)
         {
-            this.map.set(user.id, -1);
+            this.map.set(member.id, -1);
         }
     }
 }

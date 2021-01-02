@@ -30,4 +30,12 @@ export default class UserStore
         if(response)
             return await response;
     }
+
+    async deleteUser(user_id)
+    {
+        const response = await this._serverApi.deleteUser(user_id);
+
+        if(response)
+            return await response;   
+    }
 }

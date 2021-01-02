@@ -56,7 +56,7 @@ export default {
                 'name': this.new_project_title,
                 'description': this.new_project_description 
             });
-            console.log(this.new_project_title);
+            
             if(result.ok)
                 this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } })
         },

@@ -2,8 +2,8 @@
     <div>
       <app-header></app-header>
       <search-panel></search-panel>
-      <toolbar v-on:goEdit="changeEdit()" v-bind:edit_flag="edit_flag"></toolbar>
-      <issue-info v-on:cancel_edit="changeEdit()" v-bind:factory="factory" v-bind:edit_flag="edit_flag"></issue-info>
+      <toolbar v-on:delete="deleteIssue()" v-on:goEdit="changeEdit()" v-bind:edit_flag="edit_flag"></toolbar>
+      <issue-info ref="issue_info" v-on:cancel_edit="changeEdit()" v-bind:factory="factory" v-bind:edit_flag="edit_flag"></issue-info>
     </div>
 </template>
 
@@ -29,6 +29,10 @@ export default {
     methods: {
         changeEdit: function () {
             this.edit_flag = !this.edit_flag;
+        },
+        deleteIssue: function() {
+            var child = this.$refs.issue_info;
+            child.delete_issue();
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="list_view">  
-    <div v-for="issue in issuesList" class="issue">
+    <div v-for="issue in issues" class="issue">
       <div class="issue_details">
         <span class="issue_header">{{issue.issue_code}}</span>
         <router-link :to="{name: 'issue_details', params: { code: issue.issue_code }}" class="issue_title" exact>{{issue.name}}</router-link>
@@ -12,7 +12,8 @@
             <span>{{field}}</span>
           </div> -->
           <div class="issue_field">
-            <span>{{issue.username}}</span>
+            <span v-if="issue.username == ''">Unassinged</span>
+            <span v-else>{{issue.username}}</span>
           </div>
         </div>
       </div>
@@ -25,20 +26,20 @@
 import Strings from "../Utils/Strings";
 
 export default {
-  props:['factory'],
+  props:[
+    'factory',
+    'issues'
+  ],
   data() {
       return {
-        store: this.factory.createIssuesListStore(),
-        issuesList: {}
+        
       }
   },
   methods: {
-    getIssueList: async function() {
-      this.issuesList = await this.store.getIssueList();
-    }
+    
   },
   async beforeMount() {
-    await this.getIssueList();
+  
   }
 }
 

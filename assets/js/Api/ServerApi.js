@@ -55,7 +55,22 @@ export default class ServerApi
         return await response.json();
     }
 
-    async getIssueList()
+    async deleteIssue(issue_id)
+    {
+        let response = await fetch('/api/issue/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'issue_id': issue_id
+            })
+        })
+
+        return await response;
+    }
+
+    async getIssueList(search_query)
     {
         let response = await fetch('/api/issue/search',{
             method: 'POST',
@@ -63,7 +78,7 @@ export default class ServerApi
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                'search_query': ''
+                'search_query': search_query
             })
         })
         return await response.json();
@@ -156,7 +171,7 @@ export default class ServerApi
 
     async createUser(props)
     {
-        let response = await fetch('/api/user/add/', {
+        let response = await fetch('/api/user/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
@@ -174,11 +189,14 @@ export default class ServerApi
 
     async getUser(user_id)
     {
-        let response = await fetch('/api/' + user_id, {
-            method: 'GET',
+        let response = await fetch('/api/user', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
-            }
+            },
+            body: JSON.stringify({
+                'user_id': user_id 
+            })
         });
 
         return await response.json();
@@ -308,5 +326,21 @@ export default class ServerApi
         });
         
         return await response;
+    }
+
+    async getMembersList(project_id)
+    {
+        
+        let response = await fetch('/api/team-members', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'project_id': project_id
+            })
+        });
+        
+        return await response.json();
     }
 }

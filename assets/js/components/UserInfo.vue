@@ -55,7 +55,13 @@ export default {
         edit_user: async function() {
             let response;
             if(this.$route.name == 'user_info') {
-                response = await this.store.editUserInfo();
+                response = await this.store.editUserInfo({
+                    'user_id': this.$route.params.code,
+                    'email': this.email,
+                    'password': this.password,
+                    'username': this.username,
+                    'grade': this.grade
+                });
             }
             else {
                 response = await this.store.createUser({
@@ -65,16 +71,19 @@ export default {
                     'grade': this.grade
                 })
             }
+
+            if(response.ok)
+                this.$router.push({name: 'users_list'});
         },
         cancel: function() {
             this.$router.push({ name: 'users_list'});
         },
         getUserInfo: async function() {
-            this.username = "root";
-            this.email = "root@gmail.com";
-            this.grade = "Junior";
-            this.password = "1234";
-            this.grade = 0;
+            this.userInfo = await this.store.getUserInfo(this.$route.params.code);
+            this.username = this.userInfo.username;
+            this.email = this.userInfo.email;
+            this.password = this.userInfo.password;
+            this.grade = this.userInfo.grade;
         }
     },
     async beforeMount() {

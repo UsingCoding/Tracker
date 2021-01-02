@@ -3,7 +3,7 @@
         <div>
             <h1 class="new_issue_header">
                 <span>New issue in</span>
-                <span class="project_title" >Some test</span>
+                <span class="project_title" >{{chosenProject.name}}</span>
             </h1>
 
             <form class="create_issue" action="index.html" method="post">
@@ -25,21 +25,28 @@
                             <tr class="tag_row">
                                 <td><label class="tag" for="project">Project</label></td>
                                 <td>
-                                    <select v-model="project_id" class="tag_value" name="project" id="project">
-                                        <option v-for="project in projects" :value="project.project_id">{{project.name}}</option>
+                                    <select v-model="chosenProject" class="tag_value" name="project" id="project">
+                                        <option v-for="project in projects" :value="project">{{project.name}}</option>
                                     </select>
                                 </td>
                             </tr>
 
-                            <!-- <tr class="tag_row">
+                            <tr class="tag_row">
                                 <td><label class="tag" for="assignee">Assignee</label></td>
                                 <td>
                                     <select v-model="assignee" class="tag_value" name="assignee" id="assignee">
-                                        <option value="jojo">jojo</option>
-                                        <option value="Unassigned">Unassigned</option>
+                                        <option value="0">Unassigned</option>
+                                        <option v-for="member in team" :value="member.id">{{member.username}}</option>
                                     </select>
                                 </td>
-                            </tr> -->
+                            </tr>
+                            
+                            <tr v-for="field in fields.fields" class="tag_row">
+                                <td><label class="tag" for="assignee">{{field.name}}</label></td>
+                                <td>
+                                    <input class="field_input" type="text" name="">
+                                </td>
+                            </tr>
 
                         </table>
                     </div>
@@ -60,24 +67,33 @@ export default {
         return {
             issue_title: '',
             issue_description: '',
-            assignee: 'Unassigned',
-            project_id: '',
-            store: this.factory.createCreateIssueStore(),
-            projects: []
+            assignee: '0',
+            chosenProject: {},
+            issueStore: this.factory.createCreateIssueStore(),
+            teamStore: this.factory.createMembersListStore(),
+            fieldsStore: this.factory.createFieldsListStore(),
+            team: [],
+            projects: [],
+            fields: []
         }
     },
     methods: {
         create_issue: async function() {
-            let issue_code = await this.store.createIssue({
+            let issue_code = await this.issueStore.createIssue({
                 "title": this.issue_title,
                 "description": this.issue_description,
                 "fields": {
                     "user_id": user_id,
-                    "project_id": this.project_id
+                    "project_id": this.chosenProject.project_id
                 }
             });
-            
-            this.$router.push({ name: 'issue_details', params: { code: "PANDA-" + issue_code }});
+            //ne zahodit suda padaet v else
+            if(issue_code){
+                this.$router.push({ name: 'issue_details', params: { code: this.chosenProject.name_id + "-" + issue_code }});
+            }
+            else {
+                this.$emit('error');
+            }
         },
 
         cancel: function() {
@@ -87,7 +103,10 @@ export default {
     async beforeMount() {
         let projectsStore = this.factory.createProjectsListStore();
         this.projects = await projectsStore.getProjectsList();
-        this.project_id = this.projects[0].project_id;
+        this.chosenProject = this.projects[0];
+        // this.team = await this.teamStore.getMembersList(this.chosenProject.project_id).team_members;
+        // this.assignee = this.team[0].id;
+        this.fields = await this.fieldsStore.getFields(this.chosenProject.project_id);
     }
 }
 </script>

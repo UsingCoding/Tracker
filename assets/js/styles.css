@@ -666,7 +666,8 @@ header
 
 .project_input:focus,
 .new_project_description:focus,
-.name_input:focus
+.name_input:focus,
+.field_input:focus
 {
   outline: none; 
   border: 2px solid #0f5b99;
@@ -905,4 +906,62 @@ header
 {
   margin: 5% 0 0 1%;
   padding-bottom: 2%;
+}
+
+.field_input
+{
+  font: 14px/17px "Montserrat";
+  width: 92px;
+}
+
+.lost
+{
+  font: 48px/59px "Montserrat";
+  display: block;
+}
+
+.popup_div
+{
+  width: 298px;
+  height: 93px;
+  background: #111314;
+  border-radius: 5px;
+  z-index: 1;
+  position: fixed;
+  left: 73%;
+  top: 80%;
+}
+
+.popup_content
+{
+  width: 95%;
+  padding: 4% 2.5%;
+}
+
+.popup_header
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup_title
+{
+  padding-top: 5px;
+  font: 18px/22px "Montserrat";
+  color: #ffffff;
+}
+
+.popup_close
+{
+  font-size: 22px;
+  color: #c4c4c4;
+  cursor: pointer;
+}
+
+.popup_warn
+{
+  display: block;
+  margin-top: 3%;
+  font: 14px/17px "Montserrat";
+  color: #ffffff;
 }

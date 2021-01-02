@@ -64,6 +64,15 @@ export default class IssueStore
         }
     }
 
+    async deleteIssue(issue_id)
+    {
+        const response = await this._serverApi.deleteIssue(issue_id);
+        if(response)
+        {
+            return response;
+        }
+    }
+
     get name()
     {
         return this._name;

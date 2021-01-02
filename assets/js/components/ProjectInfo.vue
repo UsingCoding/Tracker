@@ -3,13 +3,9 @@
       <div class="project_info">
         <h1 class="project_name">{{projectInfo.name}}</h1>
         <div class="issues_in_project">
-            <div class="issue_in_project">
-                <span>HIPPO-1</span>
-                <router-link :to="{ name: 'issue_details', params: { code: 'HIPPO-1' }}" class="issue_name">Hard text of issue</router-link>
-            </div>
-            <div class="issue_in_project">
-                <span>HIPPO-1</span>
-                <router-link :to="{ name: 'issue_details', params: { code: 'HIPPO-1' }}" class="issue_name">Hard text of issue</router-link>
+            <div v-for="issue in issuesList" class="issue_in_project">
+                <span>{{issue.issue_code}}</span>
+                <router-link :to="{ name: 'issue_details', params: { code: issue.issue_code }}" class="issue_name">{{issue.name}}</router-link>
             </div>
         </div>
       </div>
@@ -33,12 +29,17 @@ export default {
     data() {
         return {
             store: this.factory.createProjectStore(),
-            projectInfo: {}
+            issuesStore: this.factory.createIssuesListStore(),
+            projectInfo: {},
+            issuesList: []
         }
     },
     methods: {
         getProjectInfo: async function() {
             this.projectInfo = await this.store.getProjectInfo(this.$route.params.code);
+        },
+        getIssueList: async function() {
+            this.issuesList = await this.issuesStore.getIssueList(this.projectInfo.nameId);
         },
         deleteProject: async function() {
             let response = await this.store.deleteProject(this.$route.params.code);
@@ -48,6 +49,7 @@ export default {
     },
     async beforeMount() {
         await this.getProjectInfo();
+        await this.getIssueList();
     }
 }
 </script>

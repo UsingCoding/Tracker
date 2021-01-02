@@ -10,6 +10,7 @@ import CreateFieldStore from "../Store/CreateFieldStore";
 import FieldsListStore from "../Store/FieldsListStore";
 import MemberStore from "../Store/MemberStore";
 import UsersListStore from "../Store/UsersListStore";
+import MembersListStore from "../Store/MembersListStore";
 
 export default class StoreFactory
 {
@@ -82,5 +83,10 @@ export default class StoreFactory
     createUsersListStore()
     {
         return new UsersListStore(this._serverApi);
+    }
+
+    createMembersListStore()
+    {
+        return new MembersListStore(this._serverApi);
     }
 }
