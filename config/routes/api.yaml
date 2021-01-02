@@ -55,6 +55,11 @@ api_add_comment:
   controller: App\Controller\Api\Issue\CommentController::addComment
   methods: POST
 
+api_edit_comment:
+  path: /api/issue/comment/edit
+  controller: App\Controller\Api\Issue\CommentController::editComment
+  methods: POST
+
 api_delete_comment:
   path: /api/issue/comment/delete
   controller: App\Controller\Api\Issue\CommentController::deleteComment

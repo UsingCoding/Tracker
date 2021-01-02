@@ -12,6 +12,7 @@ use App\Module\Issue\Api\Input\AddCommentInput;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
+use App\Module\Issue\Api\Input\EditCommentInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Mapper\IssueFieldOutputMapper;
@@ -25,6 +26,7 @@ use App\Module\Issue\App\Command\CreateIssueCommand;
 use App\Module\Issue\App\Command\DeleteCommentCommand;
 use App\Module\Issue\App\Command\DeleteIssueCommand;
 use App\Module\Issue\App\Command\DeleteIssueFieldCommand;
+use App\Module\Issue\App\Command\EditCommentCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
 use App\Module\Issue\App\Command\EditIssueFieldCommand;
 use App\Module\Issue\App\Event\CommentAddedEvent;
@@ -153,6 +155,13 @@ class Api implements ApiInterface
     public function deleteComment(int $commentId): void
     {
         $command = new DeleteCommentCommand($commentId);
+
+        $this->publish($command);
+    }
+
+    public function editComment(EditCommentInput $input): void
+    {
+        $command = new EditCommentCommand($input);
 
         $this->publish($command);
     }

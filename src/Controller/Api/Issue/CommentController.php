@@ -6,6 +6,7 @@ use App\Controller\Api\ApiController;
 use App\Module\Issue\Api\CommentApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddCommentInput;
+use App\Module\Issue\Api\Input\EditCommentInput;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,6 +40,34 @@ class CommentController extends ApiController
             if ($exception->getType() === ApiException::ISSUE_BY_ID_NOT_FOUND)
             {
                 return $this->json(['error' => 'issue_not_exists']);
+            }
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param CommentApiInterface $commentApi
+     * @return Response
+     * @throws ApiException
+     */
+    public function editComment(Request $request, CommentApiInterface $commentApi): Response
+    {
+        try
+        {
+            $commentApi->editComment(new EditCommentInput(
+                $request->get('comment_id'),
+                $request->get('content')
+            ));
+
+            return new Response('');
+        }
+        catch (ApiException $exception)
+        {
+            if ($exception->getType() === ApiException::COMMENT_BY_ID_NOT_FOUND)
+            {
+                return $this->json(['error' => 'comment_not_found']);
             }
 
             throw $exception;
