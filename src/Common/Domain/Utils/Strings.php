@@ -41,6 +41,11 @@ class Strings
         return explode($delimiter, $value);
     }
 
+    public static function upper(string $value): string
+    {
+        return strtoupper($value);
+    }
+
     public static function lower(string $value): string
     {
         return strtolower($value);
