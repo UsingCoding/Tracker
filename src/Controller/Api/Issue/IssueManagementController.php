@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api\Issue;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
 use App\Module\Issue\Api\ApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
@@ -9,6 +10,7 @@ use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\View\IssuesListView;
 use App\View\IssueView;
+use App\View\NewIssueView;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -149,5 +151,18 @@ class IssueManagementController extends ApiController
         $view = new IssuesListView($list);
 
         return $view->render();
+    }
+
+    /**
+     * @param Request $request
+     * @param ApiInterface $issueApi
+     * @return RenderableViewInterface
+     * @throws ApiException
+     */
+    public function newIssueView(Request $request, ApiInterface $issueApi): RenderableViewInterface
+    {
+        $fields = $issueApi->issueFieldListForProject($request->get('project_id'));
+
+        return new NewIssueView($fields);
     }
 }
