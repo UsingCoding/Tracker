@@ -38,18 +38,51 @@ export default {
     },
     methods: {
          create_project: async function() {
-            let response =  await this.store.createProject({
-                "name": this.new_project_title,
-                "nameId": this.new_project_id,
-                "description": this.new_project_description 
-            });
+            if(!this.validate()){
+                let response =  await this.store.createProject({
+                    "name": this.new_project_title,
+                    "nameId": this.new_project_id,
+                    "description": this.new_project_description 
+                });
 
-            // this.$router.push({ name: "project_info" })
-            this.$router.push({ name: "projects_list" });
-
+                if(response.ok && !response.hasOwnProperty('error'))
+                    this.$router.push({ name: "projects_list" });
+                else   
+                    this.$emit('error');
+            }
         },
         cancel: function() {
             this.$router.push({ name: "projects_list" });
+        },
+        showError: function(container) {
+            container.style ['border-color'] = '#ff0000';
+	        container.setAttribute('onclick', 'this.style=""');
+        },
+        validate: function() {
+            var error = false;
+            var name = document.getElementById('name');
+            var id = document.getElementById('id');
+            var description = document.getElementById('description');
+
+            if(!this.new_project_title)
+            {
+                error = true;
+                this.showError(name);
+            }
+
+            if(!this.new_project_id)
+            {
+                error = true;
+                this.showError(id);
+            }
+
+            if(!this.new_project_description)
+            {
+                error = true;
+                this.showError(description);
+            }
+
+            return error;
         }
 
     }

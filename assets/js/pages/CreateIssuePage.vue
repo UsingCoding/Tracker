@@ -3,8 +3,8 @@
       <app-header></app-header>
       <search-panel></search-panel>
       <toolbar></toolbar>
-      <create-issue-form v-bind:factory="factory" v-on:error="changeFlag()"></create-issue-form>
-      <pop-up v-bind:popupFlag="popupFlag" v-on:close="changeFlag()"></pop-up>
+      <create-issue-form v-bind:factory="factory" v-on:error="openPopup()"></create-issue-form>
+      <pop-up v-bind:popupFlag="popupFlag" v-on:close="closePopup()"></pop-up>
   </div>
 </template>
 
@@ -30,8 +30,11 @@ export default {
         "pop-up": popup
     },
     methods: {
-        changeFlag: function() {
-            this.popupFlag = !this.popupFlag;
+        openPopup: function() {
+            this.popupFlag = true;
+        },
+        closePopup: function() {
+            this.popupFlag = false;
         }
     }
 }

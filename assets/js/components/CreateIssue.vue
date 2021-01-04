@@ -58,8 +58,7 @@
 
 <script>
 
-const user_id = 1;
-// const project_id = 1;
+const user_id = 10;
 
 export default {
     props: ['factory'],
@@ -79,16 +78,18 @@ export default {
     },
     methods: {
         create_issue: async function() {
-            let issue_code = await this.issueStore.createIssue({
-                "title": this.issue_title,
-                "description": this.issue_description,
-                "fields": {
-                    "user_id": user_id,
-                    "project_id": this.chosenProject.project_id
-                }
-            });
-            //ne zahodit suda padaet v else
-            if(issue_code){
+            let issue_code;
+            if(this.title && this.description){
+                issue_code = await this.issueStore.createIssue({
+                    "title": this.issue_title,
+                    "description": this.issue_description,
+                    "fields": {
+                        "user_id": user_id,
+                        "project_id": this.chosenProject.project_id
+                    }
+                });
+            }
+            if(issue_code && !issue_code.hasOwnProperty['error']){
                 this.$router.push({ name: 'issue_details', params: { code: this.chosenProject.name_id + "-" + issue_code }});
             }
             else {

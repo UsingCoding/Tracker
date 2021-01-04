@@ -37,14 +37,20 @@ export default {
     methods: {
         getProjectInfo: async function() {
             this.projectInfo = await this.store.getProjectInfo(this.$route.params.code);
+            if(!this.projectInfo || typeof this.projectInfo['error'] !== "undefined")
+                this.$emit('error');
         },
         getIssueList: async function() {
             this.issuesList = await this.issuesStore.getIssueList(this.projectInfo.nameId);
+            if(!this.issuesList || typeof this.issuesList['error'] !== "undefined")
+                this.$emit('error');
         },
         deleteProject: async function() {
             let response = await this.store.deleteProject(this.$route.params.code);
-            if(response)
+            if(response.ok && typeof response['error'] === "undefined")
                 this.$router.push({ name: "projects_list" });
+            else
+                this.$emit('error');
         }
     },
     async beforeMount() {

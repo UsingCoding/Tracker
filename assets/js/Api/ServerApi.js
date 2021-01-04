@@ -329,8 +329,7 @@ export default class ServerApi
     }
 
     async getMembersList(project_id)
-    {
-        
+    {  
         let response = await fetch('/api/team-members', {
             method: 'POST',
             headers: {
@@ -342,5 +341,37 @@ export default class ServerApi
         });
         
         return await response.json();
+    }
+
+    async createComment(props)
+    {
+        let response = await fetch('/api/issue/comment/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'user_id': props.user_id,
+                'issue_id': props.issue_id,
+                'content': props.content
+            })
+        });
+
+        return await response.json();
+    }
+
+    async deleteComment(comment_id)
+    {  
+        let response = await fetch('/api/issue/comment/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'comment_id': comment_id
+            })
+        });
+        
+        return await response;
     }
 }

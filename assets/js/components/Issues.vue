@@ -8,13 +8,13 @@
       </div>
       <div class="issue_footer">
         <div class="issue_fields">
-          <!-- <div v-for="field in issue.fields" class="issue_field">
-            <span>{{field}}</span>
-          </div> -->
           <div class="issue_field">
             <span v-if="issue.username == ''">Unassinged</span>
             <span v-else>{{issue.username}}</span>
           </div>
+          <!-- <div v-for="field in issue.fields" class="issue_field">
+            <span>{{field}}</span>
+          </div> -->
         </div>
       </div>
       <hr class="issue_border"/>

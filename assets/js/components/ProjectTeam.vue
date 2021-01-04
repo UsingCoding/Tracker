@@ -54,7 +54,6 @@ export default {
                 'project_id': this.$route.params.code
             })
             await this.getMembers();
-                // console.log(this.userId);
         },
         removeMembers: async function() {
             for(var [key, val] of this.map)

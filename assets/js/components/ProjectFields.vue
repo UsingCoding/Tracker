@@ -13,8 +13,8 @@
             <div class="project_team">
                 <form v-if="addFlag" class="edited_field">
                     <div class="name_block">
-                        <label class="field_name">Name</label>
-                        <input v-model="name" class="name_input" type="text"/>
+                        <label class="field_name" for="name">Name</label>
+                        <input v-model="name" class="name_input" type="text" id="name"/>
                     </div>
                     
                     <div class="field_type">
@@ -39,13 +39,13 @@
 
                     <form v-if="field_id == field.id" class="edited_field">
                         <div class="name_block">
-                            <label class="field_name">Name</label>
-                            <input v-model="name" class="name_input" type="text"/>
+                            <label class="field_name" for="field_name">Name</label>
+                            <input v-model="name" class="name_input" type="text" id="field_name"/>
                         </div>
                     
                         <div class="field_type">
-                            <label for="type">Type</label>
-                            <select v-model="type" class="type_options" name="type" id="type">
+                            <label for="field_type">Type</label>
+                            <select v-model="type" class="type_options" name="type" id="field_type">
                                 <option value="0">Time interval</option>
                                 <option value="1">String</option>
                             </select>
@@ -82,21 +82,26 @@ export default {
     },
     methods: {
         addField: async function() {
-            let response = await this.createFieldStore.addField({
-                'name': this.name,
-                'type': this.type,
-                'project_id': this.$route.params.code 
-            });
-
-            if(response.ok)
+            if(!this.validateAdd())
             {
-                this.projectFields.push({ 
+                let response = await this.createFieldStore.addField({
                     'name': this.name,
                     'type': this.type,
-                    'id': response.issue_field_id
+                    'project_id': this.$route.params.code 
                 });
-                this.map.set(response.issue_field_id, -1);
-                this.cancel();
+
+                if(response.ok && !response.hasOwnProperty('error'))
+                {
+                    this.projectFields.push({ 
+                        'name': this.name,
+                        'type': this.type,
+                        'id': response.issue_field_id
+                    });
+                    this.map.set(response.issue_field_id, -1);
+                    this.cancel();
+                }
+                else
+                    this.$emit('error');
             }
         },
         cancel: function() {
@@ -105,16 +110,19 @@ export default {
             this.addFlag = false;
         },
         editField: async function() {
-            let response = await this.fieldStore.editField({
-                'name': this.name,
-                'type': this.type,
-                'issue_field_id': this.field_id
-            });
+            if(!this.validateEdit())
+            {
+                let response = await this.fieldStore.editField({
+                    'name': this.name,
+                    'type': this.type,
+                    'issue_field_id': this.field_id
+                });
             
-            if(response.ok)
-                await this.getFieldsList();
+                if(response.ok && !response.hasOwnProperty('error'))
+                    await this.getFieldsList();
 
-            this.cancelEdit();
+                this.cancelEdit();
+            }
         },
         openEdit: function (field) {
             this.field_id = field.id;
@@ -131,7 +139,12 @@ export default {
             { 
                 if(val == 1)
                 {
-                    this.fieldStore.deleteField(key);
+                    var result = this.fieldStore.deleteField(key);
+                    if(!result.ok || result.hasOwnProperty('error'))
+                    {
+                        this.$emit('error');
+                        break;
+                    }    
                 }
             }
             this.map.clear();
@@ -140,10 +153,57 @@ export default {
         },
         getFieldsList: async function() {
             this.projectFields = await this.fieldListStore.getFields(this.$route.params.code);
-            for(var field of this.projectFields)
+            if(this.projectFields && !this.projectFields.hasOwnProperty('error'))
             {
-                this.map.set(field.id, -1);
+                for(var field of this.projectFields.fields)
+                {
+                    this.map.set(field.id, -1);
+                }
             }
+            else
+                this.$emit('error');
+        },
+        showError: function(container) {
+            container.style ['border-color'] = '#ff0000';
+	        container.setAttribute('onclick', 'this.style=""');
+        },
+        validateAdd: function() {
+            var error = false;
+            var name = document.getElementById('name');
+            var type = document.getElementById('type');
+
+            if(!this.name)
+            {
+                error = true;
+                this.showError(name);
+            }
+
+            if(!this.type)
+            {
+                error = true;
+                this.showError(type);
+            }
+
+            return error;
+        },
+        validateEdit: function() {
+            var error = false;
+            var name = document.getElementById('field_name');
+            var type = document.getElementById('field_type');
+
+            if(!this.name)
+            {
+                error = true;
+                this.showError(name);
+            }
+
+            if(!this.type)
+            {
+                error = true;
+                this.showError(type);
+            }
+
+            return error;
         }
     },
     async beforeMount() {

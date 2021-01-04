@@ -54,36 +54,83 @@ export default {
     methods: {
         edit_user: async function() {
             let response;
-            if(this.$route.name == 'user_info') {
-                response = await this.store.editUserInfo({
-                    'user_id': this.$route.params.code,
-                    'email': this.email,
-                    'password': this.password,
-                    'username': this.username,
-                    'grade': this.grade
-                });
-            }
-            else {
-                response = await this.store.createUser({
-                    'email': this.email,
-                    'password': this.password,
-                    'username': this.username,
-                    'grade': this.grade
-                })
-            }
 
-            if(response.ok)
-                this.$router.push({name: 'users_list'});
+            if(!this.validate()){
+                if(this.$route.name == 'user_info') {
+                    response = await this.store.editUserInfo({
+                        'user_id': this.$route.params.code,
+                        'email': this.email,
+                        'password': this.password,
+                        'username': this.username,
+                        'grade': this.grade
+                    });
+                }
+                else {
+                    response = await this.store.createUser({
+                        'email': this.email,
+                        'password': this.password,
+                        'username': this.username,
+                        'grade': this.grade
+                    })
+                }
+                //PADAET V TRUE IZ ZA TOGO 4TO RASPARSIT' V JSON NE MOGY 
+                if(response.ok && !response.json().hasOwnProperty('error'))
+                   this.$router.push({name: 'users_list'});
+                else
+                    this.$emit('error');
+            }
         },
         cancel: function() {
             this.$router.push({ name: 'users_list'});
         },
         getUserInfo: async function() {
             this.userInfo = await this.store.getUserInfo(this.$route.params.code);
-            this.username = this.userInfo.username;
-            this.email = this.userInfo.email;
-            this.password = this.userInfo.password;
-            this.grade = this.userInfo.grade;
+            if(this.userInfo && !this.userInfo.hasOwnProperty('error'))
+            {
+                this.username = this.userInfo.username;
+                this.email = this.userInfo.email;
+                this.password = this.userInfo.password;
+                this.grade = this.userInfo.grade;
+            }
+            else    
+                this.$emit('error');
+        },
+        showError: function(container) {
+            container.style ['border-color'] = '#ff0000';
+	        container.setAttribute('onclick', 'this.style=""');
+        },
+        validate: function() {
+            var emailRegex = /[^@]+@[^\.]+\..+/g;
+            var email = document.getElementById('email');
+            var username = document.getElementById('username');
+            var password = document.getElementById('password');
+            var grade = document.getElementById('grade');
+            var error = false;        
+            if(!emailRegex.test(this.email))
+            {
+                error = true;
+                this.showError(email);
+            }
+
+            if(!this.username)
+            {
+                error = true;
+                this.showError(username);
+            }
+
+            if(!this.password)
+            {
+                error = true;
+                this.showError(password);
+            }
+
+            if(!this.grade)
+            {
+                error = true;
+                this.showError(grade);
+            }
+
+            return error;
         }
     },
     async beforeMount() {
