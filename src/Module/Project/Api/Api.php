@@ -78,9 +78,9 @@ class Api implements ApiInterface
         $this->publish($command);
     }
 
-    public function deleteProject(int $projectId): void
+    public function deleteProject(int $projectId, int $ownerId): void
     {
-        $command = new DeleteProjectCommand($projectId);
+        $command = new DeleteProjectCommand($projectId, $ownerId);
 
         $this->publish($command);
     }

@@ -27,8 +27,13 @@ class DeleteProjectCommandHandler implements AppCommandHandlerInterface
             throw new InvalidCommandException('Invalid command provided for handle', ['expected_command' => DeleteProjectCommand::class]);
         }
 
+        $payload = $command->getPayload();
+
         $this->synchronization->transaction(fn() =>
-            $this->projectService->deleteProject($command->getPayload()[DeleteProjectCommand::PROJECT_ID])
+            $this->projectService->deleteProject(
+                $payload[DeleteProjectCommand::PROJECT_ID],
+                $payload[DeleteProjectCommand::OWNER_ID]
+            )
         );
     }
 }

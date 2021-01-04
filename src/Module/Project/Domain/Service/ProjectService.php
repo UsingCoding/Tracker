@@ -5,6 +5,8 @@ namespace App\Module\Project\Domain\Service;
 use App\Module\Project\App\Exception\ProjectByIdNotFoundException;
 use App\Module\Project\Domain\Adapter\UserAdapterInterface;
 use App\Module\Project\Domain\Exception\DuplicateProjectNameIdException;
+use App\Module\Project\Domain\Exception\InvalidOwnerToDeleteProjectException;
+use App\Module\Project\Domain\Exception\InvalidOwnerToEditProjectException;
 use App\Module\Project\Domain\Exception\UserNotExistsException;
 use App\Module\Project\Domain\Model\Project;
 use App\Module\Project\Domain\Model\ProjectRepositoryInterface;
@@ -47,17 +49,28 @@ class ProjectService
 
     /**
      * @param int $projectId
+     * @param int $ownerId
      * @param string|null $newName
      * @param string|null $newDescription
      * @throws ProjectByIdNotFoundException
+     * @throws InvalidOwnerToEditProjectException
      */
-    public function editProject(int $projectId, ?string $newName, ?string $newDescription): void
+    public function editProject(int $projectId, int $ownerId, ?string $newName, ?string $newDescription): void
     {
         $project = $this->projectRepository->findById($projectId);
 
         if ($project === null)
         {
             throw new ProjectByIdNotFoundException('', ['project_id' => $projectId]);
+        }
+
+        if ($project->getOwnerId() !== $ownerId)
+        {
+            throw new InvalidOwnerToEditProjectException('', [
+                'project_id' => $projectId,
+                'owner_id' => $ownerId,
+                'actual_owner_id' => $project->getOwnerId()
+            ]);
         }
 
         if ($newName !== null && $newName !== $project->getName())
@@ -73,15 +86,26 @@ class ProjectService
 
     /**
      * @param int $projectId
+     * @param int $ownerId
      * @throws ProjectByIdNotFoundException
+     * @throws InvalidOwnerToDeleteProjectException
      */
-    public function deleteProject(int $projectId): void
+    public function deleteProject(int $projectId, int $ownerId): void
     {
         $project = $this->projectRepository->findById($projectId);
 
         if ($project === null)
         {
             throw new ProjectByIdNotFoundException('', ['project_id' => $projectId]);
+        }
+
+        if ($project->getOwnerId() !== $ownerId)
+        {
+            throw new InvalidOwnerToDeleteProjectException('', [
+                'project_id' => $projectId,
+                'owner_id' => $ownerId,
+                'actual_owner_id' => $project->getOwnerId()
+            ]);
         }
 
         $this->projectRepository->remove($project);
