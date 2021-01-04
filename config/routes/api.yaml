@@ -9,8 +9,8 @@ api_get_project:
 
 api_projects_list:
   path: /api/projects
-  controller: App\Controller\Api\Project\ProjectSettingsController::projectsList
-  methods: GET
+  controller: App\Controller\Api\Project\ProjectSettingsController::projectsListForUser
+  methods: POST
 
 api_create_project:
   path: /api/project/create

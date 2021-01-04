@@ -8,8 +8,9 @@ use App\Module\Project\Api\Output\ProjectsListOutput;
 interface ApiInterface extends ProjectManagementApiInterface, TeamApiInterface
 {
     /**
+     * @param int $userId
      * @return ProjectsListOutput
      * @throws ApiException
      */
-    public function projectsList(): ProjectsListOutput;
+    public function projectsListForUser(int $userId): ProjectsListOutput;
 }

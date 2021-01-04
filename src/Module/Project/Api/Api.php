@@ -57,11 +57,11 @@ class Api implements ApiInterface
         }
     }
 
-    public function projectsList(): ProjectsListOutput
+    public function projectsListForUser(int $userId): ProjectsListOutput
     {
         try
         {
-            $projects = $this->projectQueryService->list();
+            $projects = $this->projectQueryService->listForUser($userId);
 
             return ProjectMapper::getProjectListOutput($projects);
         }

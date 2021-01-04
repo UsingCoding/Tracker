@@ -16,7 +16,7 @@ class ProjectQueryService implements ProjectQueryServiceInterface
         $this->connection = $connection;
     }
 
-    public function list(): array
+    public function listForUser(int $userId): array
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -26,6 +26,9 @@ class ProjectQueryService implements ProjectQueryServiceInterface
             ->addSelect('p.name_id')
             ->addSelect('p.description')
             ->from('project', 'p')
+            ->leftJoin('p', 'team_member', 'tm', 'p.project_id = tm.project_id')
+            ->where($queryBuilder->expr()->eq('tm.user_id', ':user_id'))
+            ->setParameter('user_id', $userId)
         ;
 
         $stmt = $queryBuilder->execute();
