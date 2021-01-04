@@ -12,6 +12,7 @@ class ProjectDataMapper
             $project->getId(),
             $project->getName(),
             $project->getNameId(),
+            $project->getOwnerId(),
             $project->getDescription()
         );
     }

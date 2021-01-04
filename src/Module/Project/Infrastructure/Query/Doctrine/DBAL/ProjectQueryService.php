@@ -24,6 +24,7 @@ class ProjectQueryService implements ProjectQueryServiceInterface
             ->addSelect('p.project_id')
             ->addSelect('p.name')
             ->addSelect('p.name_id')
+            ->addSelect('p.owner_id')
             ->addSelect('p.description')
             ->from('project', 'p')
             ->leftJoin('p', 'team_member', 'tm', 'p.project_id = tm.project_id')

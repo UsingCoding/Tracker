@@ -2,12 +2,14 @@
 
 namespace App\Controller\Api\Project;
 
+use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
 use App\Controller\Api\Exception\NoLoggedUserException;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
 use App\Module\Project\Api\Input\EditProjectInput;
 use App\Module\Project\Api\ProjectManagementApiInterface;
+use App\View\ProjectView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,26 +18,26 @@ class ProjectManagementController extends ApiController
     /**
      * @param int $id
      * @param ProjectManagementApiInterface $api
-     * @return Response
+     * @return RenderableViewInterface
      * @throws ApiException
+     * @throws NoLoggedUserException
      */
-    public function getProject(int $id, ProjectManagementApiInterface $api): Response
+    public function getProject(int $id, ProjectManagementApiInterface $api): RenderableViewInterface
     {
         try
         {
             $project = $api->getProject($id);
 
-            return $this->json([
-                'name' => $project->getName(),
-                'nameId' => $project->getNameId(),
-                'description' => $project->getDescription()
-            ]);
+            return new ProjectView(
+                $project,
+                $this->getLoggedUser()->getUserOutput()->getUserId()
+            );
         }
         catch (ApiException $e)
         {
             if ($e->getType() === ApiException::PROJECT_NOT_EXISTS)
             {
-                return $this->json(['error' => 'project_not_exists'], Response::HTTP_NOT_FOUND);
+                return $this->renderableJson(['error' => 'project_not_exists'], Response::HTTP_NOT_FOUND);
             }
 
             throw $e;
