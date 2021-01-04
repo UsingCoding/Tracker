@@ -54,6 +54,7 @@ class ProjectManagementController extends ApiController
             $api->createProject(new CreateProjectInput(
                 $request->get('name'),
                 $request->get('nameId'),
+                $request->get('owner_id'),
                 $request->get('description')
             ));
 
@@ -64,6 +65,11 @@ class ProjectManagementController extends ApiController
             if ($e->getType() === ApiException::DUPLICATE_PROJECT_NAME_ID)
             {
                 return $this->json(['error' => 'duplicate_project_name_id']);
+            }
+
+            if ($e->getType() === ApiException::USER_NOT_EXISTS)
+            {
+                return $this->json(['error' => 'user_not_exists']);
             }
 
             throw $e;

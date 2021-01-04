@@ -11,6 +11,7 @@ class CreateProjectCommand extends AbstractCommand
 
     public const NAME = 'name';
     public const NAME_ID = 'name_id';
+    public const OWNER_ID = 'owner_id';
     public const DESCRIPTION = 'description';
 
     public function __construct(CreateProjectRequestInterface $request)
@@ -18,6 +19,7 @@ class CreateProjectCommand extends AbstractCommand
         parent::__construct([
             self::NAME => $request->getName(),
             self::NAME_ID => $request->getNameId(),
+            self::OWNER_ID => $request->getOwnerId(),
             self::DESCRIPTION => $request->getDescription()
         ]);
     }

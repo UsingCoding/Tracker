@@ -3,17 +3,21 @@
 namespace App\Module\Project\Domain\Service;
 
 use App\Module\Project\App\Exception\ProjectByIdNotFoundException;
+use App\Module\Project\Domain\Adapter\UserAdapterInterface;
 use App\Module\Project\Domain\Exception\DuplicateProjectNameIdException;
+use App\Module\Project\Domain\Exception\UserNotExistsException;
 use App\Module\Project\Domain\Model\Project;
 use App\Module\Project\Domain\Model\ProjectRepositoryInterface;
 
 class ProjectService
 {
     private ProjectRepositoryInterface $projectRepository;
+    private UserAdapterInterface $userAdapter;
 
-    public function __construct(ProjectRepositoryInterface $projectRepository)
+    public function __construct(ProjectRepositoryInterface $projectRepository, UserAdapterInterface $userAdapter)
     {
         $this->projectRepository = $projectRepository;
+        $this->userAdapter = $userAdapter;
     }
 
     public function getProject(int $id): ?Project
@@ -24,15 +28,18 @@ class ProjectService
     /**
      * @param string $name
      * @param string $nameId
+     * @param int $ownerId
      * @param string|null $description
      * @return Project
      * @throws DuplicateProjectNameIdException
+     * @throws UserNotExistsException
      */
-    public function addProject(string $name, string $nameId, ?string $description): Project
+    public function addProject(string $name, string $nameId, int $ownerId, ?string $description): Project
     {
         $this->assertNoDuplicateNameId($nameId);
+        $this->assertUserExists($ownerId);
 
-        $project = new Project(null, $name, $nameId, $description);
+        $project = new Project(null, $name, $nameId, $ownerId, $description);
         $this->projectRepository->add($project);
 
         return $project;
@@ -89,6 +96,18 @@ class ProjectService
         if ($this->projectRepository->findByNameId($nameId) !== null)
         {
             throw new DuplicateProjectNameIdException('Duplicate project nameId', ['nameId' => $nameId]);
+        }
+    }
+
+    /**
+     * @param int $userId
+     * @throws UserNotExistsException
+     */
+    private function assertUserExists(int $userId): void
+    {
+        if ($this->userAdapter->getUserById($userId) === null)
+        {
+            throw new UserNotExistsException('', ['user_id']);
         }
     }
 }

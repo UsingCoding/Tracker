@@ -7,5 +7,6 @@
         <field name="name" length="50" column="name" />
         <field name="nameId" length="10" column="name_id" unique="true" />
         <field name="description" length="255" column="description" nullable="true" />
+        <field name="ownerId" type="integer" />
     </entity>
 </doctrine-mapping>

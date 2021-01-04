@@ -30,8 +30,10 @@ class CreateProjectCommandHandler implements AppCommandHandlerInterface
 
         $name = ProjectDataSanitizer::sanitizeName($command->getPayload()[CreateProjectCommand::NAME]);
         $nameId = ProjectDataSanitizer::sanitizeNameId($command->getPayload()[CreateProjectCommand::NAME_ID]);
+        $ownerId = $command->getPayload()[CreateProjectCommand::OWNER_ID];
         $description = ProjectDataSanitizer::sanitizeDescription($command->getPayload()[CreateProjectCommand::DESCRIPTION]);
 
-        $this->synchronization->transaction(fn() => $this->projectService->addProject($name, $nameId, $description));
+
+        $this->synchronization->transaction(fn() => $this->projectService->addProject($name, $nameId, $ownerId, $description));
     }
 }
