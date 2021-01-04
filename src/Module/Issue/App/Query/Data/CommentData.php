@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Module\Issue\Api\Output;
+namespace App\Module\Issue\App\Query\Data;
 
-class CommentOutput
+class CommentData
 {
     private int $id;
+    private int $userId;
     private string $username;
     private string $content;
 
-    public function __construct(int $id, string $username, string $content)
+    public function __construct(int $id, int $userId, string $username, string $content)
     {
         $this->id = $id;
+        $this->userId = $userId;
         $this->username = $username;
         $this->content = $content;
     }
@@ -21,6 +23,14 @@ class CommentOutput
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->userId;
     }
 
     /**

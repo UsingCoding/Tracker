@@ -2,7 +2,9 @@
 
 namespace App\View;
 
+use App\Common\Domain\Utils\Arrays;
 use App\Common\Domain\Utils\Date;
+use App\Module\Issue\Api\Output\CommentOutput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +30,15 @@ class IssueView
             'fields' => [
                 'project_name' => $this->issue->getProjectName(),
                 'assignee' => $this->issue->getUsername(),
-            ]
+            ],
+            'comments' => Arrays::map(
+                $this->issue->getComments(),
+                static fn(CommentOutput $output) => [
+                    'id' => $output->getId(),
+                    'username' => $output->getUsername(),
+                    'content' => $output->getContent()
+                ]
+            )
         ]);
     }
 }

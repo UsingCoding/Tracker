@@ -32,29 +32,26 @@ use App\Module\Issue\App\Command\EditIssueFieldCommand;
 use App\Module\Issue\App\Event\CommentAddedEvent;
 use App\Module\Issue\App\Event\IssueAddedEvent;
 use App\Module\Issue\App\Event\IssueFieldAddedEvent;
+use App\Module\Issue\App\Query\AppIssueQueryService;
 use App\Module\Issue\App\Query\IssueFieldQueryServiceInterface;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 
 class Api implements ApiInterface
 {
     private AppCommandBusInterface $issueCommandBus;
+    private AppIssueQueryService $appIssueQueryService;
     private IssueQueryServiceInterface $issueQueryService;
     private IssueFieldQueryServiceInterface $issueFieldQueryService;
     private AppEventSourceInterface $eventSource;
 
-    public function __construct(
-        AppCommandBusInterface $issueCommandBus,
-        IssueQueryServiceInterface $issueQueryService,
-        IssueFieldQueryServiceInterface $issueFieldQueryService,
-        AppEventSourceInterface $eventSource
-    )
+    public function __construct(AppCommandBusInterface $issueCommandBus, AppIssueQueryService $appIssueQueryService, IssueQueryServiceInterface $issueQueryService, IssueFieldQueryServiceInterface $issueFieldQueryService, AppEventSourceInterface $eventSource)
     {
         $this->issueCommandBus = $issueCommandBus;
+        $this->appIssueQueryService = $appIssueQueryService;
         $this->issueQueryService = $issueQueryService;
         $this->issueFieldQueryService = $issueFieldQueryService;
         $this->eventSource = $eventSource;
     }
-
 
     public function createIssue(CreateIssueInput $input): int
     {
@@ -67,7 +64,7 @@ class Api implements ApiInterface
     {
         try
         {
-            $issueData = $this->issueQueryService->getIssue($code);
+            $issueData = $this->appIssueQueryService->getIssue($code);
 
             if ($issueData === null)
             {
