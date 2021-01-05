@@ -64,7 +64,8 @@ class CreateDefaultContentBootStage implements BootStageInterface
             'example@mail.com',
             'root',
             '12345Q',
-            3
+            3,
+            null
         ));
     }
 
@@ -75,7 +76,9 @@ class CreateDefaultContentBootStage implements BootStageInterface
     {
         $this->projectApi->createProject(new CreateProjectInput(
             'Default',
-            'PANDA'
+            'PANDA',
+            1,
+            null
         ));
     }
 }
