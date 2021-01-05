@@ -8,4 +8,5 @@ interface AddUserRequestInterface
     public function getUsername(): string;
     public function getPassword(): string;
     public function getGrade(): int;
+    public function getAvatarUrl(): ?string;
 }

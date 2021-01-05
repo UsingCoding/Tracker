@@ -9,5 +9,6 @@
         <field name="createdAt" type="datetime_immutable" column="created_at" length="255" />
         <field name="email" type="string" column="email" unique="true" length="255"/>
         <field name="grade" type="smallint" column="grade" length="1" />
+        <field name="avatarUrl" length="255" nullable="true" />
     </entity>
 </doctrine-mapping>

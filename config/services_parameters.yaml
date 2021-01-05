@@ -2,6 +2,8 @@ parameters:
     app.site_domain: dev.fold.com
     app.catch_exceptions: false
 
+    app.upload_files_directory: '%kernel.project_dir%/public/assets'
+
     app.boot.external_commands:
         - name: doctrine:database:create
           args:

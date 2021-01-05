@@ -50,12 +50,13 @@ class UserService
      * @param string $username
      * @param string $password
      * @param int $grade
+     * @param string|null $avatarUrl
      * @return User
      * @throws DuplicateUserEmailException
      * @throws DuplicateUsernameException
      * @throws UnknownUserGradeException
      */
-    public function addUser(string $email, string $username, string $password, int $grade): User
+    public function addUser(string $email, string $username, string $password, int $grade, ?string $avatarUrl): User
     {
         $this->assertGradeCorrect($grade);
 
@@ -69,7 +70,8 @@ class UserService
             $password,
             new \DateTimeImmutable(),
             $email,
-            $grade
+            $grade,
+            $avatarUrl
         );
 
         $this->userRepository->add($user);
