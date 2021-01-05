@@ -48,7 +48,7 @@ class ProjectDataSanitizer
             throw new InvalidProjectDataException("NameId must have length from 1 to {$nameIdMaxLength}");
         }
 
-        return $nameId;
+        return Strings::upper($nameId);
     }
 
     /**

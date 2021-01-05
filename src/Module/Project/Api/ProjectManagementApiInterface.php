@@ -30,7 +30,8 @@ interface ProjectManagementApiInterface
 
     /**
      * @param int $projectId
+     * @param int $ownerId
      * @throws ApiException
      */
-    public function deleteProject(int $projectId): void;
+    public function deleteProject(int $projectId, int $ownerId): void;
 }

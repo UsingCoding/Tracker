@@ -2,7 +2,9 @@
 
 namespace App\Controller\Api\User;
 
+use App\Common\App\Exception\CantStoreFileException;
 use App\Common\App\View\RenderableViewInterface;
+use App\Common\Infrastructure\Persistence\FileRepositoryInterface;
 use App\Controller\Api\ApiController;
 use App\Module\User\Api\ApiInterface;
 use App\Module\User\Api\Exception\ApiException;
@@ -10,6 +12,7 @@ use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Input\EditUserInput;
 use App\View\UserInfoView;
 use App\View\UserListView;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,18 +21,36 @@ class UserController extends ApiController
     /**
      * @param Request $request
      * @param ApiInterface $api
+     * @param FileRepositoryInterface $fileRepository
      * @return Response
      * @throws ApiException
+     * @throws CantStoreFileException
      */
-    public function addUser(Request $request, ApiInterface $api): Response
+    public function addUser(
+        Request $request,
+        ApiInterface $api,
+        FileRepositoryInterface $fileRepository
+    ): Response
     {
         try
         {
+            /** @var string|null $avatarUrl */
+            $avatarUrl = null;
+
+            /** @var UploadedFile|null $file */
+            $file = $request->files->get('avatar');
+
+            if ($file !== null)
+            {
+                $avatarUrl = $fileRepository->store($file->getRealPath(), $file->getClientOriginalExtension());
+            }
+
             $api->addUser(new AddUserInput(
                 $request->get('email'),
                 $request->get('username'),
                 $request->get('password'),
-                $request->get('grade')
+                $request->get('grade'),
+                $avatarUrl
             ));
 
             return new Response();
@@ -63,19 +84,33 @@ class UserController extends ApiController
     /**
      * @param Request $request
      * @param ApiInterface $api
+     * @param FileRepositoryInterface $fileRepository
      * @return Response
      * @throws ApiException
+     * @throws CantStoreFileException
      */
-    public function editUser(Request $request, ApiInterface $api): Response
+    public function editUser(Request $request, ApiInterface $api, FileRepositoryInterface $fileRepository): Response
     {
         try
         {
+            /** @var string|null $avatarUrl */
+            $avatarUrl = null;
+
+            /** @var UploadedFile|null $file */
+            $file = $request->files->get('avatar');
+
+            if ($file !== null)
+            {
+                $avatarUrl = $fileRepository->store($file->getRealPath(), $file->getClientOriginalExtension());
+            }
+
             $api->editUser(new EditUserInput(
                 $request->get('user_id'),
                 $request->get('email'),
                 $request->get('username'),
                 $request->get('password'),
-                $request->get('grade')
+                $request->get('grade'),
+                $avatarUrl
             ));
 
             return new Response();

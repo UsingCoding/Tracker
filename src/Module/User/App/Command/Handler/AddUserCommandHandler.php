@@ -34,7 +34,8 @@ class AddUserCommandHandler implements AppCommandHandlerInterface
             Arrays::get($payload, AddUserCommand::EMAIL),
             Arrays::get($payload, AddUserCommand::USERNAME),
             Arrays::get($payload, AddUserCommand::PASSWORD),
-            Arrays::get($payload, AddUserCommand::GRADE)
+            Arrays::get($payload, AddUserCommand::GRADE),
+            Arrays::get($payload, AddUserCommand::AVATAR_URL)
         ));
     }
 }

@@ -5,7 +5,7 @@ namespace App\Module\Issue\Infrastructure\Hydration;
 use App\Framework\Infrastructure\Hydration\AbstractDbalHydrator;
 use App\Module\Issue\App\Query\Data\IssueData;
 
-class IssueWithUserDataHydrator extends AbstractDbalHydrator
+class IssueDataHydrator extends AbstractDbalHydrator
 {
     /**
      * @param array $row

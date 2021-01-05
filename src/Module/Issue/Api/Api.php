@@ -12,6 +12,7 @@ use App\Module\Issue\Api\Input\AddCommentInput;
 use App\Module\Issue\Api\Input\AddIssueFieldInput;
 use App\Module\Issue\Api\Input\CreateIssueInput;
 use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
+use App\Module\Issue\Api\Input\EditCommentInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
 use App\Module\Issue\Api\Mapper\IssueFieldOutputMapper;
@@ -25,34 +26,32 @@ use App\Module\Issue\App\Command\CreateIssueCommand;
 use App\Module\Issue\App\Command\DeleteCommentCommand;
 use App\Module\Issue\App\Command\DeleteIssueCommand;
 use App\Module\Issue\App\Command\DeleteIssueFieldCommand;
+use App\Module\Issue\App\Command\EditCommentCommand;
 use App\Module\Issue\App\Command\EditIssueCommand;
 use App\Module\Issue\App\Command\EditIssueFieldCommand;
 use App\Module\Issue\App\Event\CommentAddedEvent;
 use App\Module\Issue\App\Event\IssueAddedEvent;
 use App\Module\Issue\App\Event\IssueFieldAddedEvent;
+use App\Module\Issue\App\Query\AppIssueQueryService;
 use App\Module\Issue\App\Query\IssueFieldQueryServiceInterface;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 
 class Api implements ApiInterface
 {
     private AppCommandBusInterface $issueCommandBus;
+    private AppIssueQueryService $appIssueQueryService;
     private IssueQueryServiceInterface $issueQueryService;
     private IssueFieldQueryServiceInterface $issueFieldQueryService;
     private AppEventSourceInterface $eventSource;
 
-    public function __construct(
-        AppCommandBusInterface $issueCommandBus,
-        IssueQueryServiceInterface $issueQueryService,
-        IssueFieldQueryServiceInterface $issueFieldQueryService,
-        AppEventSourceInterface $eventSource
-    )
+    public function __construct(AppCommandBusInterface $issueCommandBus, AppIssueQueryService $appIssueQueryService, IssueQueryServiceInterface $issueQueryService, IssueFieldQueryServiceInterface $issueFieldQueryService, AppEventSourceInterface $eventSource)
     {
         $this->issueCommandBus = $issueCommandBus;
+        $this->appIssueQueryService = $appIssueQueryService;
         $this->issueQueryService = $issueQueryService;
         $this->issueFieldQueryService = $issueFieldQueryService;
         $this->eventSource = $eventSource;
     }
-
 
     public function createIssue(CreateIssueInput $input): int
     {
@@ -65,7 +64,7 @@ class Api implements ApiInterface
     {
         try
         {
-            $issueData = $this->issueQueryService->getIssue($code);
+            $issueData = $this->appIssueQueryService->getIssue($code);
 
             if ($issueData === null)
             {
@@ -153,6 +152,13 @@ class Api implements ApiInterface
     public function deleteComment(int $commentId): void
     {
         $command = new DeleteCommentCommand($commentId);
+
+        $this->publish($command);
+    }
+
+    public function editComment(EditCommentInput $input): void
+    {
+        $command = new EditCommentCommand($input);
 
         $this->publish($command);
     }

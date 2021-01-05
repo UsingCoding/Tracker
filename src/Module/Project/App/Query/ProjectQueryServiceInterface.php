@@ -7,7 +7,8 @@ use App\Module\Project\App\Data\ProjectListItemData;
 interface ProjectQueryServiceInterface
 {
     /**
+     * @param int $userId
      * @return ProjectListItemData[]
      */
-    public function list(): array;
+    public function listForUser(int $userId): array;
 }

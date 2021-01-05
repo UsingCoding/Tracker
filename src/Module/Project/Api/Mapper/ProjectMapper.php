@@ -16,6 +16,7 @@ class ProjectMapper
             $data->getId(),
             $data->getName(),
             $data->getNameId(),
+            $data->getOwnerId(),
             $data->getDescription()
         );
     }
@@ -26,11 +27,12 @@ class ProjectMapper
      */
     public static function getProjectListOutput(array $list): ProjectsListOutput
     {
-        return new  ProjectsListOutput((array) Arrays::map($list,
+        return new ProjectsListOutput((array) Arrays::map($list,
             static fn(ProjectListItemData $data) => new ProjectOutput(
                 $data->getId(),
                 $data->getName(),
                 $data->getNameId(),
+                $data->getOwnerId(),
                 $data->getDescription()
             )
         ));

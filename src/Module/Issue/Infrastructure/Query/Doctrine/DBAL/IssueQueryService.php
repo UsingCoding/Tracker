@@ -5,9 +5,9 @@ namespace App\Module\Issue\Infrastructure\Query\Doctrine\DBAL;
 use App\Module\Issue\App\Query\Data\IssueData;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 use App\Module\Issue\Domain\Service\IssueCodeService;
+use App\Module\Issue\Infrastructure\Hydration\IssueDataHydrator;
 use App\Module\Issue\Infrastructure\Hydration\IssueListWithUserAndProjectDataHydrator;
 use App\Module\Issue\Infrastructure\Hydration\IssueWithFieldsHydrator;
-use App\Module\Issue\Infrastructure\Hydration\IssueWithUserDataHydrator;
 use App\Module\Issue\Infrastructure\Query\SearchQueryParser;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
@@ -58,7 +58,7 @@ class IssueQueryService implements IssueQueryServiceInterface
             return null;
         }
 
-        $hydrator = new IssueWithUserDataHydrator($this->connection->getDatabasePlatform());
+        $hydrator = new IssueDataHydrator($this->connection->getDatabasePlatform());
 
         /** @var IssueData[] $results */
         $results = [];

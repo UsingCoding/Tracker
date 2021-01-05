@@ -24,6 +24,7 @@ class UserInfoView implements RenderableViewInterface
             'password' => $this->user->getPassword(),
             'email' => $this->user->getEmail(),
             'created_at' => $this->user->getCreatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT),
+            'grade' => $this->user->getGrade()
         ]);
     }
 }

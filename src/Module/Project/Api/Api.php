@@ -57,11 +57,11 @@ class Api implements ApiInterface
         }
     }
 
-    public function projectsList(): ProjectsListOutput
+    public function projectsListForUser(int $userId): ProjectsListOutput
     {
         try
         {
-            $projects = $this->projectQueryService->list();
+            $projects = $this->projectQueryService->listForUser($userId);
 
             return ProjectMapper::getProjectListOutput($projects);
         }
@@ -78,9 +78,9 @@ class Api implements ApiInterface
         $this->publish($command);
     }
 
-    public function deleteProject(int $projectId): void
+    public function deleteProject(int $projectId, int $ownerId): void
     {
-        $command = new DeleteProjectCommand($projectId);
+        $command = new DeleteProjectCommand($projectId, $ownerId);
 
         $this->publish($command);
     }

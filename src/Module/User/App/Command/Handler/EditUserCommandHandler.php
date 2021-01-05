@@ -37,6 +37,7 @@ class EditUserCommandHandler implements AppCommandHandlerInterface
             Arrays::get($payload, EditUserCommand::USERNAME),
             Arrays::get($payload, EditUserCommand::PASSWORD),
             Arrays::get($payload, EditUserCommand::GRADE),
+            Arrays::get($payload, EditUserCommand::AVATAR_URL)
         ));
     }
 }

@@ -50,6 +50,26 @@ class CommentService
 
     /**
      * @param int $commentId
+     * @param string $newContent
+     * @throws CommentByIdNotFoundException
+     */
+    public function editComment(int $commentId, string $newContent): void
+    {
+        $comment = $this->commentRepo->findById($commentId);
+
+        if ($comment === null)
+        {
+            throw new CommentByIdNotFoundException('', ['comment_id' => $commentId]);
+        }
+
+        if ($newContent !== $comment->getContent())
+        {
+            $comment->setContent($newContent);
+        }
+    }
+
+    /**
+     * @param int $commentId
      * @throws CommentByIdNotFoundException
      */
     public function deleteComment(int $commentId): void

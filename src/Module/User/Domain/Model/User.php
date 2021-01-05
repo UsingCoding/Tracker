@@ -10,8 +10,17 @@ class User
     private \DateTimeImmutable $createdAt;
     private string $email;
     private int $grade;
+    private ?string $avatarUrl;
 
-    public function __construct(?int $id, string $username, string $password, \DateTimeImmutable $createdAt, string $email, int $grade)
+    public function __construct(
+        ?int $id,
+        string $username,
+        string $password,
+        \DateTimeImmutable $createdAt,
+        string $email,
+        int $grade,
+        ?string $avatarUrl
+    )
     {
         $this->id = $id;
         $this->username = $username;
@@ -19,6 +28,7 @@ class User
         $this->createdAt = $createdAt;
         $this->email = $email;
         $this->grade = $grade;
+        $this->avatarUrl = $avatarUrl;
     }
 
     /**
@@ -70,6 +80,14 @@ class User
     }
 
     /**
+     * @return string|null
+     */
+    public function getAvatarUrl(): ?string
+    {
+        return $this->avatarUrl;
+    }
+
+    /**
      * @param int|null $id
      */
     public function setId(?int $id): void
@@ -115,5 +133,13 @@ class User
     public function setGrade(int $grade): void
     {
         $this->grade = $grade;
+    }
+
+    /**
+     * @param string|null $avatarUrl
+     */
+    public function setAvatarUrl(?string $avatarUrl): void
+    {
+        $this->avatarUrl = $avatarUrl;
     }
 }

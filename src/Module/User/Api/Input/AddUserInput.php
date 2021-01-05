@@ -10,13 +10,15 @@ class AddUserInput implements AddUserRequestInterface
     private string $username;
     private string $password;
     private int $grade;
+    private ?string $avatarUrl;
 
-    public function __construct(string $email, string $username, string $password, int $grade)
+    public function __construct(string $email, string $username, string $password, int $grade, ?string $avatarUrl)
     {
         $this->email = $email;
         $this->username = $username;
         $this->password = $password;
         $this->grade = $grade;
+        $this->avatarUrl = $avatarUrl;
     }
 
     /**
@@ -49,5 +51,13 @@ class AddUserInput implements AddUserRequestInterface
     public function getGrade(): int
     {
         return $this->grade;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatarUrl(): ?string
+    {
+        return $this->avatarUrl;
     }
 }

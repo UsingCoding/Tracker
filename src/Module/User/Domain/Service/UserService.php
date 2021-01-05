@@ -50,12 +50,13 @@ class UserService
      * @param string $username
      * @param string $password
      * @param int $grade
+     * @param string|null $avatarUrl
      * @return User
      * @throws DuplicateUserEmailException
      * @throws DuplicateUsernameException
      * @throws UnknownUserGradeException
      */
-    public function addUser(string $email, string $username, string $password, int $grade): User
+    public function addUser(string $email, string $username, string $password, int $grade, ?string $avatarUrl): User
     {
         $this->assertGradeCorrect($grade);
 
@@ -69,7 +70,8 @@ class UserService
             $password,
             new \DateTimeImmutable(),
             $email,
-            $grade
+            $grade,
+            $avatarUrl
         );
 
         $this->userRepository->add($user);
@@ -83,12 +85,20 @@ class UserService
      * @param string|null $newUsername
      * @param string|null $newPassword
      * @param int|null $newGrade
+     * @param string|null $avatarUrl
      * @throws DuplicateUserEmailException
      * @throws DuplicateUsernameException
      * @throws UnknownUserGradeException
      * @throws UserByIdNotFoundException
      */
-    public function editUser(int $userId, ?string $newEmail, ?string $newUsername, ?string $newPassword, ?int $newGrade): void
+    public function editUser(
+        int $userId,
+        ?string $newEmail,
+        ?string $newUsername,
+        ?string $newPassword,
+        ?int $newGrade,
+        ?string $avatarUrl
+    ): void
     {
         $user = $this->userRepository->findById($userId);
 
@@ -118,6 +128,11 @@ class UserService
         {
             $this->assertNoDuplicateUsername($newUsername);
             $user->setUsername($newUsername);
+        }
+
+        if ($avatarUrl !== null)
+        {
+            $user->setAvatarUrl($avatarUrl);
         }
     }
 

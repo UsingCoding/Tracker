@@ -9,8 +9,8 @@ api_get_project:
 
 api_projects_list:
   path: /api/projects
-  controller: App\Controller\Api\Project\ProjectSettingsController::projectsList
-  methods: GET
+  controller: App\Controller\Api\Project\ProjectSettingsController::projectsListForUser
+  methods: POST
 
 api_create_project:
   path: /api/project/create
@@ -50,9 +50,19 @@ api_issues_list:
   controller: App\Controller\Api\Issue\IssueManagementController::issuesList
   methods: POST
 
+api_new_issue_view:
+  path: /api/issue/new-info
+  controller: App\Controller\Api\Issue\IssueManagementController::newIssueView
+  methods: POST
+
 api_add_comment:
   path: /api/issue/comment/add
   controller: App\Controller\Api\Issue\CommentController::addComment
+  methods: POST
+
+api_edit_comment:
+  path: /api/issue/comment/edit
+  controller: App\Controller\Api\Issue\CommentController::editComment
   methods: POST
 
 api_delete_comment:

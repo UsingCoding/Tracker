@@ -109,3 +109,7 @@ services:
 
     app.integration.fuzzy.http_gateway:
         alias: App\Module\FuzzyIntegration\Infrastructure\FuzzyGateway\FuzzyHttpGateway
+
+    App\Framework\Infrastructure\Persistence\File\FileSystemFileRepository:
+        arguments:
+            $dirPath: '%app.upload_files_directory%'

@@ -7,13 +7,15 @@ class ProjectListItemData
     private int $id;
     private string $name;
     private string $nameId;
+    private int $ownerId;
     private ?string $description;
 
-    public function __construct(int $id, string $name, string $nameId, ?string $description)
+    public function __construct(int $id, string $name, string $nameId, int $ownerId, ?string $description)
     {
         $this->id = $id;
         $this->name = $name;
         $this->nameId = $nameId;
+        $this->ownerId = $ownerId;
         $this->description = $description;
     }
 
@@ -39,6 +41,14 @@ class ProjectListItemData
     public function getNameId(): string
     {
         return $this->nameId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOwnerId(): int
+    {
+        return $this->ownerId;
     }
 
     /**

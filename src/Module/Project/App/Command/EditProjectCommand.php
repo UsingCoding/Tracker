@@ -10,6 +10,7 @@ class EditProjectCommand extends AbstractCommand
     public const TYPE = 'project.edit_project';
 
     public const PROJECT_ID = 'project_id';
+    public const OWNER_ID = 'owner_id';
     public const NAME = 'name';
     public const DESCRIPTION = 'description';
 
@@ -17,6 +18,7 @@ class EditProjectCommand extends AbstractCommand
     {
         parent::__construct([
             self::PROJECT_ID => $request->getId(),
+            self::OWNER_ID => $request->getOwnerId(),
             self::NAME => $request->getName(),
             self::DESCRIPTION => $request->getDescription()
         ]);
