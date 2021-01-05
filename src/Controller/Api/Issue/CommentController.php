@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Issue;
 
 use App\Controller\Api\ApiController;
+use App\Controller\Api\Exception\NoLoggedUserException;
 use App\Module\Issue\Api\CommentApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddCommentInput;
@@ -17,6 +18,7 @@ class CommentController extends ApiController
      * @param CommentApiInterface $commentApi
      * @return Response
      * @throws ApiException
+     * @throws NoLoggedUserException
      */
     public function addComment(Request $request, CommentApiInterface $commentApi): Response
     {
@@ -24,7 +26,7 @@ class CommentController extends ApiController
         {
             $commentId = $commentApi->addComment(new AddCommentInput(
                 $request->get('issue_id'),
-                $request->get('user_id'),
+                $this->getLoggedUser()->getUserOutput()->getUserId(),
                 $request->get('content')
             ));
 
