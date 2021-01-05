@@ -14,6 +14,7 @@ class EditUserCommand extends AbstractCommand
     public const USERNAME = 'username';
     public const PASSWORD = 'password';
     public const GRADE = 'grade';
+    public const AVATAR_URL = 'avatar_url';
 
     public function __construct(EditUserRequestInterface $request)
     {
@@ -22,7 +23,8 @@ class EditUserCommand extends AbstractCommand
             self::EMAIL => $request->getEmail(),
             self::USERNAME => $request->getUsername(),
             self::PASSWORD => $request->getPassword(),
-            self::GRADE => $request->getGrade()
+            self::GRADE => $request->getGrade(),
+            self::AVATAR_URL => $request->getAvatarUrl()
         ]);
     }
 }

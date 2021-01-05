@@ -85,12 +85,20 @@ class UserService
      * @param string|null $newUsername
      * @param string|null $newPassword
      * @param int|null $newGrade
+     * @param string|null $avatarUrl
      * @throws DuplicateUserEmailException
      * @throws DuplicateUsernameException
      * @throws UnknownUserGradeException
      * @throws UserByIdNotFoundException
      */
-    public function editUser(int $userId, ?string $newEmail, ?string $newUsername, ?string $newPassword, ?int $newGrade): void
+    public function editUser(
+        int $userId,
+        ?string $newEmail,
+        ?string $newUsername,
+        ?string $newPassword,
+        ?int $newGrade,
+        ?string $avatarUrl
+    ): void
     {
         $user = $this->userRepository->findById($userId);
 
@@ -120,6 +128,11 @@ class UserService
         {
             $this->assertNoDuplicateUsername($newUsername);
             $user->setUsername($newUsername);
+        }
+
+        if ($avatarUrl !== null)
+        {
+            $user->setAvatarUrl($avatarUrl);
         }
     }
 
