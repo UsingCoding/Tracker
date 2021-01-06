@@ -131,3 +131,8 @@ api_team_member_list:
   path: /api/team-members
   controller: App\Controller\Api\Project\TeamController::list
   methods: POST
+
+api_users_to_add:
+  path: /api/team/users-to-add
+  controller: App\Controller\Api\Project\TeamController::usersToAddToTeam
+  methods: POST

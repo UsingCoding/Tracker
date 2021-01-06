@@ -3,11 +3,13 @@
 namespace App\Controller\Api\Project;
 
 use App\Common\App\View\RenderableViewInterface;
+use App\Common\Domain\Utils\Arrays;
 use App\Controller\Api\ApiController;
 use App\Controller\Api\Exception\NoLoggedUserException;
 use App\Module\Project\Api\ApiInterface;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\AddTeamMemberInput;
+use App\Module\Project\Api\Output\UserToAddToTeamOutput;
 use App\Module\Project\Api\TeamApiInterface;
 use App\View\TeamMemberListView;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,5 +90,18 @@ class TeamController extends ApiController
         $project = $projectApi->getProject($projectId);
 
         return new TeamMemberListView($list, $project, $this->getLoggedUser());
+    }
+
+    public function usersToAddToTeam(Request $request, TeamApiInterface $teamApi): RenderableViewInterface
+    {
+        $users = $teamApi->usersToAddToTeamList($request->get('project_id'));
+
+        return $this->renderableJson((array) Arrays::map(
+            $users,
+            static fn(UserToAddToTeamOutput $output) => [
+                'user_id' => $output->getUserId(),
+                'username' => $output->getUsername()
+            ]
+        ));
     }
 }
