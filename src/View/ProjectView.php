@@ -26,6 +26,7 @@ class ProjectView implements RenderableViewInterface
             'name' => $this->project->getName(),
             'nameId' => $this->project->getNameId(),
             'description' => $this->project->getDescription(),
+            'owner_id' => $this->project->getOwnerId(),
             'is_owner' => $this->project->getOwnerId() === $this->loggedUserId
         ]);
     }
