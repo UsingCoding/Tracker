@@ -5,6 +5,7 @@ namespace App\Module\Project\Domain\Service;
 use App\Module\Project\App\Exception\ProjectByIdNotFoundException;
 use App\Module\Project\Domain\Adapter\UserAdapterInterface;
 use App\Module\Project\Domain\Exception\TeamMemberByIdNotFoundException;
+use App\Module\Project\Domain\Exception\UserAlreadyInTeamException;
 use App\Module\Project\Domain\Exception\UserToAddToTeamByIdNotFoundException;
 use App\Module\Project\Domain\Model\ProjectRepositoryInterface;
 use App\Module\Project\Domain\Model\TeamMember;
@@ -32,9 +33,15 @@ class TeamMemberService
      * @param int $userId
      * @throws ProjectByIdNotFoundException
      * @throws UserToAddToTeamByIdNotFoundException
+     * @throws UserAlreadyInTeamException
      */
     public function addMember(int $projectId, int $userId): void
     {
+        if ($this->hasMember($projectId, $userId))
+        {
+            throw new UserAlreadyInTeamException('', ['project_id' => $projectId, 'user_id' => $userId]);
+        }
+
         $this->assertProjectExists($projectId);
         $this->assertUserExists($userId);
 

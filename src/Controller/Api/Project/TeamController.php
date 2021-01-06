@@ -39,6 +39,11 @@ class TeamController extends ApiController
                 return $this->json(['error' => 'user_not_found']);
             }
 
+            if ($exception->getType() === ApiException::USER_ALREADY_IN_TEAM)
+            {
+                return $this->json(['error' => 'user_already_in_team']);
+            }
+
             throw $exception;
         }
     }
