@@ -15,7 +15,8 @@ class UserMapper
             $user->getPassword(),
             $user->getCreatedAt(),
             $user->getEmail(),
-            $user->getGrade()
+            $user->getGrade(),
+            $user->getAvatarUrl()
         );
     }
 }
