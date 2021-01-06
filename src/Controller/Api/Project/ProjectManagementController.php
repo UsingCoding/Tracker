@@ -5,10 +5,12 @@ namespace App\Controller\Api\Project;
 use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
 use App\Controller\Api\Exception\NoLoggedUserException;
-use App\Module\Project\Api\Exception\ApiException;
+use App\Module\Project\Api\Exception\ApiException as ProjectApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
 use App\Module\Project\Api\Input\EditProjectInput;
 use App\Module\Project\Api\ProjectManagementApiInterface;
+use App\Module\Statistics\Api\ApiInterface as StatisticsApi;
+use App\Module\Statistics\Api\Exception\ApiException as StatisticsApiException;
 use App\View\ProjectView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,25 +19,29 @@ class ProjectManagementController extends ApiController
 {
     /**
      * @param int $id
-     * @param ProjectManagementApiInterface $api
+     * @param ProjectManagementApiInterface $projectManagementApi
+     * @param StatisticsApi $statisticsApi
      * @return RenderableViewInterface
-     * @throws ApiException
+     * @throws ProjectApiException
      * @throws NoLoggedUserException
+     * @throws StatisticsApiException
      */
-    public function getProject(int $id, ProjectManagementApiInterface $api): RenderableViewInterface
+    public function getProject(int $id, ProjectManagementApiInterface $projectManagementApi, StatisticsApi $statisticsApi): RenderableViewInterface
     {
         try
         {
-            $project = $api->getProject($id);
+            $project = $projectManagementApi->getProject($id);
+            $statistics = $statisticsApi->getProjectStatistics($id);
 
             return new ProjectView(
                 $project,
-                $this->getLoggedUser()->getUserOutput()->getUserId()
+                $statistics,
+                $this->getLoggedUser()
             );
         }
-        catch (ApiException $e)
+        catch (ProjectApiException $e)
         {
-            if ($e->getType() === ApiException::PROJECT_NOT_EXISTS)
+            if ($e->getType() === ProjectApiException::PROJECT_NOT_EXISTS)
             {
                 return $this->renderableJson(['error' => 'project_not_exists'], Response::HTTP_NOT_FOUND);
             }
@@ -48,7 +54,7 @@ class ProjectManagementController extends ApiController
      * @param Request $request
      * @param ProjectManagementApiInterface $api
      * @return Response
-     * @throws ApiException
+     * @throws ProjectApiException
      * @throws NoLoggedUserException
      */
     public function createProject(Request $request, ProjectManagementApiInterface $api): Response
@@ -64,14 +70,14 @@ class ProjectManagementController extends ApiController
 
             return $this->json(['success' => 1]);
         }
-        catch (ApiException $e)
+        catch (ProjectApiException $e)
         {
-            if ($e->getType() === ApiException::DUPLICATE_PROJECT_NAME_ID)
+            if ($e->getType() === ProjectApiException::DUPLICATE_PROJECT_NAME_ID)
             {
                 return $this->json(['error' => 'duplicate_project_name_id']);
             }
 
-            if ($e->getType() === ApiException::USER_NOT_EXISTS)
+            if ($e->getType() === ProjectApiException::USER_NOT_EXISTS)
             {
                 return $this->json(['error' => 'user_not_exists']);
             }
@@ -84,7 +90,7 @@ class ProjectManagementController extends ApiController
      * @param Request $request
      * @param ProjectManagementApiInterface $api
      * @return Response
-     * @throws ApiException
+     * @throws ProjectApiException
      * @throws NoLoggedUserException
      */
     public function editProject(Request $request, ProjectManagementApiInterface $api): Response
@@ -101,9 +107,9 @@ class ProjectManagementController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (ProjectApiException $exception)
         {
-            if ($exception->getType() === ApiException::PROJECT_BY_ID_NOT_FOUND)
+            if ($exception->getType() === ProjectApiException::PROJECT_BY_ID_NOT_FOUND)
             {
                 return $this->json(['error' => 'project_by_id_not_found']);
             }
@@ -116,7 +122,7 @@ class ProjectManagementController extends ApiController
      * @param Request $request
      * @param ProjectManagementApiInterface $api
      * @return Response
-     * @throws ApiException
+     * @throws ProjectApiException
      * @throws NoLoggedUserException
      */
     public function deleteProject(Request $request, ProjectManagementApiInterface $api): Response
@@ -130,9 +136,9 @@ class ProjectManagementController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (ProjectApiException $exception)
         {
-            if ($exception->getType() === ApiException::PROJECT_BY_ID_NOT_FOUND)
+            if ($exception->getType() === ProjectApiException::PROJECT_BY_ID_NOT_FOUND)
             {
                 return $this->json(['error' => 'project_by_id_not_found']);
             }
