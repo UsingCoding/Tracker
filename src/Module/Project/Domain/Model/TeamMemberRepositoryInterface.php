@@ -8,5 +8,7 @@ interface TeamMemberRepositoryInterface
 
     public function findById(int $id): ?TeamMember;
 
+    public function findMemberForProject(int $projectId, int $userId);
+
     public function remove(TeamMember $teamMember): void;
 }

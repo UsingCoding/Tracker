@@ -95,6 +95,7 @@ class ProjectManagementController extends ApiController
                 $request->get('project_id'),
                 $this->getLoggedUser()->getUserOutput()->getUserId(),
                 $request->get('name'),
+                $request->get('new_owner_id'),
                 $request->get('description')
             ));
 

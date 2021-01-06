@@ -40,6 +40,7 @@ class EditProjectCommandHandler implements AppCommandHandlerInterface
         $this->synchronization->transaction(fn() => $this->projectService->editProject(
             Arrays::get($payload, EditProjectCommand::PROJECT_ID),
             Arrays::get($payload, EditProjectCommand::OWNER_ID),
+            Arrays::get($payload, EditProjectCommand::NEW_OWNER_ID),
             $name,
             $description
         ));

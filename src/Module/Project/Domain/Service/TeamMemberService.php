@@ -63,6 +63,11 @@ class TeamMemberService
         $this->teamMemberRepository->remove($teamMember);
     }
 
+    public function hasMember(int $projectId, int $userId): bool
+    {
+        return $this->teamMemberRepository->findMemberForProject($projectId, $userId) !== null;
+    }
+
     /**
      * @param int $projectId
      * @throws ProjectByIdNotFoundException

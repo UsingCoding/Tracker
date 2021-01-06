@@ -8,13 +8,15 @@ class EditProjectInput implements EditProjectRequestInterface
 {
     private int $id;
     private int $ownerId;
+    private ?int $newOwnerId;
     private ?string $name;
     private ?string $description;
 
-    public function __construct(int $id, int $ownerId, ?string $name, ?string $description)
+    public function __construct(int $id, int $ownerId, ?int $newOwnerId, ?string $name, ?string $description)
     {
         $this->id = $id;
         $this->ownerId = $ownerId;
+        $this->newOwnerId = $newOwnerId;
         $this->name = $name;
         $this->description = $description;
     }
@@ -33,6 +35,14 @@ class EditProjectInput implements EditProjectRequestInterface
     public function getOwnerId(): int
     {
         return $this->ownerId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNewOwnerId(): ?int
+    {
+        return $this->newOwnerId;
     }
 
     /**

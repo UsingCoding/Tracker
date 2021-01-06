@@ -61,12 +61,14 @@ class ProjectService
     /**
      * @param int $projectId
      * @param int $ownerId
+     * @param int|null $newOwnerId
      * @param string|null $newName
      * @param string|null $newDescription
-     * @throws ProjectByIdNotFoundException
      * @throws InvalidOwnerToEditProjectException
+     * @throws ProjectByIdNotFoundException
+     * @throws UserToAddToTeamByIdNotFoundException
      */
-    public function editProject(int $projectId, int $ownerId, ?string $newName, ?string $newDescription): void
+    public function editProject(int $projectId, int $ownerId, ?int $newOwnerId, ?string $newName, ?string $newDescription): void
     {
         $project = $this->projectRepository->findById($projectId);
 
@@ -82,6 +84,16 @@ class ProjectService
                 'owner_id' => $ownerId,
                 'actual_owner_id' => $project->getOwnerId()
             ]);
+        }
+
+        if ($newOwnerId !== null && $ownerId !== $newOwnerId)
+        {
+            $project->setOwnerId($newOwnerId);
+
+            if (!$this->teamMemberService->hasMember($project->getId(), $newOwnerId))
+            {
+                $this->teamMemberService->addMember($project->getId(), $newOwnerId);
+            }
         }
 
         if ($newName !== null && $newName !== $project->getName())
