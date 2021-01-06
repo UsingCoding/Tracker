@@ -4,6 +4,7 @@ namespace App\Controller\Api\Project;
 
 use App\Common\App\View\RenderableViewInterface;
 use App\Controller\Api\ApiController;
+use App\Controller\Api\Exception\NoLoggedUserException;
 use App\Module\Project\Api\ApiInterface;
 use App\Module\Project\Api\Exception\ApiException;
 use App\Module\Project\Api\Input\AddTeamMemberInput;
@@ -72,6 +73,7 @@ class TeamController extends ApiController
      * @param ApiInterface $projectApi
      * @return RenderableViewInterface
      * @throws ApiException
+     * @throws NoLoggedUserException
      */
     public function list(Request $request, ApiInterface $projectApi): RenderableViewInterface
     {
@@ -80,6 +82,6 @@ class TeamController extends ApiController
         $list = $projectApi->teamMemberList($projectId);
         $project = $projectApi->getProject($projectId);
 
-        return new TeamMemberListView($list, $project);
+        return new TeamMemberListView($list, $project, $this->getLoggedUser());
     }
 }
