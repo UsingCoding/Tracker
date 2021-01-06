@@ -4,6 +4,7 @@ namespace App\View;
 
 use App\Common\Domain\Utils\Arrays;
 use App\Common\Domain\Utils\Date;
+use App\Common\Infrastructure\Context\AvatarUrlProvider;
 use App\Module\Issue\Api\Output\CommentOutput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,10 +13,12 @@ use Symfony\Component\HttpFoundation\Response;
 class IssueView
 {
     private GetIssueOutput $issue;
+    private AvatarUrlProvider $avatarUrlProvider;
 
-    public function __construct(GetIssueOutput $issue)
+    public function __construct(GetIssueOutput $issue, AvatarUrlProvider $avatarUrlProvider)
     {
         $this->issue = $issue;
+        $this->avatarUrlProvider = $avatarUrlProvider;
     }
 
     public function render(): Response
@@ -33,10 +36,11 @@ class IssueView
             ],
             'comments' => Arrays::map(
                 $this->issue->getComments(),
-                static fn(CommentOutput $output) => [
+                fn(CommentOutput $output) => [
                     'id' => $output->getId(),
                     'username' => $output->getUsername(),
-                    'content' => $output->getContent()
+                    'content' => $output->getContent(),
+                    'avatar_url' => $this->avatarUrlProvider->getUrl($output->getUserAvatarUrl())
                 ]
             )
         ]);

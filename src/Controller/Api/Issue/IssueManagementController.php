@@ -3,6 +3,7 @@
 namespace App\Controller\Api\Issue;
 
 use App\Common\App\View\RenderableViewInterface;
+use App\Common\Infrastructure\Context\AvatarUrlProvider;
 use App\Controller\Api\ApiController;
 use App\Module\Issue\Api\ApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
@@ -54,10 +55,11 @@ class IssueManagementController extends ApiController
     /**
      * @param string $issueCode
      * @param ApiInterface $issueApi
+     * @param AvatarUrlProvider $avatarUrlProvider
      * @return Response
      * @throws ApiException
      */
-    public function getIssue(string $issueCode, ApiInterface $issueApi): Response
+    public function getIssue(string $issueCode, ApiInterface $issueApi, AvatarUrlProvider $avatarUrlProvider): Response
     {
         try
         {
@@ -68,7 +70,7 @@ class IssueManagementController extends ApiController
                 return $this->json(['message' => 'issue_not_found'], 404);
             }
 
-            $view = new IssueView($issue);
+            $view = new IssueView($issue, $avatarUrlProvider);
 
             return $view->render();
         }

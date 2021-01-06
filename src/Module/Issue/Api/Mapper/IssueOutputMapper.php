@@ -59,6 +59,7 @@ class IssueOutputMapper
         return new CommentOutput(
             $commentData->getId(),
             $commentData->getUsername(),
+            $commentData->getUserAvatarUrl(),
             $commentData->getContent()
         );
     }
