@@ -2,15 +2,15 @@
 
 namespace App\Module\Issue\Api\Output;
 
-class AssigneeUserOutput
+class ProjectOutput
 {
     private int $id;
-    private string $username;
+    private string $name;
 
-    public function __construct(int $id, string $username)
+    public function __construct(int $id, string $name)
     {
         $this->id = $id;
-        $this->username = $username;
+        $this->name = $name;
     }
 
     /**
@@ -24,8 +24,8 @@ class AssigneeUserOutput
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getName(): string
     {
-        return $this->username;
+        return $this->name;
     }
 }
