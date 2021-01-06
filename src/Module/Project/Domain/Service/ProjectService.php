@@ -8,18 +8,25 @@ use App\Module\Project\Domain\Exception\DuplicateProjectNameIdException;
 use App\Module\Project\Domain\Exception\InvalidOwnerToDeleteProjectException;
 use App\Module\Project\Domain\Exception\InvalidOwnerToEditProjectException;
 use App\Module\Project\Domain\Exception\UserNotExistsException;
+use App\Module\Project\Domain\Exception\UserToAddToTeamByIdNotFoundException;
 use App\Module\Project\Domain\Model\Project;
 use App\Module\Project\Domain\Model\ProjectRepositoryInterface;
 
 class ProjectService
 {
     private ProjectRepositoryInterface $projectRepository;
+    private TeamMemberService $teamMemberService;
     private UserAdapterInterface $userAdapter;
 
-    public function __construct(ProjectRepositoryInterface $projectRepository, UserAdapterInterface $userAdapter)
+    public function __construct(
+        ProjectRepositoryInterface $projectRepository,
+        UserAdapterInterface $userAdapter,
+        TeamMemberService $teamMemberService
+    )
     {
         $this->projectRepository = $projectRepository;
         $this->userAdapter = $userAdapter;
+        $this->teamMemberService = $teamMemberService;
     }
 
     public function getProject(int $id): ?Project
@@ -34,7 +41,9 @@ class ProjectService
      * @param string|null $description
      * @return Project
      * @throws DuplicateProjectNameIdException
+     * @throws ProjectByIdNotFoundException
      * @throws UserNotExistsException
+     * @throws UserToAddToTeamByIdNotFoundException
      */
     public function addProject(string $name, string $nameId, int $ownerId, ?string $description): Project
     {
@@ -43,6 +52,8 @@ class ProjectService
 
         $project = new Project(null, $name, $nameId, $ownerId, $description);
         $this->projectRepository->add($project);
+
+        $this->teamMemberService->addMember($project->getId(), $ownerId);
 
         return $project;
     }
