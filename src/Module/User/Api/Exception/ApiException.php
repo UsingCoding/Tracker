@@ -5,6 +5,7 @@ namespace App\Module\User\Api\Exception;
 
 use App\Common\Api\Exception\AbstractApiException;
 use App\Module\User\App\Exception\IncorrectUserPasswordException;
+use App\Module\User\App\Exception\UserCantDeleteHimSelfException;
 use App\Module\User\App\Exception\UserNotFoundException;
 use App\Module\User\Domain\Exception\DuplicateUserEmailException;
 use App\Module\User\Domain\Exception\DuplicateUsernameException;
@@ -24,6 +25,8 @@ class ApiException extends AbstractApiException
     public const USER_BY_ID_NOT_FOUND = 6;
     public const INVALID_USER_DATA = 7;
 
+    public const USER_CANT_DELETE_HIM_SELF = 8;
+
     protected static function getSelf(): string
     {
         return __CLASS__;
@@ -38,7 +41,8 @@ class ApiException extends AbstractApiException
             DuplicateUsernameException::class => self::DUPLICATE_USERNAME,
             UnknownUserGradeException::class => self::UNKNOWN_GRADE,
             UserByIdNotFoundException::class => self::USER_BY_ID_NOT_FOUND,
-            InvalidUserDataException::class => self::INVALID_USER_DATA
+            InvalidUserDataException::class => self::INVALID_USER_DATA,
+            UserCantDeleteHimSelfException::class => self::USER_CANT_DELETE_HIM_SELF
         ];
     }
 }

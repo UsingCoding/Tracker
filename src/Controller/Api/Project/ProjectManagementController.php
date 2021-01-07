@@ -100,8 +100,8 @@ class ProjectManagementController extends ApiController
             $api->editProject(new EditProjectInput(
                 $request->get('project_id'),
                 $this->getLoggedUser()->getUserOutput()->getUserId(),
-                $request->get('name'),
                 $request->get('new_owner_id'),
+                $request->get('name'),
                 $request->get('description')
             ));
 
