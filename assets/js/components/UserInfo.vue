@@ -9,11 +9,12 @@
                 <input v-model="email" class="project_input email_margin" type="text" id="email">
             </div>
 
-            
             <div class="create_project_label">
                 <label for="username">Username</label>
                 <input v-model="username" class="project_input username_margin" type="text" id="username">
             </div>
+
+            
 
             <div class="create_project_label">
                 <label for="password">Password</label>

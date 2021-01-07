@@ -45,11 +45,11 @@ export default class IssueStore
         const result = await this._serverApi.updateIssue(props)
         if (result)
         {
-            // is fuck was given
+            this._name = props.name;
+            this.description = props.description;
+            return result;            
         }
 
-        this._name = props.name;
-        this.description = props.description;
     }
 
     async getIssueInformation(issue_id)

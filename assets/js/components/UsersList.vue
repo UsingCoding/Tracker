@@ -56,4 +56,9 @@ export default {
 
 <style>
 
+.add_member
+{
+    padding: 2px 15px;
+}
+
 </style>

@@ -18,22 +18,19 @@ export default class ServerApi
     async updateIssue(props)
     {
         let response = await fetch('/api/issue', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({
-                    "issue_id": props.issue_id,
-                    "name": props.title,
-                    "description": props.description,
-                    "fields": {
-                        "user_id": props.user_id,
-                        "project_id": props.project_id
-                    }
-                })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                "issue_id": props.issue_id,
+                "name": props.title,
+                "description": props.description,
+                "fields": props.fields
             })
+        })
     
-            return await response.json();
+        return await response.json();
     }
 
     async createIssue(props)
@@ -46,10 +43,7 @@ export default class ServerApi
             body: JSON.stringify({
                 "name": props.title,
                 "description": props.description,
-                "fields": {
-                    "user_id": props.fields.user_id,
-                    "project_id": props.fields.project_id
-                }
+                "fields": props.fields
             })
         })
         return await response.json();
@@ -114,8 +108,8 @@ export default class ServerApi
 
     async getProjectsList()
     {
-        let response = await fetch('/api/projects/', {
-            method: 'GET',
+        let response = await fetch('/api/projects', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             }
@@ -343,6 +337,21 @@ export default class ServerApi
         return await response.json();
     }
 
+    async getUsersToAddList(project_id)
+    {
+        let response = await fetch('/api/team/users-to-add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'project_id': project_id
+            })
+        })
+
+        return await response.json();
+    }
+
     async createComment(props)
     {
         let response = await fetch('/api/issue/comment/add', {
@@ -358,6 +367,22 @@ export default class ServerApi
         });
 
         return await response.json();
+    }
+
+    async editComment(props)
+    {
+        let response = await fetch('/api/issue/comment/edit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'comment_id': props.comment_id,
+                'content': props.content
+            })
+        })
+
+        return response;
     }
 
     async deleteComment(comment_id)

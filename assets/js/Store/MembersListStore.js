@@ -18,6 +18,15 @@ export default class MembersListStore
             return this._memberList;
         }
     }
+
+    async getUsersToAddList(project_id)
+    {
+        let response = await this._serverApi.getUsersToAddList(project_id);
+
+        if(response){
+            return response;
+        }
+    }
     
     get memberList()
     {

@@ -724,6 +724,7 @@ header
 .sidebar_project
 {
   width: 30%;
+  height: 268px;
   margin-left: 3%;
   background: #ffffff;
   box-sizing: border-box;
@@ -764,7 +765,8 @@ header
   text-decoration: underline;
 }
 
-.issues_in_project
+.issues_in_project,
+.project_stat_div
 {
   background: #ffffff;
   box-sizing: border-box;
@@ -965,3 +967,4 @@ header
   font: 14px/17px "Montserrat";
   color: #ffffff;
 }
+

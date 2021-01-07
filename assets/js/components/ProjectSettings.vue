@@ -18,7 +18,7 @@
             <div class="create_project_label">
                 <label for="owner">Owner</label>
                 <select v-model="project_owner" class="owner_input project_input" type="text" id="owner">
-                    <option value="root">root</option>
+                    <option v-for="member in team" :value="member.user_id">{{member.username}}</option>
                 </select>        
             </div>
             
@@ -42,13 +42,19 @@ export default {
             new_project_title: '',
             new_project_description: '',
             new_project_id: '',
-            project_owner: 'root',
-            projectInfo: {}
+            project_owner: '',
+            projectInfo: {},
+            team: []
         }
     },
     methods: {
         getProjectInfo: async function() {
             this.projectInfo = await this.store.getProjectInfo(this.$route.params.code);
+        },
+        getMembers: async function() {
+            var membersListStore = this.factory.createMembersListStore();
+            var result = await membersListStore.getMembersList(this.$route.params.code);
+            this.team = result.team_members;
         },
         editProject: async function() {
             let result = await this.store.updateProject({
@@ -56,7 +62,6 @@ export default {
                 'name': this.new_project_title,
                 'description': this.new_project_description 
             });
-            
             if(result.ok)
                 this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } })
         },
@@ -66,9 +71,11 @@ export default {
     },
     async beforeMount() {
         await this.getProjectInfo();
+        await this.getMembers();
         this.new_project_title = this.projectInfo.name;
         this.new_project_id = this.projectInfo.nameId;
         this.new_project_description = this.projectInfo.description;
+        this.project_owner = this.projectInfo.owner_id;
     }
 }
 </script>

@@ -4,7 +4,7 @@
         <div>
             <span class="autoassigneeWarning" >
                 Auto assignee feature will be available if project exist fields
-                with names and types extimation - Time interval, difficulty - String
+                with names and types estimation - Time interval, difficulty - String
             </span>
             <div class="edit_team_btns">
                 <button v-on:click="addFlag = true" type="button" class="project_form_btn add_member">Add field</button>
@@ -59,6 +59,7 @@
                     </form>
 
                 </div>
+                <span v-if="projectFields.fields.length == 0" class="no_fields">There is no fields...</span>
             </div>
         </div>
   </div>
@@ -90,14 +91,9 @@ export default {
                     'project_id': this.$route.params.code 
                 });
 
-                if(response.ok && !response.hasOwnProperty('error'))
+                if(response)
                 {
-                    this.projectFields.push({ 
-                        'name': this.name,
-                        'type': this.type,
-                        'id': response.issue_field_id
-                    });
-                    this.map.set(response.issue_field_id, -1);
+                    await this.getFieldsList();
                     this.cancel();
                 }
                 else
@@ -118,7 +114,7 @@ export default {
                     'issue_field_id': this.field_id
                 });
             
-                if(response.ok && !response.hasOwnProperty('error'))
+                if(response.ok)
                     await this.getFieldsList();
 
                 this.cancelEdit();
@@ -139,12 +135,7 @@ export default {
             { 
                 if(val == 1)
                 {
-                    var result = this.fieldStore.deleteField(key);
-                    if(!result.ok || result.hasOwnProperty('error'))
-                    {
-                        this.$emit('error');
-                        break;
-                    }    
+                    var result = this.fieldStore.deleteField(key);  
                 }
             }
             this.map.clear();
@@ -153,7 +144,7 @@ export default {
         },
         getFieldsList: async function() {
             this.projectFields = await this.fieldListStore.getFields(this.$route.params.code);
-            if(this.projectFields && !this.projectFields.hasOwnProperty('error'))
+            if(this.projectFields)
             {
                 for(var field of this.projectFields.fields)
                 {
@@ -228,6 +219,11 @@ export default {
     cursor: pointer;
     text-decoration: underline;
     color: #ff318c;
+}
+
+.no_fields
+{
+    font: 36px/44px "Montserrat";
 }
 
 </style>

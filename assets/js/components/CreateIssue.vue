@@ -35,16 +35,16 @@
                                 <td><label class="tag" for="assignee">Assignee</label></td>
                                 <td>
                                     <select v-model="assignee" class="tag_value" name="assignee" id="assignee">
-                                        <option value="0">Unassigned</option>
-                                        <option v-for="member in team" :value="member.id">{{member.username}}</option>
+                                        <option value="null">Unassigned</option>
+                                        <option v-for="member in team" :value="member.user_id">{{member.username}}</option>
                                     </select>
                                 </td>
                             </tr>
                             
-                            <tr v-for="field in fields.fields" class="tag_row">
-                                <td><label class="tag" for="assignee">{{field.name}}</label></td>
+                            <tr v-for="field in fields" class="tag_row">
+                                <td><label class="tag" :for="field.id">{{field.name}}</label></td>
                                 <td>
-                                    <input class="field_input" type="text" name="">
+                                    <input class="field_input" type="text" name="" :id="field.id">
                                 </td>
                             </tr>
 
@@ -58,15 +58,13 @@
 
 <script>
 
-const user_id = 10;
-
 export default {
     props: ['factory'],
     data() {
         return {
             issue_title: '',
             issue_description: '',
-            assignee: '0',
+            assignee: 'null',
             chosenProject: {},
             issueStore: this.factory.createCreateIssueStore(),
             teamStore: this.factory.createMembersListStore(),
@@ -79,35 +77,63 @@ export default {
     methods: {
         create_issue: async function() {
             let issue_code;
-            if(this.title && this.description){
+            if(this.issue_title && this.issue_description){
+                if(this.assignee == 'null')
+                    this.assignee = null;
                 issue_code = await this.issueStore.createIssue({
                     "title": this.issue_title,
                     "description": this.issue_description,
-                    "fields": {
-                        "user_id": user_id,
-                        "project_id": this.chosenProject.project_id
-                    }
+                    "fields": this.getFieldsValues()
                 });
             }
-            if(issue_code && !issue_code.hasOwnProperty['error']){
+            if(issue_code && !issue_code.hasOwnProperty('error')){
                 this.$router.push({ name: 'issue_details', params: { code: this.chosenProject.name_id + "-" + issue_code }});
             }
             else {
                 this.$emit('error');
             }
         },
+        getFieldsValues: function() {
+            var fieldsValues = {};
+            fieldsValues.user_id = this.assignee;
+            fieldsValues.project_id = this.chosenProject.project_id;
 
+            for(var field of this.fields)
+            {
+                var elem = document.getElementById(field.id);
+                var fieldName = field.name;
+                fieldsValues[field.name] = elem.value;
+            }
+
+            return fieldsValues;
+        },
         cancel: function() {
             this.$router.push({ name: 'issues' });
+        }
+    },
+    computed: {
+        teamC: async function() {
+            var teamC = await this.teamStore.getMembersList(this.chosenProject.project_id);
+            this.assignee = 'null'
+            if(teamC)
+                this.team = teamC.team_members;
+            return this.team;
+        },
+        fieldsC: async function() {
+            var response = await this.fieldsStore.getFields(this.chosenProject.project_id);
+            if(response)
+                this.fields = response.fields;
+            return this.fields;
         }
     },
     async beforeMount() {
         let projectsStore = this.factory.createProjectsListStore();
         this.projects = await projectsStore.getProjectsList();
         this.chosenProject = this.projects[0];
-        // this.team = await this.teamStore.getMembersList(this.chosenProject.project_id).team_members;
-        // this.assignee = this.team[0].id;
-        this.fields = await this.fieldsStore.getFields(this.chosenProject.project_id);
+    },
+    async beforeUpdate() {
+        this.teamC;
+        this.fieldsC;
     }
 }
 </script>

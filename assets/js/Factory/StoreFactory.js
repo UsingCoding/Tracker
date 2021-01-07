@@ -11,6 +11,8 @@ import FieldsListStore from "../Store/FieldsListStore";
 import MemberStore from "../Store/MemberStore";
 import UsersListStore from "../Store/UsersListStore";
 import MembersListStore from "../Store/MembersListStore";
+import CreateCommentStore from "../Store/CreateCommentStore";
+import CommentStore from "../Store/CommentStore";
 
 export default class StoreFactory
 {
@@ -88,5 +90,15 @@ export default class StoreFactory
     createMembersListStore()
     {
         return new MembersListStore(this._serverApi);
+    }
+
+    createCreateCommentStore()
+    {
+        return new CreateCommentStore(this._serverApi);
+    }
+
+    createCommentStore()
+    {
+        return new CommentStore(this._serverApi);
     }
 }
