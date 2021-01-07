@@ -25,11 +25,11 @@ class IssueFieldEditedEventHandler extends TypedDomainEventHandler
             return;
         }
 
-        if ($event->getFieldType() === null)
-        {
-            return;
-        }
-
-        $this->issueService->editFieldInIssues($event->getId(), $event->getProjectId());
+        $this->issueService->editFieldInIssues(
+            $event->getProjectId(),
+            $event->getName(),
+            $event->getNewName(),
+            $event->getFieldType() !== null
+        );
     }
 }

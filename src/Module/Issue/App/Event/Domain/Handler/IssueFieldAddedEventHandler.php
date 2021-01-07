@@ -25,6 +25,6 @@ class IssueFieldAddedEventHandler extends TypedDomainEventHandler
             return;
         }
 
-        $this->issueService->addFieldToIssues($event->getId(), $event->getProjectId());
+        $this->issueService->addFieldToIssues($event->getName(), $event->getProjectId());
     }
 }

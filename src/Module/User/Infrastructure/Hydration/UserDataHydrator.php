@@ -21,6 +21,7 @@ class UserDataHydrator extends AbstractDbalHydrator
             $this->convertValue(UserDataMapping::CREATED_AT, $row),
             $this->convertValue(UserDataMapping::EMAIL, $row),
             $this->convertValue(UserDataMapping::GRADE, $row),
+            $this->convertValue(UserDataMapping::AVATAR_URL, $row),
         );
     }
 

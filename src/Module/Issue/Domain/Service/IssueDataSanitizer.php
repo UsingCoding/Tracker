@@ -68,6 +68,8 @@ class IssueDataSanitizer
     {
         $userId = Arrays::get($fields, self::USER_ID_KEY);
 
+        Arrays::removeByKey($fields, self::USER_ID_KEY);
+
         if ($userId === null)
         {
             return null;
@@ -77,8 +79,6 @@ class IssueDataSanitizer
         {
             throw new InvalidIssueDataException('User id must be int');
         }
-
-        Arrays::removeByKey($fields, self::USER_ID_KEY);
 
         return $userId;
     }

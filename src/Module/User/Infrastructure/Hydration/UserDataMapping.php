@@ -13,6 +13,7 @@ class UserDataMapping
     public const CREATED_AT = UserTable::CREATED_AT;
     public const EMAIL = UserTable::EMAIL;
     public const GRADE = UserTable::GRADE;
+    public const AVATAR_URL = UserTable::AVATAR_URL;
 
     private const TYPES = [
         self::USER_ID => Types::INTEGER,
@@ -21,6 +22,7 @@ class UserDataMapping
         self::CREATED_AT => Types::DATETIME_IMMUTABLE,
         self::EMAIL => Types::STRING,
         self::GRADE => Types::SMALLINT,
+        self::AVATAR_URL => Types::STRING
     ];
 
     public static function getColumnTypeName(string $columnName): string

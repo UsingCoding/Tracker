@@ -23,6 +23,7 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function add(Project $project): void
     {
         $this->entityManager->persist($project);
+        $this->entityManager->flush();
     }
 
     public function findById(int $id): ?Project

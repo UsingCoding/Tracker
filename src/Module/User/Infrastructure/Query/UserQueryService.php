@@ -57,6 +57,7 @@ class UserQueryService implements UserQueryServiceInterface
             ->addSelect('u.created_at')
             ->addSelect('u.email')
             ->addSelect('u.grade')
+            ->addSelect('u.avatar_url')
             ->from('account_user', 'u')
         ;
 

@@ -92,22 +92,27 @@ class IssueFieldService
             throw new IssueFieldByIdNotFoundException('Issue field not found', ['issue_field_id' => $issueFieldId]);
         }
 
-        if ($newName !== null && $newName !== $issueField->getName())
+        $name = $issueField->getName();
+
+        if ($newName !== null && $newName !== $name)
         {
             $this->assertIssueFieldIsNotBusy($newName, $issueField->getProjectId());
 
             $issueField->setName($newName);
         }
 
-        if ($newType !== null && $newType !== $issueField->getType())
+        $type = $issueField->getType();
+
+        if ($newType !== null && $newType !== $type)
         {
             $issueField->setType($newType);
         }
 
         $this->eventDispatcher->dispatch(new IssueFieldEdited(
             $issueFieldId,
-            $newName,
-            $newType,
+            $name,
+            $newName === $name ? null : $newName,
+            $newType === $type ? null : $newType,
             $issueField->getProjectId()
         ));
     }
