@@ -33,7 +33,7 @@ class TeamMemberListView implements RenderableViewInterface
                 fn(TeamMemberOutput $output) => [
                     'team_member_id' => $output->getId(),
                     'user_id' => $output->getUserId(),
-                    'is_owner' => $output->getUserId() === $this->loggedUser->getUserOutput()->getUserId(),
+                    'is_owner' => $output->getUserId() === $this->project->getOwnerId(),
                     'username' => $output->getUsername()
                 ]
             )
