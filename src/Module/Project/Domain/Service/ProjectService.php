@@ -7,6 +7,7 @@ use App\Module\Project\Domain\Adapter\UserAdapterInterface;
 use App\Module\Project\Domain\Exception\DuplicateProjectNameIdException;
 use App\Module\Project\Domain\Exception\InvalidOwnerToDeleteProjectException;
 use App\Module\Project\Domain\Exception\InvalidOwnerToEditProjectException;
+use App\Module\Project\Domain\Exception\UserAlreadyInTeamException;
 use App\Module\Project\Domain\Exception\UserNotExistsException;
 use App\Module\Project\Domain\Exception\UserToAddToTeamByIdNotFoundException;
 use App\Module\Project\Domain\Model\Project;
@@ -44,6 +45,7 @@ class ProjectService
      * @throws ProjectByIdNotFoundException
      * @throws UserNotExistsException
      * @throws UserToAddToTeamByIdNotFoundException
+     * @throws UserAlreadyInTeamException
      */
     public function addProject(string $name, string $nameId, int $ownerId, ?string $description): Project
     {
@@ -67,6 +69,7 @@ class ProjectService
      * @throws InvalidOwnerToEditProjectException
      * @throws ProjectByIdNotFoundException
      * @throws UserToAddToTeamByIdNotFoundException
+     * @throws UserAlreadyInTeamException
      */
     public function editProject(int $projectId, int $ownerId, ?int $newOwnerId, ?string $newName, ?string $newDescription): void
     {
