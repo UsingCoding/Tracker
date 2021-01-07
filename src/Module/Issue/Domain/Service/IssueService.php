@@ -120,6 +120,8 @@ class IssueService
         if ($newProjectId !== null && $issue->getProjectId() !== $newProjectId)
         {
             $this->assertProjectExists($newProjectId);
+            $newInProjectId = $this->issueRepo->getNextInProjectId($newProjectId);
+            $issue->setInProjectId($newInProjectId);
             $issue->setProjectId($newProjectId);
             $updated = true;
         }
