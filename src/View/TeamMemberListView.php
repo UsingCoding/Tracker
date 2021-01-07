@@ -28,6 +28,7 @@ class TeamMemberListView implements RenderableViewInterface
     {
         return new JsonResponse([
             'project_name' => $this->project->getName(),
+            'logged_user_id' => $this->loggedUser->getUserOutput()->getUserId(),
             'team_members' => Arrays::map($this->list->getMembers(),
                 fn(TeamMemberOutput $output) => [
                     'team_member_id' => $output->getId(),

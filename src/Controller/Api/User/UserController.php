@@ -202,12 +202,13 @@ class UserController extends ApiController
      * @param ApiInterface $api
      * @return Response
      * @throws ApiException
+     * @throws \App\Controller\Api\Exception\NoLoggedUserException
      */
     public function list(ApiInterface $api): Response
     {
         $list = $api->list();
 
-        $view = new UserListView($list);
+        $view = new UserListView($list, $this->getLoggedUser());
 
         return $view->render();
     }
