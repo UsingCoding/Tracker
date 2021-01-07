@@ -6,7 +6,7 @@ use Doctrine\DBAL\Types\Types;
 
 class IssueFieldDataMapping
 {
-    public const ISSUE_FIELD_ID = 'issue_id';
+    public const ISSUE_FIELD_ID = 'issue_field_id';
     public const NAME = 'name';
     public const TYPE = 'type';
 

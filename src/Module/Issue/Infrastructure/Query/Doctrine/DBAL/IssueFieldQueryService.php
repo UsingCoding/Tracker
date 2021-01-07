@@ -22,7 +22,7 @@ class IssueFieldQueryService implements IssueFieldQueryServiceInterface
         $queryBuilder = $this->connection->createQueryBuilder();
 
         $queryBuilder
-            ->addSelect('if.issue_id')
+            ->addSelect('if.issue_field_id')
             ->addSelect('if.name')
             ->addSelect('if.type')
             ->from('issue_field', 'if')
