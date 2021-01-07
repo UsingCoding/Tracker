@@ -174,11 +174,13 @@ class IssueService
     }
 
     /**
-     * @param int $fieldId
      * @param int $projectId
+     * @param string $name
+     * @param string|null $newName
+     * @param bool $typeChanged
      * @throws ModelCorruptedException
      */
-    public function editFieldInIssues(int $fieldId, int $projectId): void
+    public function editFieldInIssues(int $projectId, string $name, ?string $newName, bool $typeChanged): void
     {
         $issues = $this->issueRepo->findForProject($projectId);
 
@@ -186,15 +188,25 @@ class IssueService
         {
             $fields = $issue->getFields();
 
-            if (!Arrays::hasKey($fields, $fieldId))
+            if (!Arrays::hasKey($fields, $name))
             {
                 throw new ModelCorruptedException('Issue Field name not found is issue fields', [
                     'issue_id' => $issue->getId(),
-                    'issue_field_id' => $fieldId
+                    'issue_field_name' => $name,
+                    'project_id' => $projectId
                 ]);
             }
 
-            $fields[$fieldId] = self::FIELD_DEFAULT_VALUE;
+            if ($typeChanged)
+            {
+                $fields[$name] = self::FIELD_DEFAULT_VALUE;
+            }
+
+            if ($newName !== null)
+            {
+                $fields[$newName] = $fields[$name];
+                Arrays::removeByKey($fields, $name);
+            }
 
             $issue->setFields($fields);
         }

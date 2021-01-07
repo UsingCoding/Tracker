@@ -9,18 +9,19 @@ class IssueFieldEdited implements DomainEventInterface
     public const TYPE = 'issue_field.edited';
 
     private int $id;
-    private ?string $name;
+    private string $name;
+    private ?string $newName;
     private ?int $type;
     private int $projectId;
 
-    public function __construct(int $id, ?string $name, ?int $type, int $projectId)
+    public function __construct(int $id, string $name, ?string $newName, ?int $type, int $projectId)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->newName = $newName;
         $this->type = $type;
         $this->projectId = $projectId;
     }
-
 
     public function getType(): string
     {
@@ -36,16 +37,19 @@ class IssueFieldEdited implements DomainEventInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getFieldType(): ?int
+    /**
+     * @return string|null
+     */
+    public function getNewName(): ?string
     {
-        return $this->type;
+        return $this->newName;
     }
 
     /**
@@ -54,5 +58,10 @@ class IssueFieldEdited implements DomainEventInterface
     public function getProjectId(): int
     {
         return $this->projectId;
+    }
+
+    public function getFieldType(): ?int
+    {
+        return $this->type;
     }
 }
