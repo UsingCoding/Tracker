@@ -11,4 +11,5 @@ class UserTable
     public const UPDATED_AT = 'updated_at';
     public const EMAIL = 'email';
     public const GRADE = 'grade';
+    public const AVATAR_URL = 'avatar_url';
 }

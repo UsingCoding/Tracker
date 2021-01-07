@@ -7,6 +7,7 @@ use App\Module\Project\App\Exception\ProjectByIdNotFoundException;
 use App\Module\Project\App\Exception\ProjectNotExistsException;
 use App\Module\Project\Domain\Exception\DuplicateProjectNameIdException;
 use App\Module\Project\Domain\Exception\TeamMemberByIdNotFoundException;
+use App\Module\Project\Domain\Exception\UserAlreadyInTeamException;
 use App\Module\Project\Domain\Exception\UserNotExistsException;
 use App\Module\Project\Domain\Exception\UserToAddToTeamByIdNotFoundException;
 
@@ -22,6 +23,8 @@ class ApiException extends AbstractApiException
 
     public const USER_NOT_EXISTS = 7;
 
+    public const USER_ALREADY_IN_TEAM = 8;
+
     protected static function getSelf(): string
     {
         return __CLASS__;
@@ -35,7 +38,8 @@ class ApiException extends AbstractApiException
             ProjectByIdNotFoundException::class => self::PROJECT_BY_ID_NOT_FOUND,
             UserToAddToTeamByIdNotFoundException::class => self::USER_TO_ADD_TO_TEAM_NOT_FOUND,
             TeamMemberByIdNotFoundException::class => self::TEAM_MEMBER_BY_ID_NOT_FOUND,
-            UserNotExistsException::class => self::USER_NOT_EXISTS
+            UserNotExistsException::class => self::USER_NOT_EXISTS,
+            UserAlreadyInTeamException::class => self::USER_ALREADY_IN_TEAM
         ];
     }
 }

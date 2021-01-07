@@ -3,11 +3,12 @@
 namespace App\Module\Issue\Api\Mapper;
 
 use App\Common\Domain\Utils\Arrays;
-use App\Module\Issue\Api\Output\BelongingProjectOutput;
+use App\Module\Issue\Api\Output\AssigneeUserOutput;
 use App\Module\Issue\Api\Output\CommentOutput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssueListItemOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
+use App\Module\Issue\Api\Output\ProjectOutput;
 use App\Module\Issue\App\Query\Data\CommentData;
 use App\Module\Issue\App\Query\Data\ExtendedIssueData;
 use App\Module\Issue\App\Query\Data\IssueListItemData;
@@ -22,10 +23,16 @@ class IssueOutputMapper
             $data->getIssue()->getInProjectId(),
             $data->getIssue()->getName(),
             $data->getIssue()->getDescription(),
-            $data->getIssue()->getProjectName(),
-            $data->getIssue()->getUsername(),
-            null,
-            new BelongingProjectOutput('formal'),
+            $data->getIssue()->getFields(),
+            $data->getIssue()->getUserId() !== null ?
+            new AssigneeUserOutput(
+                $data->getIssue()->getUserId(),
+                $data->getIssue()->getUsername()
+            ) : null,
+            new ProjectOutput(
+                $data->getIssue()->getProjectId(),
+                $data->getIssue()->getProjectName()
+            ),
             (array) Arrays::map(
                 $data->getComments(),
                 static fn(CommentData $data) => self::getComment($data)
@@ -59,6 +66,7 @@ class IssueOutputMapper
         return new CommentOutput(
             $commentData->getId(),
             $commentData->getUsername(),
+            $commentData->getUserAvatarUrl(),
             $commentData->getContent()
         );
     }

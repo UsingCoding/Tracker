@@ -17,7 +17,8 @@ class UserMapper
             $data->getPassword(),
             $data->getEmail(),
             $data->getCreatedAt(),
-            $data->getGrade()
+            $data->getGrade(),
+            $data->getAvatarUrl()
         );
     }
 
@@ -34,7 +35,8 @@ class UserMapper
                 $data->getPassword(),
                 $data->getEmail(),
                 $data->getCreatedAt(),
-                $data->getGrade()
+                $data->getGrade(),
+                $data->getAvatarUrl()
             )
         ));
     }

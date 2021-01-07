@@ -4,15 +4,28 @@ namespace App\Module\Issue\Api\Output;
 
 class AssigneeUserOutput
 {
-    private string $name;
+    private int $id;
+    private string $username;
 
-    public function __construct(string $name)
+    public function __construct(int $id, string $username)
     {
-        $this->name = $name;
+        $this->id = $id;
+        $this->username = $username;
     }
 
-    public function getName(): string
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
-        return $this->name;
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
     }
 }

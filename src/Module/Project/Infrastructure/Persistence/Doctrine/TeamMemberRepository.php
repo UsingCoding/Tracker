@@ -27,6 +27,11 @@ class TeamMemberRepository implements TeamMemberRepositoryInterface
         return $this->repo->findOneBy(['id' => $id]);
     }
 
+    public function findMemberForProject(int $projectId, int $userId)
+    {
+        return $this->repo->findOneBy(['projectId' => $projectId, 'userId' => $userId]);
+    }
+
     public function remove(TeamMember $teamMember): void
     {
         $this->entityManager->remove($teamMember);

@@ -24,6 +24,7 @@ class CommentQueryService implements CommentQueryServiceInterface
             ->addSelect('c.comment_id')
             ->addSelect('c.user_id')
             ->addSelect('ac.username')
+            ->addSelect('ac.avatar_url')
             ->addSelect('c.content')
             ->from('comment', 'c')
             ->leftJoin('c', 'account_user', 'ac', 'ac.user_id = c.user_id')

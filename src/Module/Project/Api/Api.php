@@ -113,6 +113,20 @@ class Api implements ApiInterface
         }
     }
 
+    public function usersToAddToTeamList(int $projectId): array
+    {
+        try
+        {
+            $users = $this->teamMemberQueryService->getUsersToAddTeamList($projectId);
+
+            return TeamMemberMapper::getUsersToAddToTeam($users);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
+        }
+    }
+
     /**
      * @param CommandInterface $command
      * @throws ApiException

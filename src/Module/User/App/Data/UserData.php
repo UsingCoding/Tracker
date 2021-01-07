@@ -10,8 +10,9 @@ class UserData
     private \DateTimeImmutable $createdAt;
     private string $email;
     private int $grade;
+    private ?string $avatarUrl;
 
-    public function __construct(int $id, string $username, string $password, \DateTimeImmutable $createdAt, string $email, int $grade)
+    public function __construct(int $id, string $username, string $password, \DateTimeImmutable $createdAt, string $email, int $grade, ?string $avatarUrl)
     {
         $this->id = $id;
         $this->username = $username;
@@ -19,6 +20,7 @@ class UserData
         $this->createdAt = $createdAt;
         $this->email = $email;
         $this->grade = $grade;
+        $this->avatarUrl = $avatarUrl;
     }
 
     /**
@@ -67,5 +69,13 @@ class UserData
     public function getGrade(): int
     {
         return $this->grade;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatarUrl(): ?string
+    {
+        return $this->avatarUrl;
     }
 }

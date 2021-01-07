@@ -12,13 +12,15 @@ class CommentDataMapping
     public const USER_ID = 'user_id';
     public const USERNAME = UserTableAdapter::USERNAME;
     public const CONTENT = 'content';
+    public const AVATAR_URL = UserTableAdapter::AVATAR_URL;
 
     private const TYPES = [
         self::COMMENT_ID => Types::INTEGER,
         self::ISSUE_ID => Types::INTEGER,
         self::USER_ID => Types::INTEGER,
         self::CONTENT => Types::STRING,
-        self::USERNAME => Types::STRING
+        self::USERNAME => Types::STRING,
+        self::AVATAR_URL => Types::STRING
     ];
 
     public static function getColumnTypeName(string $columnName): string

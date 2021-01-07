@@ -8,23 +8,21 @@ class GetIssueOutput
     private int $inProjectId;
     private string $name;
     private ?string $description;
-    private string $projectName;
-    private ?string $username;
+    private array $fields;
     private ?AssigneeUserOutput $assigneeUser;
-    private BelongingProjectOutput $project;
+    private ProjectOutput $project;
     /** @var CommentOutput[] */
     private array $comments;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    public function __construct(int $issueId, int $inProjectId, string $name, ?string $description, string $projectName, ?string $username, ?AssigneeUserOutput $assigneeUser, BelongingProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
+    public function __construct(int $issueId, int $inProjectId, string $name, ?string $description, array $fields, ?AssigneeUserOutput $assigneeUser, ProjectOutput $project, array $comments, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->issueId = $issueId;
         $this->inProjectId = $inProjectId;
         $this->name = $name;
         $this->description = $description;
-        $this->projectName = $projectName;
-        $this->username = $username;
+        $this->fields = $fields;
         $this->assigneeUser = $assigneeUser;
         $this->project = $project;
         $this->comments = $comments;
@@ -65,19 +63,11 @@ class GetIssueOutput
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getProjectName(): string
+    public function getFields(): array
     {
-        return $this->projectName;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUsername(): ?string
-    {
-        return $this->username;
+        return $this->fields;
     }
 
     /**
@@ -89,9 +79,9 @@ class GetIssueOutput
     }
 
     /**
-     * @return BelongingProjectOutput
+     * @return ProjectOutput
      */
-    public function getProject(): BelongingProjectOutput
+    public function getProject(): ProjectOutput
     {
         return $this->project;
     }

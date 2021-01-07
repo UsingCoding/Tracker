@@ -113,3 +113,8 @@ services:
     App\Framework\Infrastructure\Persistence\File\FileSystemFileRepository:
         arguments:
             $dirPath: '%app.upload_files_directory%'
+
+    App\Common\Infrastructure\Context\AvatarUrlProvider:
+        arguments:
+            $assetsRootUrl: '%app.assets_path%'
+            $defaultAvatarUrl: '%app.default_avatar_url%'

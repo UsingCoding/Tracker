@@ -4,6 +4,7 @@ parameters:
 
     app.assets_path: /assets
     app.upload_files_directory: '%kernel.project_dir%/public/%app.assets_path%'
+    app.default_avatar_url: '%app.assets_path%/default.avatar.png'
 
     app.boot.external_commands:
         - name: doctrine:database:create

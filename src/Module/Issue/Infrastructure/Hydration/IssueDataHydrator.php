@@ -19,7 +19,10 @@ class IssueDataHydrator extends AbstractDbalHydrator
             $this->convertValue(IssueDataMapping::IN_PROJECT_ID, $row),
             $this->convertValue(IssueDataMapping::NAME, $row),
             $this->convertValue(IssueDataMapping::DESCRIPTION, $row),
+            $this->convertValue(IssueDataMapping::FIELDS, $row),
+            $this->convertValue(IssueDataMapping::USER_ID, $row),
             $this->convertValue(IssueDataMapping::USERNAME, $row),
+            $this->convertValue(IssueDataMapping::PROJECT_ID, $row),
             $this->convertValue(IssueDataMapping::PROJECT_NAME, $row),
             $this->convertValue(IssueDataMapping::CREATED_AT, $row),
             $this->convertValue(IssueDataMapping::UPDATED_AT, $row)

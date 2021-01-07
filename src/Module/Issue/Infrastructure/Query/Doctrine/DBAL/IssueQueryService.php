@@ -39,6 +39,8 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->addSelect('i.updated_at')
             ->addSelect('i.in_project_id')
             ->addSelect('p.name project_name')
+            ->addSelect('p.project_id')
+            ->addSelect('ac.user_id')
             ->addSelect('ac.username')
             ->from('issue', 'i')
             ->leftJoin('i', 'project', 'p', 'p.name_id = :project_name_id')

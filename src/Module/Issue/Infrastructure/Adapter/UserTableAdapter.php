@@ -12,4 +12,5 @@ class UserTableAdapter
     public const CREATED_AT = UserTable::CREATED_AT;
     public const UPDATED_AT = UserTable::UPDATED_AT;
     public const EMAIL = UserTable::EMAIL;
+    public const AVATAR_URL = UserTable::AVATAR_URL;
 }

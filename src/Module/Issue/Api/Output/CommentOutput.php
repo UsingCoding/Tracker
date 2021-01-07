@@ -6,12 +6,14 @@ class CommentOutput
 {
     private int $id;
     private string $username;
+    private ?string $userAvatarUrl;
     private string $content;
 
-    public function __construct(int $id, string $username, string $content)
+    public function __construct(int $id, string $username, ?string $userAvatarUrl, string $content)
     {
         $this->id = $id;
         $this->username = $username;
+        $this->userAvatarUrl = $userAvatarUrl;
         $this->content = $content;
     }
 
@@ -29,6 +31,14 @@ class CommentOutput
     public function getUsername(): string
     {
         return $this->username;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUserAvatarUrl(): ?string
+    {
+        return $this->userAvatarUrl;
     }
 
     /**

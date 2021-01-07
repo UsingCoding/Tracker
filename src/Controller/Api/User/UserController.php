@@ -4,6 +4,7 @@ namespace App\Controller\Api\User;
 
 use App\Common\App\Exception\CantStoreFileException;
 use App\Common\App\View\RenderableViewInterface;
+use App\Common\Infrastructure\Context\AvatarUrlProvider;
 use App\Common\Infrastructure\Persistence\FileRepositoryInterface;
 use App\Controller\Api\ApiController;
 use App\Module\User\Api\ApiInterface;
@@ -174,16 +175,17 @@ class UserController extends ApiController
     /**
      * @param Request $request
      * @param ApiInterface $api
+     * @param AvatarUrlProvider $avatarUrlProvider
      * @return RenderableViewInterface
      * @throws ApiException
      */
-    public function user(Request $request, ApiInterface $api): RenderableViewInterface
+    public function user(Request $request, ApiInterface $api, AvatarUrlProvider $avatarUrlProvider): RenderableViewInterface
     {
         try
         {
             $user = $api->getUserById($request->get('user_id'));
 
-            return new UserInfoView($user);
+            return new UserInfoView($user, $avatarUrlProvider);
         }
         catch (ApiException $exception)
         {
