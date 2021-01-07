@@ -24,6 +24,6 @@ class IssueFieldDeletedEventHandler extends TypedDomainEventHandler
             return;
         }
 
-        $this->issueService->deleteFieldFromIssues($event->getId(), $event->getProjectId());
+        $this->issueService->deleteFieldFromIssues($event->getName(), $event->getProjectId());
     }
 }

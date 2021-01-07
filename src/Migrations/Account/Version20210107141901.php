@@ -18,6 +18,7 @@ final class Version20210107141901 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('ALTER TABLE issue_field RENAME COLUMN issue_id TO issue_field_id');
+        $this->addSql('ALTER SEQUENCE issue_field_issue_id_seq RENAME TO issue_field_issue_field_id_seq');
     }
 
     public function down(Schema $schema) : void
@@ -26,5 +27,6 @@ final class Version20210107141901 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('ALTER TABLE issue_field RENAME COLUMN issue_field_id TO issue_id');
+        $this->addSql('ALTER SEQUENCE issue_field_issue_field_id_seq RENAME TO issue_field_issue_id_seq');
     }
 }

@@ -159,7 +159,7 @@ class IssueService
         $this->issueRepo->remove($issue);
     }
 
-    public function addFieldToIssues(int $fieldId, int $projectId): void
+    public function addFieldToIssues(string $fieldName, int $projectId): void
     {
         $issues = $this->issueRepo->findForProject($projectId);
 
@@ -167,7 +167,7 @@ class IssueService
         {
             $fields = $issue->getFields();
 
-            $fields = Arrays::merge($fields, [$fieldId => self::FIELD_DEFAULT_VALUE]);
+            $fields = Arrays::merge($fields, [$fieldName => self::FIELD_DEFAULT_VALUE]);
 
             $issue->setFields($fields);
         }
@@ -212,7 +212,7 @@ class IssueService
         }
     }
 
-    public function deleteFieldFromIssues(int $fieldId, int $projectId): void
+    public function deleteFieldFromIssues(string $fieldName, int $projectId): void
     {
         $issues =  $this->issueRepo->findForProject($projectId);
 
@@ -220,7 +220,7 @@ class IssueService
         {
             $fields = $issue->getFields();
 
-            Arrays::removeByKey($fields, $fieldId);
+            Arrays::removeByKey($fields, $fieldName);
 
             $issue->setFields($fields);
         }
