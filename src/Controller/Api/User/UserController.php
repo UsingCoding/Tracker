@@ -168,6 +168,11 @@ class UserController extends ApiController
                 return $this->json(['error' => 'user_not_found']);
             }
 
+            if ($exception->getType() === ApiException::USER_CANT_DELETE_HIM_SELF)
+            {
+                return $this->json(['error' => 'user_cant_delete_him_self']);
+            }
+
             throw $exception;
         }
     }

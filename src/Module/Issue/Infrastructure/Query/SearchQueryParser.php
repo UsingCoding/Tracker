@@ -27,7 +27,7 @@ class SearchQueryParser
      */
     public function parse(string $query, QueryBuilder $queryBuilder): void
     {
-        // Assignee: {vadim.makerov} State: {} field: {value}
+        // Assignee: {vadim.makerov} State: {} field: {value} Sort-by: UpdateTime DESC
 
         /** @var string[] $tokens */
         $tokens = Strings::split($query, ' ');
