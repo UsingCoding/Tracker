@@ -110,7 +110,12 @@ class IssueService
             $updated = true;
         }
 
-        if ($newUserId !== null && $issue->getUserId() !== $newUserId)
+        if ($newUserId === null)
+        {
+            $issue->setUserId(null);
+            $updated = true;
+        }
+        elseif ($issue->getUserId() !== $newUserId)
         {
             $this->assertUserExists($newUserId);
             $issue->setUserId($newUserId);
