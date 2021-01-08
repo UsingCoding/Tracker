@@ -88,6 +88,8 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->leftJoin('i', 'project', 'p', 'p.project_id = i.project_id')
         ;
 
+        $this->searchQueryBuilder->build($query, $queryBuilder);
+
         if ($projectId !== null)
         {
             $queryBuilder
@@ -95,8 +97,6 @@ class IssueQueryService implements IssueQueryServiceInterface
                 ->setParameter('project_id', $projectId, ParameterType::INTEGER)
             ;
         }
-
-        $this->searchQueryBuilder->build($query, $queryBuilder);
 
         $stmt = $queryBuilder->execute();
         $row = $stmt->fetchAll(FetchMode::ASSOCIATIVE);
