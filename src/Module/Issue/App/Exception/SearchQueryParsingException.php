@@ -6,7 +6,8 @@ use Throwable;
 
 class SearchQueryParsingException extends \Exception
 {
-    public const KEY_FOUNDED_BUT_VALUE_IS_NOT_SUPPORTED = 0;
+    public const VALUE_NOT_SUPPORTED = 0;
+    public const UNKNOWN_ORDER_BY_PARAM = 1;
 
     private int $type;
 
