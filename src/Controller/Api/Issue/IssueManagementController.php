@@ -148,7 +148,10 @@ class IssueManagementController extends ApiController
      */
     public function issuesList(Request $request, ApiInterface $issueApi): Response
     {
-        $list = $issueApi->list($request->get('search_query'));
+        $list = $issueApi->list(
+            $request->get('search_query'),
+            $request->get('project_id'),
+        );
 
         $view = new IssuesListView($list);
 
