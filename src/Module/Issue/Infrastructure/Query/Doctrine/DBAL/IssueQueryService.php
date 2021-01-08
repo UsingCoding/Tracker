@@ -8,7 +8,7 @@ use App\Module\Issue\Domain\Service\IssueCodeService;
 use App\Module\Issue\Infrastructure\Hydration\IssueDataHydrator;
 use App\Module\Issue\Infrastructure\Hydration\IssueListWithUserAndProjectDataHydrator;
 use App\Module\Issue\Infrastructure\Hydration\IssueWithFieldsHydrator;
-use App\Module\Issue\Infrastructure\Query\SearchQueryParser;
+use App\Module\Issue\Infrastructure\Query\SearchQueryBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
@@ -16,12 +16,12 @@ use Doctrine\DBAL\ParameterType;
 class IssueQueryService implements IssueQueryServiceInterface
 {
     private Connection $connection;
-    private SearchQueryParser $queryParser;
+    private SearchQueryBuilder $searchQueryBuilder;
 
-    public function __construct(Connection $connection, SearchQueryParser $queryParser)
+    public function __construct(Connection $connection, SearchQueryBuilder $searchQueryBuilder)
     {
         $this->connection = $connection;
-        $this->queryParser = $queryParser;
+        $this->searchQueryBuilder = $searchQueryBuilder;
     }
 
     public function getIssue(string $code): ?IssueData
@@ -69,7 +69,7 @@ class IssueQueryService implements IssueQueryServiceInterface
         return $results[0];
     }
 
-    public function list(string $query): array
+    public function issuesList(string $query, ?int $projectId): array
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -87,6 +87,16 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
             ->leftJoin('i', 'project', 'p', 'p.project_id = i.project_id')
         ;
+
+        $this->searchQueryBuilder->build($query, $queryBuilder);
+
+        if ($projectId !== null)
+        {
+            $queryBuilder
+                ->andWhere($queryBuilder->expr()->eq('i.project_id', ':project_id'))
+                ->setParameter('project_id', $projectId, ParameterType::INTEGER)
+            ;
+        }
 
         $stmt = $queryBuilder->execute();
         $row = $stmt->fetchAll(FetchMode::ASSOCIATIVE);

@@ -5,10 +5,11 @@ namespace App\Module\Issue\Infrastructure\Query;
 use App\Common\Domain\Utils\Arrays;
 use App\Common\Domain\Utils\Strings;
 use App\Module\Issue\App\Exception\SearchQueryParsingException;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Psr\Log\LoggerInterface;
 
-class SearchQueryParser
+class SearchQueryBuilder
 {
     private const KEY_POSTFIX = ':';
     private const VALUE_REG = '({(.+)})';
@@ -27,7 +28,7 @@ class SearchQueryParser
      */
     public function parse(string $query, QueryBuilder $queryBuilder): void
     {
-        // Assignee: {vadim.makerov} State: {} field: {value} Sort-by: UpdateTime DESC
+        // Assignee: {vadim.makerov} Sort-by: UpdateTime DESC
 
         /** @var string[] $tokens */
         $tokens = Strings::split($query, ' ');
@@ -67,6 +68,37 @@ class SearchQueryParser
 
                 throw new SearchQueryParsingException(SearchQueryParsingException::KEY_FOUNDED_BUT_VALUE_IS_NOT_SUPPORTED);
             }
+        }
+    }
+
+    public function build(string $searchQuery, QueryBuilder $queryBuilder): void
+    {
+        /** @var string[] $tokens */
+        $tokens = Strings::split($searchQuery, ' ');
+
+        $searchModifiers = [];
+
+        foreach ($tokens as $token)
+        {
+            if (Strings::isEndsWith($token, self::KEY_POSTFIX))
+            {
+
+            }
+
+            $searchModifiers[] = $token;
+        }
+
+        if (Arrays::length($searchModifiers) !== 0)
+        {
+            $searchModifier = implode('%', $searchModifiers);
+
+            $searchModifier = "%$searchModifier%";
+
+            $queryBuilder
+                ->where($queryBuilder->expr()->like('i.name', ':search_modifier'))
+                ->orWhere($queryBuilder->expr()->like('i.description', ':search_modifier'))
+                ->setParameter('search_modifier', $searchModifier, ParameterType::STRING)
+            ;
         }
     }
 }

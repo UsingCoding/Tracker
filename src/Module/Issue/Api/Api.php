@@ -93,11 +93,11 @@ class Api implements ApiInterface
         $this->publish($command);
     }
 
-    public function list(string $query): IssuesListOutput
+    public function list(string $query, ?int $projectId): IssuesListOutput
     {
         try
         {
-            $issues = $this->issueQueryService->list($query);
+            $issues = $this->issueQueryService->issuesList($query, $projectId);
 
             return IssueOutputMapper::getIssueListOutput($issues);
         }
