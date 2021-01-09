@@ -12,6 +12,8 @@ class CommentDataMapping
     public const USER_ID = 'user_id';
     public const USERNAME = UserTableAdapter::USERNAME;
     public const CONTENT = 'content';
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
     public const AVATAR_URL = UserTableAdapter::AVATAR_URL;
 
     private const TYPES = [
@@ -19,6 +21,8 @@ class CommentDataMapping
         self::ISSUE_ID => Types::INTEGER,
         self::USER_ID => Types::INTEGER,
         self::CONTENT => Types::STRING,
+        self::CREATED_AT => Types::DATETIME_IMMUTABLE,
+        self::UPDATED_AT => Types::DATETIME_IMMUTABLE,
         self::USERNAME => Types::STRING,
         self::AVATAR_URL => Types::STRING
     ];

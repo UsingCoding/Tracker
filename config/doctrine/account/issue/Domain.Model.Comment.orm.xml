@@ -8,5 +8,7 @@
         <field name="issueId" type="integer" />
         <field name="userId" type="integer" />
         <field name="content" length="1000" />
+        <field name="createdAt" type="datetime_immutable" column="created_at" />
+        <field name="updatedAt" type="datetime_immutable" column="updated_at" />
     </entity>
 </doctrine-mapping>

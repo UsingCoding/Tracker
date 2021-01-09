@@ -9,6 +9,7 @@ class SearchQueryKeyWords
 {
     public const ASSIGNEE = 'assignee';
     public const GROUP_BY = 'group by';
+    public const ORDER_BY = 'order-by';
 
     public const MODIFICATION_KEY_WORDS = [
         self::GROUP_BY
