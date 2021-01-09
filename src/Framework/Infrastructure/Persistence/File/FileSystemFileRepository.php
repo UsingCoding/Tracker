@@ -26,7 +26,7 @@ class FileSystemFileRepository implements FileRepositoryInterface
         }
         catch (FileException $exception)
         {
-            throw new CantStoreFileException();
+            throw new CantStoreFileException($exception->getMessage(), [], $exception->getCode(), $exception);
         }
 
         return $newFile->getFilename();
