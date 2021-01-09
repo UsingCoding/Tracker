@@ -8,8 +8,10 @@
           </div>
             <div class="project_team">
                 <div v-for="user in users" class="member_div">
-                    <input v-on:click="map.set(user.id, map.get(user.id)*-1)" class="member_checkbox" type="checkbox"/> 
+                    <input v-if="user.id != logged_user" v-on:click="map.set(user.id, map.get(user.id)*-1)" class="member_checkbox" type="checkbox"/> 
+                    <div v-else class="member_checkbox unclickable_checkbox"></div>
                     <router-link :to="{ name: 'user_info', params: {code: user.id}}" class="team_member">{{user.username}}</router-link>
+                    <span v-if="user.id == logged_user" class="owner_tag">YOU</span>
                 </div>
             </div>
         </div>
@@ -24,12 +26,15 @@ export default {
             store: this.factory.createUsersListStore(),
             userStore: this.factory.createUserStore(),
             users: [],
+            logged_user: '',
             map: new Map()
         }
     },
     methods: {
         getUsers: async function() {
-            this.users = await this.store.getUsers();
+            var response = await this.store.getUsers();
+            this.users = response.users;
+            this.logged_user = response.logged_user_id;
             for(var user of this.users)
             {
                 this.map.set(user.id, -1);
@@ -40,7 +45,7 @@ export default {
             { 
                 if(val == 1)
                 {
-                    this.userStore.deleteUser(key);
+                    await this.userStore.deleteUser(key);
                 }
             }
             this.map.clear();

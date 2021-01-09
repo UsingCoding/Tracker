@@ -1,6 +1,6 @@
 <template>
   <div class="project_view_width">
-        <h1 class="administration_path">{{projectFields.project_name}} <i class="fas fa-chevron-right arrow"></i> Fields</h1>
+        <h1 class="administration_path">{{projectTitle}} <i class="fas fa-chevron-right arrow"></i> Fields</h1>
         <div>
             <span class="autoassigneeWarning" >
                 Auto assignee feature will be available if project exist fields
@@ -31,7 +31,7 @@
                     </div>
                 </form>
 
-                <div v-for="field in projectFields.fields" class="member_div">
+                <div v-for="field in projectFields" class="member_div">
                     <div v-if="field_id != field.id">
                         <input v-on:click="map.set(field.id, map.get(field.id)*-1)" class="member_checkbox" type="checkbox" :id="field.fieldId"/> 
                         <span v-on:click="openEdit(field)" class="team_member">{{field.name}}</span>
@@ -59,7 +59,7 @@
                     </form>
 
                 </div>
-                <span v-if="projectFields.fields.length == 0" class="no_fields">There is no fields...</span>
+                <span v-if="projectFields.length == 0" class="no_fields">There is no fields...</span>
             </div>
         </div>
   </div>
@@ -70,6 +70,7 @@ export default {
     props: ['factory'],
     data() {
         return {
+            projectTitle: '',
             projectFields: [],
             fieldListStore: this.factory.createFieldsListStore(),
             createFieldStore: this.factory.createCreateFieldStore(),
@@ -135,7 +136,7 @@ export default {
             { 
                 if(val == 1)
                 {
-                    var result = this.fieldStore.deleteField(key);  
+                    var result = await this.fieldStore.deleteField(key);  
                 }
             }
             this.map.clear();
@@ -143,10 +144,12 @@ export default {
             await this.getFieldsList();
         },
         getFieldsList: async function() {
-            this.projectFields = await this.fieldListStore.getFields(this.$route.params.code);
-            if(this.projectFields)
+            var response = await this.fieldListStore.getFields(this.$route.params.code);
+            if(response)
             {
-                for(var field of this.projectFields.fields)
+                this.projectTitle = response.project_name;
+                this.projectFields = response.fields
+                for(var field of this.projectFields)
                 {
                     this.map.set(field.id, -1);
                 }

@@ -14,7 +14,19 @@
                 <input v-model="username" class="project_input username_margin" type="text" id="username">
             </div>
 
-            
+            <div class="create_project_label avatar_div">
+                <label for="avatar">Avatar</label>
+                <div v-if="createFlag && !this.avatar" v-on:click="addAvatar()" class="add_avatar add_avatar_background">
+                    <i class="plus_icon fas fa-plus-circle"></i>
+                </div>
+                <div v-if="createFlag" v-on:click="addAvatar()" class="preview_avatar_div" id="preview_div">
+                    <img src="" alt="sorry(" class="preview_avatar" id="preview">
+                </div>
+                <div v-if="!createFlag" v-on:click="addAvatar()" class="add_avatar">
+                    <img :src="userInfo.avatar_url" alt="sorry(" class="avatar">
+                </div>
+                <input class="user_avatar" title="some test" v-on:change="preloadFile()" type="file" ref="file" id="avatar"/>
+            </div>
 
             <div class="create_project_label">
                 <label for="password">Password</label>
@@ -24,10 +36,10 @@
             <div class="create_project_label grade_div">
                 <label for="grade">Grade</label>
                 <select v-model="grade" class="project_input grade" type="text" id="grade">
-                    <option value="0">Junior</option>
-                    <option value="1">Middle</option>
-                    <option value="2">Senior</option>
-                    <option value="3">Architect</option>
+                    <option value="1">Junior</option>
+                    <option value="2">Middle</option>
+                    <option value="3">Senior</option>
+                    <option value="4">Architect</option>
                 </select>
             </div>
 
@@ -46,6 +58,7 @@ export default {
             store: this.factory.createUserStore(),
             email: '',
             username: '',
+            avatar: '',
             grade: '',
             password: '',
             createFlag: false,
@@ -55,27 +68,23 @@ export default {
     methods: {
         edit_user: async function() {
             let response;
-
             if(!this.validate()){
+                let formData = new FormData()
+                formData.append('email', this.email);
+                formData.append('password', this.password);
+                formData.append('username', this.username);
+                formData.append('grade', this.grade - 1);
+                formData.append('avatar', this.avatar);
+
                 if(this.$route.name == 'user_info') {
-                    response = await this.store.editUserInfo({
-                        'user_id': this.$route.params.code,
-                        'email': this.email,
-                        'password': this.password,
-                        'username': this.username,
-                        'grade': this.grade
-                    });
+                    formData.append('user_id', this.$route.params.code);
+                    response = await this.store.editUserInfo(formData);
                 }
                 else {
-                    response = await this.store.createUser({
-                        'email': this.email,
-                        'password': this.password,
-                        'username': this.username,
-                        'grade': this.grade
-                    })
+                    response = await this.store.createUser(formData);
                 }
-                //PADAET V TRUE IZ ZA TOGO 4TO RASPARSIT' V JSON NE MOGY 
-                if(response.ok && !response.json().hasOwnProperty('error'))
+                
+                if(response.result === 1)
                    this.$router.push({name: 'users_list'});
                 else
                     this.$emit('error');
@@ -91,7 +100,7 @@ export default {
                 this.username = this.userInfo.username;
                 this.email = this.userInfo.email;
                 this.password = this.userInfo.password;
-                this.grade = this.userInfo.grade;
+                this.grade = this.userInfo.grade + 1;
             }
             else    
                 this.$emit('error');
@@ -132,15 +141,58 @@ export default {
             }
 
             return error;
+        },
+        addAvatar: function() {
+            var input = document.getElementById('avatar');
+            input.click();
+        },
+        preloadFile: function() {
+            this.avatar = this.$refs.file.files[0];
+            var preview = document.getElementById('preview');
+            var reader = new FileReader();
+
+            reader.onloadend = function() {
+                preview.src = reader.result;
+            }
+
+            reader.onerror = function() {
+                preview.src = "";
+            }
+
+            if(this.avatar) 
+                reader.readAsDataURL(this.avatar);
+            else
+                preview.src = "";
+        }
+    },
+    computed: {
+        previewComp: function() {
+            if(this.avatar && this.createFlag)
+            {
+                var preview = document.getElementById('preview');
+                var previewDiv = document.getElementById('preview_div');
+
+                preview.style['width'] = '60px';
+                preview.style['height'] = '60px';
+
+                previewDiv.style['width'] = '60px';
+                previewDiv.style['height'] = '60px';
+
+                preview.style['display'] ='block';
+            }
         }
     },
     async beforeMount() {
-        if(this.$route.name == 'user_info') {
+        if(this.$route.name == 'user_info')
+        {
             this.getUserInfo();
             this.createFlag = false;
         }
         else
             this.createFlag = true;
+    },
+    beforeUpdate() {
+        this.previewComp;
     }
 }
 </script>
@@ -162,6 +214,64 @@ export default {
 .username_margin
 {
     margin-left: 55px;
+}
+
+.avatar_div
+{
+    display: flex;
+}
+
+.add_avatar
+{
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    margin-left: 96px;
+}
+
+.add_avatar_background
+{
+    background: #5e5e5e;
+}
+
+.preview_avatar_div
+{
+    width: 0px;
+    height: 0px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 96px;
+}
+
+.preview_avatar
+{
+    width: 0px;
+    height: 0px;
+    border-radius: 5px;
+    display: none;
+}
+
+
+.avatar
+{
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.plus_icon
+{
+    font-size: 30px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+input[type='file']
+{
+    display: none;
 }
 
 .password_margin

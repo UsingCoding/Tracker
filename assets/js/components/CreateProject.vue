@@ -45,7 +45,7 @@ export default {
                     "description": this.new_project_description 
                 });
 
-                if(response.ok && !response.hasOwnProperty('error'))
+                if(response)
                     this.$router.push({ name: "projects_list" });
                 else   
                     this.$emit('error');
@@ -84,7 +84,6 @@ export default {
 
             return error;
         }
-
     }
 }
 </script>

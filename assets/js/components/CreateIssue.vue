@@ -10,8 +10,8 @@
 
                 <div class="new_issue_body">
                     <div class="width_100">
-                        <input required placeholder="Summary" v-model="issue_title" type="text" class="new_issue_title width_100" name="new_issue_title">
-                        <textarea placeholder="Description" v-model="issue_description" class="new_issue_description width_100" name="new_issue_description"></textarea>
+                        <input required placeholder="Summary" v-model="issue_title" type="text" class="new_issue_title width_100" name="new_issue_title" id="title">
+                        <textarea placeholder="Description" v-model="issue_description" class="new_issue_description width_100" name="new_issue_description" id="description"></textarea>
                         <hr class="issue_border"/>
                         <button v-on:click="create_issue()" class="create_button" type="button" name="create">Create</button>
                         <button v-on:click="cancel()" class="create_button" type="button" name="cancel">Cancel</button>
@@ -77,7 +77,7 @@ export default {
     methods: {
         create_issue: async function() {
             let issue_code;
-            if(this.issue_title && this.issue_description){
+            if(!this.validate()){
                 if(this.assignee == 'null')
                     this.assignee = null;
                 issue_code = await this.issueStore.createIssue({
@@ -85,12 +85,13 @@ export default {
                     "description": this.issue_description,
                     "fields": this.getFieldsValues()
                 });
-            }
-            if(issue_code && !issue_code.hasOwnProperty('error')){
-                this.$router.push({ name: 'issue_details', params: { code: this.chosenProject.name_id + "-" + issue_code }});
-            }
-            else {
-                this.$emit('error');
+
+                if(issue_code && !issue_code.hasOwnProperty('error')){
+                    this.$router.push({ name: 'issue_details', params: { code: this.chosenProject.name_id + "-" + issue_code }});
+                }
+                else {
+                    this.$emit('error');
+                }
             }
         },
         getFieldsValues: function() {
@@ -109,6 +110,29 @@ export default {
         },
         cancel: function() {
             this.$router.push({ name: 'issues' });
+        },
+        showError: function(container) {
+            container.style ['border-color'] = '#ff0000';
+	        container.setAttribute('onclick', 'this.style=""');
+        },
+        validate: function() {
+            var error = false;
+            var title = document.getElementById('title');
+            var description = document.getElementById('description');
+
+            if(!this.issue_title)
+            {
+                error = true;
+                this.showError(title);
+            }
+
+            if(!this.issue_description)
+            {
+                error = true;
+                this.showError(description);
+            }
+
+            return error;
         }
     },
     computed: {

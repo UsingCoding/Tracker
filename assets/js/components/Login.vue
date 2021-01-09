@@ -31,8 +31,7 @@ export default{
     },
     methods: {
         login: async function() {
-            var emailRegex = /[^@]+@[^\.]+\..+/g;
-            if(this.password && emailRegex.test(this.username)){
+            if(!this.validate()){
                 let response = await fetch('/api/auth?username=' + encodeURIComponent(this.username) + '&password=' + this.password, {
                     method: 'POST',
                     headers: {
@@ -44,14 +43,37 @@ export default{
                 if(result.isLogin === 1) {
                     this.$router.push({path: '/issues'});
                 }
+                else{
+                    var username = document.getElementById('username');
+                    var password = document.getElementById('password');
+                    this.showError(username);
+                    this.showError(password);
+                }
             }
+        },
+        showError: function(container) {
+            container.style ['border-color'] = '#ff0000';
+	        container.setAttribute('onclick', 'this.style=""');
+        },
+        validate: function() {
+            var error = false;
             var username = document.getElementById('username');
             var password = document.getElementById('password');
-            username.style ['border-color'] = '#ff0000';
-	        username.setAttribute('onclick', 'this.style=""');
-            password.style ['border-color'] = '#ff0000';
-	        password.setAttribute('onclick', 'this.style=""');
-            
+            var emailRegex = /[^@]+@[^\.]+\..+/g;
+
+            if(!emailRegex.test(this.username))
+            {
+                error = true;
+                this.showError(username);
+            }
+
+            if(!this.password)
+            {
+                error = true;
+                this.showError(password);
+            }
+
+            return error;
         }
     }
 
@@ -59,5 +81,10 @@ export default{
 </script>
 
 <style scoped>
+
+.sign_up
+{
+    display: none;
+}
 
 </style>

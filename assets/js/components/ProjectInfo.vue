@@ -21,7 +21,7 @@
                     <td class="stat_width">{{stat[1]}}</td>
                 </tr>
             </table>
-            <span v-if="projectInfo.user_to_issues_count.length == 0" class="no_issues">Seems there no statistics for project :(</span>
+            <span v-if="statistics.length == 0" class="no_issues">Seems there no statistics for project :(</span>
         </div>
       </div>
       <div class="sidebar_project">
@@ -48,6 +48,7 @@ export default {
             issuesStore: this.factory.createIssuesListStore(),
             projectInfo: {},
             issuesList: [],
+            statistics: [],
             strings: new Strings()
         }
     },
@@ -56,9 +57,14 @@ export default {
             this.projectInfo = await this.store.getProjectInfo(this.$route.params.code);
             if(!this.projectInfo || typeof this.projectInfo['error'] !== "undefined")
                 this.$emit('error');
+            else
+                this.statistics = this.projectInfo.user_to_issues_count;
         },
         getIssueList: async function() {
-            this.issuesList = await this.issuesStore.getIssueList(this.projectInfo.nameId);
+            this.issuesList = await this.issuesStore.getIssueList({
+                'search_query': '',
+                'project_id': this.$route.params.code
+            });
             if(!this.issuesList)
                 this.$emit('error');
         },

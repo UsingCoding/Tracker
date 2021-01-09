@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default class ServerApi
 {
     /**
@@ -64,7 +66,7 @@ export default class ServerApi
         return await response;
     }
 
-    async getIssueList(search_query)
+    async getIssueList(props)
     {
         let response = await fetch('/api/issue/search',{
             method: 'POST',
@@ -72,7 +74,8 @@ export default class ServerApi
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({
-                'search_query': search_query
+                'search_query': props.search_query,
+                'project_id': props.project_id
             })
         })
         return await response.json();
@@ -128,6 +131,7 @@ export default class ServerApi
             body: JSON.stringify({
                 'name': props.name,
                 'project_id': props.project_id,
+                'new_owner_id': props.new_owner_id,
                 'description': props.description
             })
         });
@@ -165,20 +169,22 @@ export default class ServerApi
 
     async createUser(props)
     {
-        let response = await fetch('/api/user/add', {
-            method: 'POST',
+        let response = {};
+        await axios.post('/api/user/add',
+        props,
+        {
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                'email': props.email,
-                'username': props.username,
-                'password': props.password,
-                'grade': props.grade
-            })
-        });
+                'Content-Type': 'multipart/form-data' 
+            }
+        }).then(function() {
+            response.result = 1;
+            
+        })
+        .catch(function() {
+            response.result = 0;
+        })
+        return response;
 
-        return await response;
     }
 
     async getUser(user_id)
@@ -198,21 +204,20 @@ export default class ServerApi
 
     async editUser(props)
     {
-        let response = await fetch('/api/user/edit', {
-            method: 'POST',
+        let response = {}
+        await axios.post('/api/user/edit',
+        props,
+        {
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                'user_id': props.user_id,
-                'email': props.email,
-                'username': props.username,
-                'password': props.password,
-                'grade': props.grade
-            })
-        });
-
-        return await response;
+                'Content-Type': 'multipart/form-data' 
+            }
+        }).then(function() {
+            response.result = 1;
+        })
+        .catch(function() {
+            response.result = 0;
+        })
+        return response;
     }
 
     async deleteUser(user_id)
@@ -398,5 +403,20 @@ export default class ServerApi
         });
         
         return await response;
+    }
+
+    async getCommentsForIssue(issue_id)
+    {
+        let response = await fetch('/api/issue/comments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify({
+                'issue_id': issue_id
+            })
+        });
+
+        return await response.json();
     }
 }

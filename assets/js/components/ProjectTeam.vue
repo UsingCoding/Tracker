@@ -12,7 +12,7 @@
                     <div class="name_block">
                         <label class="field_name" for="username">Username</label>
                         <select v-model="userId" class="type_options" name="username" id="username">
-                            <option v-for="user in usersToAdd" :value="user.id">{{user.username}}</option>
+                            <option v-for="user in usersToAdd" :value="user.user_id">{{user.username}}</option>
                         </select>
                     </div>
                 
@@ -23,9 +23,11 @@
                 </form>
               
                 <div v-for="user in team.team_members" class="member_div">
-                    <input v-on:click="map.set(user.team_member_id, map.get(user.team_member_id)*-1)" class="member_checkbox" type="checkbox"/> 
+                    <input v-if="user.user_id != team.logged_user_id && !user.is_owner " v-on:click="map.set(user.team_member_id, map.get(user.team_member_id)*-1)" class="member_checkbox" type="checkbox"/> 
+                    <div v-else class="member_checkbox unclickable_checkbox"></div>
                     <span class="team_member">{{user.username}}</span>
-                    <span v-if="user.is_owner" class="owner_tag">Owner</span>
+                    <span v-if="user.is_owner" class="owner_tag">OWNER</span>
+                    <span v-if="user.user_id == team.logged_user_id" class="owner_tag">YOU</span>
                 </div>
           </div>
       </div>

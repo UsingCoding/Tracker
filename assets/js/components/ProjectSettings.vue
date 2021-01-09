@@ -57,16 +57,56 @@ export default {
             this.team = result.team_members;
         },
         editProject: async function() {
-            let result = await this.store.updateProject({
-                'project_id': this.$route.params.code,
-                'name': this.new_project_title,
-                'description': this.new_project_description 
-            });
-            if(result.ok)
-                this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } })
+            if(!this.validate()){
+                let result = await this.store.updateProject({
+                    'project_id': this.$route.params.code,
+                    'name': this.new_project_title,
+                    'new_owner_id': this.project_owner,
+                    'description': this.new_project_description 
+                });
+                if(result.ok)
+                    this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } })
+            }
         },
         cancel: function() {
             this.$router.push({ name: 'project_info', params: { code: this.$route.params.code } });
+        },
+        showError: function(container) {
+            container.style ['border-color'] = '#ff0000';
+	        container.setAttribute('onclick', 'this.style=""');
+        },
+        validate: function() {
+            var error = false;
+            var name = document.getElementById('name');
+            var id = document.getElementById('id');
+            var description = document.getElementById('description');
+            var owner = document.getElementById('owner');
+
+            if(!this.new_project_title)
+            {
+                error = true;
+                this.showError(name);
+            }
+
+            if(!this.new_project_id)
+            {
+                error = true;
+                this.showError(id);
+            }
+
+            if(!this.project_owner)
+            {
+                error = true;
+                this.showError(owner);
+            }
+
+            if(!this.new_project_description)
+            {
+                error = true;
+                this.showError(description);
+            }
+
+            return error;
         }
     },
     async beforeMount() {

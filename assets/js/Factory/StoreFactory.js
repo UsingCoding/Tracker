@@ -13,6 +13,7 @@ import UsersListStore from "../Store/UsersListStore";
 import MembersListStore from "../Store/MembersListStore";
 import CreateCommentStore from "../Store/CreateCommentStore";
 import CommentStore from "../Store/CommentStore";
+import CommentsListStore from "../Store/CommentsListStore";
 
 export default class StoreFactory
 {
@@ -100,5 +101,10 @@ export default class StoreFactory
     createCommentStore()
     {
         return new CommentStore(this._serverApi);
+    }
+
+    createCommentsListStore()
+    {
+        return new CommentsListStore(this._serverApi);
     }
 }

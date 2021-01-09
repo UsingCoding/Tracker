@@ -11,15 +11,14 @@
                     <p class="issue_view_description">{{new_description}}</p>
                     <hr class="issue_border"/>
                     <div class="comments">
-                      <div v-on:dblclick="showEditComment(comment)" class="comment" v-for="comment in issueInfo.comments" >
+                      <div v-on:dblclick="showEditComment(comment)" class="comment" v-for="comment in comments" >
 
                         <div class="user_img">
-                          <!-- <div class="user_img_test"></div> -->
-                          <img :src="comment.avatar_url" alt="sorry(">
+                          <img :src="comment.avatar_url" alt="sorry(" class="user_img">
                         </div>
                     
                         <div class="comment_content width_100">
-                          <span class="comment_owner">{{comment.username}} commented 32.12.2020</span>
+                          <span class="comment_owner">{{comment.username}} commented {{comment.updated_at}}</span>
                           <p v-if="commentId != comment.id" class="comment_text">{{comment.content}}</p>
 
                           <div class="width_100" v-if="commentId == comment.id">
@@ -74,8 +73,8 @@
         <form v-if="edit_flag" class="create_issue" action="index.html" method="post">
           <div class="new_issue_body">
             <div class="width_100">
-              <input required placeholder="Summary" v-model="new_title" type="text" class="new_issue_title width_100" name="new_issue_title">
-              <textarea placeholder="Description" v-model="new_description" class="new_issue_description width_100" name="new_issue_description"></textarea>
+              <input required placeholder="Summary" v-model="new_title" type="text" class="new_issue_title width_100" name="new_issue_title" id="title">
+              <textarea placeholder="Description" v-model="new_description" class="new_issue_description width_100" name="new_issue_description" id="description"></textarea>
               <hr class="issue_border"/>
               <button v-if="edit_flag" v-on:click="edit_issue()" class="create_button" type="button" name="save">Save</button>
               <button v-on:click="cancel_edit()" class="create_button" type="button" name="cancel">Cancel</button>
@@ -103,11 +102,13 @@
                     </select>
                   </td>
                 </tr>
-                            
+                
                 <tr v-for="field in fields" class="tag_row">
                   <td><label class="tag" :for="field.id">{{field.name}}</label></td>
                   <td>
-                    <input class="field_input" type="text" :id="field.id">
+                    <input v-if="issueInfo.fields[field.name] && issueInfo.fields[field.name] == 'null'" class="field_input" type="text" :id="field.id">
+                    <input v-else-if="issueInfo.fields[field.name] && issueInfo.fields[field.name] != 'null'" v-model="issueInfo.fields[field.name]" class="field_input" type="text" :id="field.id">
+                    <input v-else class="field_input" type="text" :id="field.id">
                   </td>
                 </tr>
 
@@ -128,7 +129,7 @@ export default {
   data() {
     return {
       store: this.factory.createIssueStore(),
-      issueInfo: {},
+      issueInfo: { issue_id: 1 },
       new_description: '',
       new_title: '',
       assignee: {},
@@ -136,6 +137,7 @@ export default {
       projects: [],
       team: [],
       fields: [],
+      comments: [],
       newCommentContent: '',
       commentContent: '',
       createCommentStore: this.factory.createCreateCommentStore(),
@@ -145,20 +147,22 @@ export default {
   },
   methods: {
     edit_issue: async function() {
-      if(this.assignee.id == 'null')
-        this.assignee.id = null;
-      console.log(this.assignee.id);
-      let result = await this.store.updateIssue({
-        "issue_id": this.issueInfo.issue_id,
-        "title": this.new_title,
-        "description": this.new_description,
-        "fields": this.getFieldsValues()
-      });
-       
-      if(result.success == 1)
+      if(!this.validate())
       {
-        await this.getIssueInfo();
-        this.cancel_edit();
+        if(this.assignee.id == 'null')
+          this.assignee.id = null;
+        let result = await this.store.updateIssue({
+          "issue_id": this.issueInfo.issue_id,
+          "title": this.new_title,
+          "description": this.new_description,
+          "fields": this.getFieldsValues()
+        });
+       
+        if(result.success == 1)
+        {
+          await this.getIssueInfo();
+          this.cancel_edit();
+        }
       }
     },
     cancel_edit: function() {
@@ -170,6 +174,7 @@ export default {
       this.projects = await projectsStore.getProjectsList();
       this.new_title = this.issueInfo.name;
       this.new_description = this.issueInfo.description;
+      await this.getCommentsList();
       if(this.issueInfo.user)
       {
         this.assignee = this.issueInfo.user;
@@ -186,7 +191,7 @@ export default {
     getFieldsValues: function() {
       var fieldsValues = {};
       fieldsValues.user_id = this.assignee.id;
-      fieldsValues.project_id = this.project.id;
+      fieldsValues.project_id = this.newProjectId;
 
       for(var field of this.fields)
       {
@@ -206,7 +211,7 @@ export default {
           'content': this.newCommentContent
         });
         this.newCommentContent = '';
-        await this.getIssueInfo();
+        await this.getCommentsList();
       }
     },
     showEditComment: function(comment) {
@@ -225,7 +230,7 @@ export default {
           'content': this.commentContent
         })
         if(response.ok)
-          await this.getIssueInfo();
+          await this.getCommentsList();
         this.closeEditComment();
       }
     },
@@ -233,6 +238,33 @@ export default {
       let response = await this.commentStore.deleteComment(this.commentId)
       if(response.ok)
         await this.getIssueInfo();
+    },
+    getCommentsList: async function() {
+      var commentsStore = this.factory.createCommentsListStore();
+      this.comments = await commentsStore.getComments(this.issueInfo.issue_id);
+    },
+    showError: function(container) {
+      container.style ['border-color'] = '#ff0000';
+	    container.setAttribute('onclick', 'this.style=""');
+    },
+    validate: function() {
+      var error = false;
+      var title = document.getElementById('title');
+      var description = document.getElementById('description');
+
+      if(!this.new_title)
+      {
+        error = true;
+        this.showError(title);
+      }
+
+      if(!this.new_description)
+      {
+        error = true;
+        this.showError(description);
+      }
+
+      return error;
     }
   },
   computed: {

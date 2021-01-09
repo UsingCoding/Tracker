@@ -11,9 +11,9 @@ export default class IssueListStore
         this._serverApi = server_api;
     }
 
-    async getIssueList(search_query)
+    async getIssueList(props)
     {
-        let response = await this._serverApi.getIssueList(search_query);
+        let response = await this._serverApi.getIssueList(props);
 
         if(response){
             this._issueList = await response;

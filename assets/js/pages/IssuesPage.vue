@@ -33,7 +33,10 @@ export default {
     },
     methods: {
         getIssueList: async function(search) {
-            this.issues = await this.store.getIssueList(search);
+            this.issues = await this.store.getIssueList({
+                'search_query': search,
+                'project_id': null
+            });
             if(!this.issues || this.issues.hasOwnProperty('error'))
                 this.openPopup();
         },
