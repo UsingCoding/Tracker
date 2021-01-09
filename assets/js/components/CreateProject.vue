@@ -19,8 +19,10 @@
                 <label for="description">Description</label>
                 <textarea v-model="new_project_description" class="new_project_description" name="new_project_description" id="description"></textarea>
             </div>
-            <button v-on:click="create_project()" type="button" class="project_form_btn create_project_btn">Save</button>
-            <button v-on:click="cancel()" type="button" class="project_form_btn cancel_btn">Cancel</button>
+            <div>
+                <button v-on:click="create_project()" type="button" class="project_form_btn create_project_btn">Save</button>
+                <button v-on:click="cancel()" type="button" class="project_form_btn cancel_btn">Cancel</button>
+            </div>
         </form> 
     </div>
 </template>

@@ -29,7 +29,6 @@
             <h3 class="sidebar_project_header">Administration</h3>
             <router-link v-if="projectInfo.is_owner" :to="{ name: 'project_settings', params: { code: this.$route.params.code } }" class="sidebar_link" exact>Settings</router-link>
             <router-link :to="{ name: 'project_team', params: { code: this.$route.params.code } }" class="sidebar_link" exact>Team</router-link>
-            <router-link to="/" class="sidebar_link" exact>Access</router-link>
             <router-link :to="{ name: 'project_fields', params: { code: this.$route.params.code } }" class="sidebar_link" exact>Fields</router-link>
             <span v-if="projectInfo.is_owner" v-on:click="deleteProject()" class="delete_project">Delete</span>
           </div>
