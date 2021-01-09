@@ -12,6 +12,7 @@ use App\Module\Issue\Infrastructure\Query\SearchQueryBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
+use function Doctrine\DBAL\Query\QueryBuilder;
 
 class IssueQueryService implements IssueQueryServiceInterface
 {
@@ -69,7 +70,7 @@ class IssueQueryService implements IssueQueryServiceInterface
         return $results[0];
     }
 
-    public function issuesList(string $query, ?int $projectId): array
+    public function issuesList(string $query, ?int $currentUserId, ?int $projectId): array
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -87,6 +88,15 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
             ->leftJoin('i', 'project', 'p', 'p.project_id = i.project_id')
         ;
+
+        if ($currentUserId !== null)
+        {
+            $queryBuilder
+                ->leftJoin('p', 'team_member', 'tm', 'p.project_id = tm.project_id')
+                ->where($queryBuilder->expr()->eq('tm.user_id', ':current_user_id'))
+                ->setParameter('current_user_id', $currentUserId, ParameterType::INTEGER)
+            ;
+        }
 
         $this->searchQueryBuilder->build($query, $queryBuilder);
 

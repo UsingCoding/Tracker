@@ -77,7 +77,7 @@ class SearchQueryBuilder
             $searchModifier = "%$searchModifier%";
 
             $queryBuilder
-                ->where($queryBuilder->expr()->like('i.name', ':search_modifier'))
+                ->andWhere($queryBuilder->expr()->like('i.name', ':search_modifier'))
                 ->orWhere($queryBuilder->expr()->like('i.description', ':search_modifier'))
                 ->setParameter('search_modifier', $searchModifier, ParameterType::STRING)
             ;

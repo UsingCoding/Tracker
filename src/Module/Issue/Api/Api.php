@@ -4,6 +4,7 @@ namespace App\Module\Issue\Api;
 
 use App\Common\App\Command\Bus\AppCommandBusInterface;
 use App\Common\App\Command\CommandInterface;
+use App\Common\App\Context\LoggedUserIdProviderInterface;
 use App\Common\App\Event\AppEventHandlerInterface;
 use App\Common\App\Event\AppEventInterface;
 use App\Common\App\Event\AppEventSourceInterface;
@@ -45,6 +46,7 @@ class Api implements ApiInterface
     private CommentQueryServiceInterface $commentsQueryService;
     private IssueQueryServiceInterface $issueQueryService;
     private IssueFieldQueryServiceInterface $issueFieldQueryService;
+    private LoggedUserIdProviderInterface $loggedUserIdProvider;
     private AppEventSourceInterface $eventSource;
 
     public function __construct(
@@ -53,6 +55,7 @@ class Api implements ApiInterface
         CommentQueryServiceInterface $commentsQueryService,
         IssueQueryServiceInterface $issueQueryService,
         IssueFieldQueryServiceInterface $issueFieldQueryService,
+        LoggedUserIdProviderInterface $loggedUserIdProvider,
         AppEventSourceInterface $eventSource
     )
     {
@@ -61,8 +64,10 @@ class Api implements ApiInterface
         $this->commentsQueryService = $commentsQueryService;
         $this->issueQueryService = $issueQueryService;
         $this->issueFieldQueryService = $issueFieldQueryService;
+        $this->loggedUserIdProvider = $loggedUserIdProvider;
         $this->eventSource = $eventSource;
     }
+
 
     public function createIssue(CreateIssueInput $input): int
     {
@@ -108,7 +113,7 @@ class Api implements ApiInterface
     {
         try
         {
-            $issues = $this->issueQueryService->issuesList($query, $projectId);
+            $issues = $this->issueQueryService->issuesList($query, $this->loggedUserIdProvider->getUserId(), $projectId);
 
             return IssueOutputMapper::getIssueListOutput($issues);
         }
