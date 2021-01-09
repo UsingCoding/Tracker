@@ -8,12 +8,17 @@ use App\Module\User\Domain\Exception\InvalidUserDataException;
 class UserDataSanitizer
 {
     /**
-     * @param string $rawEmail
-     * @return string
+     * @param string|null $rawEmail
+     * @return string|null
      * @throws InvalidUserDataException
      */
-    public static function sanitizeEmail(string $rawEmail): string
+    public static function sanitizeEmail(?string $rawEmail): ?string
     {
+        if ($rawEmail === null)
+        {
+            return null;
+        }
+
         $email = Strings::trim($rawEmail);
 
         if(!preg_match('/^.+@.+\.[a-z]+/', $email))
