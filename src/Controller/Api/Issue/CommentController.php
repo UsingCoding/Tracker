@@ -2,12 +2,15 @@
 
 namespace App\Controller\Api\Issue;
 
+use App\Common\App\View\RenderableViewInterface;
+use App\Common\Infrastructure\Context\AvatarUrlProvider;
 use App\Controller\Api\ApiController;
 use App\Controller\Api\Exception\NoLoggedUserException;
 use App\Module\Issue\Api\CommentApiInterface;
 use App\Module\Issue\Api\Exception\ApiException;
 use App\Module\Issue\Api\Input\AddCommentInput;
 use App\Module\Issue\Api\Input\EditCommentInput;
+use App\View\CommentsListView;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -99,5 +102,19 @@ class CommentController extends ApiController
 
             throw $exception;
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param CommentApiInterface $commentApi
+     * @param AvatarUrlProvider $avatarUrlProvider
+     * @return RenderableViewInterface
+     * @throws ApiException
+     */
+    public function commentsForIssue(Request $request, CommentApiInterface $commentApi, AvatarUrlProvider $avatarUrlProvider): RenderableViewInterface
+    {
+        $comments = $commentApi->commentsForIssue($request->get('issue_id'));
+
+        return new CommentsListView($comments, $avatarUrlProvider);
     }
 }

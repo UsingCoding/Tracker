@@ -15,6 +15,7 @@ use App\Module\Issue\Api\Input\DeleteIssueFieldInput;
 use App\Module\Issue\Api\Input\EditCommentInput;
 use App\Module\Issue\Api\Input\EditIssueFieldInput;
 use App\Module\Issue\Api\Input\EditIssueInput;
+use App\Module\Issue\Api\Mapper\CommentMapper;
 use App\Module\Issue\Api\Mapper\IssueFieldOutputMapper;
 use App\Module\Issue\Api\Mapper\IssueOutputMapper;
 use App\Module\Issue\Api\Output\GetIssueOutput;
@@ -33,6 +34,7 @@ use App\Module\Issue\App\Event\CommentAddedEvent;
 use App\Module\Issue\App\Event\IssueAddedEvent;
 use App\Module\Issue\App\Event\IssueFieldAddedEvent;
 use App\Module\Issue\App\Query\AppIssueQueryService;
+use App\Module\Issue\App\Query\CommentQueryServiceInterface;
 use App\Module\Issue\App\Query\IssueFieldQueryServiceInterface;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 
@@ -40,14 +42,23 @@ class Api implements ApiInterface
 {
     private AppCommandBusInterface $issueCommandBus;
     private AppIssueQueryService $appIssueQueryService;
+    private CommentQueryServiceInterface $commentsQueryService;
     private IssueQueryServiceInterface $issueQueryService;
     private IssueFieldQueryServiceInterface $issueFieldQueryService;
     private AppEventSourceInterface $eventSource;
 
-    public function __construct(AppCommandBusInterface $issueCommandBus, AppIssueQueryService $appIssueQueryService, IssueQueryServiceInterface $issueQueryService, IssueFieldQueryServiceInterface $issueFieldQueryService, AppEventSourceInterface $eventSource)
+    public function __construct(
+        AppCommandBusInterface $issueCommandBus,
+        AppIssueQueryService $appIssueQueryService,
+        CommentQueryServiceInterface $commentsQueryService,
+        IssueQueryServiceInterface $issueQueryService,
+        IssueFieldQueryServiceInterface $issueFieldQueryService,
+        AppEventSourceInterface $eventSource
+    )
     {
         $this->issueCommandBus = $issueCommandBus;
         $this->appIssueQueryService = $appIssueQueryService;
+        $this->commentsQueryService = $commentsQueryService;
         $this->issueQueryService = $issueQueryService;
         $this->issueFieldQueryService = $issueFieldQueryService;
         $this->eventSource = $eventSource;
@@ -161,6 +172,20 @@ class Api implements ApiInterface
         $command = new EditCommentCommand($input);
 
         $this->publish($command);
+    }
+
+    public function commentsForIssue(int $issueId): array
+    {
+        try
+        {
+            $list = $this->commentsQueryService->getCommentsForIssue($issueId);
+
+            return CommentMapper::getComments($list);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
+        }
     }
 
     /**

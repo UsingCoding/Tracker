@@ -4,12 +4,10 @@ namespace App\Module\Issue\Api\Mapper;
 
 use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\Api\Output\AssigneeUserOutput;
-use App\Module\Issue\Api\Output\CommentOutput;
 use App\Module\Issue\Api\Output\GetIssueOutput;
 use App\Module\Issue\Api\Output\IssueListItemOutput;
 use App\Module\Issue\Api\Output\IssuesListOutput;
 use App\Module\Issue\Api\Output\ProjectOutput;
-use App\Module\Issue\App\Query\Data\CommentData;
 use App\Module\Issue\App\Query\Data\ExtendedIssueData;
 use App\Module\Issue\App\Query\Data\IssueListItemData;
 use App\Module\Issue\Domain\Service\IssueCodeService;
@@ -33,10 +31,7 @@ class IssueOutputMapper
                 $data->getIssue()->getProjectId(),
                 $data->getIssue()->getProjectName()
             ),
-            (array) Arrays::map(
-                $data->getComments(),
-                static fn(CommentData $data) => self::getComment($data)
-            ),
+            CommentMapper::getComments($data->getComments()),
             $data->getIssue()->getCreatedAt(),
             $data->getIssue()->getUpdatedAt()
         );
@@ -58,18 +53,6 @@ class IssueOutputMapper
                 $data->getFields(),
                 $data->getUpdatedAt()
             ))
-        );
-    }
-
-    private static function getComment(CommentData $commentData): CommentOutput
-    {
-        return new CommentOutput(
-            $commentData->getId(),
-            $commentData->getUsername(),
-            $commentData->getUserAvatarUrl(),
-            $commentData->getContent(),
-            $commentData->getCreatedAt(),
-            $commentData->getUpdatedAt(),
         );
     }
 }

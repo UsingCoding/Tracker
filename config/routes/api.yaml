@@ -70,6 +70,11 @@ api_delete_comment:
   controller: App\Controller\Api\Issue\CommentController::deleteComment
   methods: POST
 
+api_comments:
+  path: /api/issue/comments
+  controller: App\Controller\Api\Issue\CommentController::commentsForIssue
+  methods: POST
+
 api_add_issue_field:
   path: /api/issue-field/add
   controller: App\Controller\Api\Issue\IssueFieldController::addField
