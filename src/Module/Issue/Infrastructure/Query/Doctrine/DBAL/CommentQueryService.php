@@ -26,6 +26,8 @@ class CommentQueryService implements CommentQueryServiceInterface
             ->addSelect('ac.username')
             ->addSelect('ac.avatar_url')
             ->addSelect('c.content')
+            ->addSelect('c.created_at')
+            ->addSelect('c.updated_at')
             ->from('comment', 'c')
             ->leftJoin('c', 'account_user', 'ac', 'ac.user_id = c.user_id')
             ->where($queryBuilder->expr()->eq('c.issue_id', ':issue_id'))

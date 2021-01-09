@@ -9,14 +9,18 @@ class CommentData
     private string $username;
     private ?string $userAvatarUrl;
     private string $content;
+    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $updatedAt;
 
-    public function __construct(int $id, int $userId, string $username, ?string $userAvatarUrl, string $content)
+    public function __construct(int $id, int $userId, string $username, ?string $userAvatarUrl, string $content, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
         $this->userId = $userId;
         $this->username = $username;
         $this->userAvatarUrl = $userAvatarUrl;
         $this->content = $content;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -57,5 +61,21 @@ class CommentData
     public function getContent(): string
     {
         return $this->content;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
     }
 }

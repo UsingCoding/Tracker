@@ -41,6 +41,8 @@ class IssueView
                     'id' => $output->getId(),
                     'username' => $output->getUsername(),
                     'content' => $output->getContent(),
+                    'created_at' => $output->getCreatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT),
+                    'updated_at' => $output->getUpdatedAt()->format(Date::DEFAULT_ISSUE_TIME_FORMAT),
                     'avatar_url' => $this->avatarUrlProvider->getUrl($output->getUserAvatarUrl())
                 ]
             )

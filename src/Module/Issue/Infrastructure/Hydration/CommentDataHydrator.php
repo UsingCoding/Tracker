@@ -21,7 +21,9 @@ class CommentDataHydrator extends AbstractDbalHydrator
             $this->convertValue(CommentDataMapping::USER_ID, $row),
             $this->convertValue(CommentDataMapping::USERNAME, $row),
             $this->convertValue(CommentDataMapping::AVATAR_URL, $row),
-            $this->convertValue(CommentDataMapping::CONTENT, $row)
+            $this->convertValue(CommentDataMapping::CONTENT, $row),
+            $this->convertValue(CommentDataMapping::CREATED_AT, $row),
+            $this->convertValue(CommentDataMapping::UPDATED_AT, $row)
         );
     }
 

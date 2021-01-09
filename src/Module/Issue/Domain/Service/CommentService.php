@@ -40,7 +40,9 @@ class CommentService
             null,
             $issueId,
             $userId,
-            $content
+            $content,
+            new \DateTimeImmutable(),
+            new \DateTimeImmutable()
         );
 
         $this->commentRepo->add($comment);
@@ -62,9 +64,17 @@ class CommentService
             throw new CommentByIdNotFoundException('', ['comment_id' => $commentId]);
         }
 
+        $updated = false;
+
         if ($newContent !== $comment->getContent())
         {
             $comment->setContent($newContent);
+        }
+
+
+        if ($updated)
+        {
+            $comment->setUpdatedAt(new \DateTimeImmutable());
         }
     }
 

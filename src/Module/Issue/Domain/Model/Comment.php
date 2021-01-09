@@ -8,13 +8,17 @@ class Comment
     private int $issueId;
     private int $userId;
     private string $content;
+    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $updatedAt;
 
-    public function __construct(?int $id, int $issueId, int $userId, string $content)
+    public function __construct(?int $id, int $issueId, int $userId, string $content, \DateTimeImmutable $createdAt, \DateTimeImmutable $updatedAt)
     {
         $this->id = $id;
         $this->issueId = $issueId;
         $this->userId = $userId;
         $this->content = $content;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -79,5 +83,37 @@ class Comment
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTimeImmutable $createdAt
+     */
+    public function setCreatedAt(\DateTimeImmutable $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTimeImmutable $updatedAt
+     */
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 }
