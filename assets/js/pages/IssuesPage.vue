@@ -3,9 +3,9 @@
         <app-header></app-header>
         <search-panel v-bind:projects="projectsList" v-on:find="getIssueList($event)"></search-panel>
         <toolbar></toolbar>
-        <loader v-if="loading"></loader>
-        <issues-list v-if="!loading" v-bind:factory="factory" v-bind:issues="issues"></issues-list>
+        <issues-list ref="issuesList" v-on:loadMore="getMoreIssueList($event)" v-bind:loading="loading" v-bind:factory="factory" v-bind:issues="issues"></issues-list>
         <pop-up v-bind:popupFlag="popupFlag" v-on:close="closePopup()"></pop-up>
+        <scroll-loader :loader-method="getMoreIssueList" :loader-disable="loadMore" :loader-size="50"></scroll-loader>
     </div>
 </template>
 
@@ -25,7 +25,11 @@ export default {
             issues: [],
             projectsList: [],
             popupFlag: false,
-            loading: true
+            search: '',
+            projectId: null ,
+            loading: true,
+            loadMore: false,
+            page: 0
         }
     },
     components: {
@@ -38,16 +42,48 @@ export default {
     },
     methods: {
         getIssueList: async function(props) {
+            this.issues = [];
             this.loading = true;
-            this.issues = await this.store.getIssueList({
+            this.page = 1;
+            var response = await this.store.getIssueList({
                 'search_query': props.search_query,
+                'page': this.page,
                 'project_id': props.project_id
             });
-            setTimeout(() => {
-                if(!this.issues || this.issues.hasOwnProperty('error'))
-                    this.openPopup();
+            this.projectId = props.project_id;
+            this.search = props.search_query;
+            if(response.length != 0)
+            {
+                for(var issue of response)
+                {
+                    this.issues.push(issue);
+                }
+            }
+            this.loadMore = false;
+            this.loading = false;
+        },
+        getMoreIssueList: async function(props) {
+            this.page += 1;
+            if(this.page == 1)
+                this.loading = true;
+            
+            var response = await this.store.getIssueList({
+                'search_query': this.search,
+                'page': this.page,
+                'project_id': this.projectId
+            });
+            if(response.length != 0)
+            {
+                for(var issue of response)
+                {
+                    this.issues.push(issue);
+                }
+            }
+            else
+                this.loadMore = true;
+            if(this.page == 1)
                 this.loading = false;
-            }, 500);
+            
         },
         openPopup: function() {
             this.popupFlag = true;
@@ -64,7 +100,6 @@ export default {
     },
     async beforeMount() {
         await this.getProjects();
-        await this.getIssueList({ 'search_query': '', 'project_id': null });
     }
 }
 </script>

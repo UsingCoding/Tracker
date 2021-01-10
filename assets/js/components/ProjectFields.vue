@@ -236,4 +236,10 @@ export default {
     font: 36px/44px "Montserrat";
 }
 
+.comment_text
+{
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 </style>

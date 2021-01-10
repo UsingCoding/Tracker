@@ -12,6 +12,10 @@ import StoreFactory from "./Factory/StoreFactory";
 const serverApi = new ServerApi();
 const factory = new StoreFactory(serverApi);
 
+import ScrollLoader from "vue-scroll-loader";
+
+Vue.use(ScrollLoader);
+
 new Vue({
     el: '#app',
     router: Routes,

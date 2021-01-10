@@ -3,11 +3,11 @@
         <div class="">
             <select v-on:change="findIssues()" class="search_type" v-model="projectId" name="" id="">
                 <option value="null">Everything</option>
-                <option v-for="project in projects" :value="project.project_id">{{strings.trimString(project.name, 13)}}</option>
+                <option v-for="project in projects" :value="project.project_id">{{strings.trimString(project.name, 10)}}</option>
             </select>
         </div>
         <div class="search_field">
-            <input v-model="search" v-on:keyup.enter="findIssues()" class="search_input" type="text" id="search_str"/>
+            <input placeholder="Enter search request" v-model="search" v-on:keyup.enter="findIssues()" class="search_input" type="text" id="search_str"/>
             <div class="">
                 <span v-on:click="findIssues()" class="search_button">Search</span>
             </div>
