@@ -7409,11 +7409,6 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-v-infinite-scroll@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/v-infinite-scroll/-/v-infinite-scroll-1.0.4.tgz#56aad33b3d89759abd23702d7960763aeb8e0fc7"
-  integrity sha512-o2PeC0LNh3nSpsak+tcJEPRj9ENWWZTFvp1JdsraOom/d7lEbj7QfsJuF56AyrkqdSszaAwiVq2h4xTayl3RtQ==
-
 v8-compile-cache@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.1.1.tgz#54bc3cdd43317bca91e35dcaf305b1a7237de745"
