@@ -16,7 +16,7 @@ with specific terms and rules.
 
 * By task complexity
 
-```json
+```shell
 "easy": [0:4],
 "medium": [4:8],
 "hard": [7:10],
@@ -24,17 +24,17 @@ with specific terms and rules.
 
 * By time to complete the task
 
-````json
+```shell
 "very urgent": [0h,3h],
 "urgent" : [2h:6h],
 "usual": [4h:10h],
 "long": [1d:4d]
 "very long": [3.5d:1w]
-````
+```
 
 * By employee level
 
-```json
+```shell
 "Junior": [0,4],
 "Middle": [3,7],
 "Senior": [6,9],
