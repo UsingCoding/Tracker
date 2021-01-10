@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-header></app-header>
-        <search-panel v-bind:projects="projectsList" v-on:find="getIssueList($event)"></search-panel>
+        <search-panel v-bind:searchQuery="search" v-bind:project_id="projectId" v-bind:projects="projectsList" v-on:find="getIssueList($event)"></search-panel>
         <toolbar></toolbar>
         <issues-list ref="issuesList" v-on:loadMore="getMoreIssueList($event)" v-bind:loading="loading" v-bind:factory="factory" v-bind:issues="issues"></issues-list>
         <pop-up v-bind:popupFlag="popupFlag" v-on:close="closePopup()"></pop-up>
@@ -45,19 +45,16 @@ export default {
             this.issues = [];
             this.loading = true;
             this.page = 1;
+            this.projectId = props.project_id;
+            this.search = props.search_query;
             var response = await this.store.getIssueList({
                 'search_query': props.search_query,
                 'page': this.page,
                 'project_id': props.project_id
             });
-            this.projectId = props.project_id;
-            this.search = props.search_query;
             if(response.length != 0)
             {
-                for(var issue of response)
-                {
-                    this.issues.push(issue);
-                }
+                this.issues = this.issues.concat(response);
             }
             this.loadMore = false;
             this.loading = false;
@@ -74,10 +71,7 @@ export default {
             });
             if(response.length != 0)
             {
-                for(var issue of response)
-                {
-                    this.issues.push(issue);
-                }
+                this.issues = this.issues.concat(response);
             }
             else
                 this.loadMore = true;
@@ -99,6 +93,11 @@ export default {
         }
     },
     async beforeMount() {
+        if(this.$route.params.search || this.$route.params.project_id)
+        {
+            this.search = this.$route.params.search;
+            this.projectId = this.$route.params.project_id;
+        }
         await this.getProjects();
     }
 }
