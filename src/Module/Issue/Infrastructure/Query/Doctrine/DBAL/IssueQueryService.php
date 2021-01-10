@@ -12,10 +12,11 @@ use App\Module\Issue\Infrastructure\Query\SearchQueryBuilder;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
-use function Doctrine\DBAL\Query\QueryBuilder;
 
 class IssueQueryService implements IssueQueryServiceInterface
 {
+    private const ISSUES_ON_PAGE = 20;
+
     private Connection $connection;
     private SearchQueryBuilder $searchQueryBuilder;
 
@@ -70,7 +71,7 @@ class IssueQueryService implements IssueQueryServiceInterface
         return $results[0];
     }
 
-    public function issuesList(string $query, ?int $currentUserId, ?int $projectId): array
+    public function issuesList(string $query, int $page = 1, ?int $currentUserId = null, ?int $projectId = null): array
     {
         $queryBuilder = $this->connection->createQueryBuilder();
 
@@ -87,6 +88,8 @@ class IssueQueryService implements IssueQueryServiceInterface
             ->from('issue', 'i')
             ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
             ->leftJoin('i', 'project', 'p', 'p.project_id = i.project_id')
+            ->setFirstResult(self::ISSUES_ON_PAGE * ($page - 1))
+            ->setMaxResults(self::ISSUES_ON_PAGE)
         ;
 
         if ($currentUserId !== null)

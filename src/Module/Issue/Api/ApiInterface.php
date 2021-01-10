@@ -38,9 +38,10 @@ interface ApiInterface extends IssueFieldApiInterface, CommentApiInterface
 
     /**
      * @param string $query
+     * @param int $page
      * @param int|null $projectId
      * @return IssuesListOutput
      * @throws ApiException
      */
-    public function list(string $query, ?int $projectId): IssuesListOutput;
+    public function issuesList(string $query, int $page, ?int $projectId): IssuesListOutput;
 }
