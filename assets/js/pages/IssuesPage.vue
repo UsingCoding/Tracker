@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-header></app-header>
-        <search-panel v-on:find="getIssueList($event)"></search-panel>
+        <search-panel v-bind:projects="projectsList" v-on:find="getIssueList($event)"></search-panel>
         <toolbar></toolbar>
         <issues-list v-bind:factory="factory" v-bind:issues="issues"></issues-list>
         <pop-up v-bind:popupFlag="popupFlag" v-on:close="closePopup()"></pop-up>
@@ -21,6 +21,7 @@ export default {
         return {
             store: this.factory.createIssuesListStore(),
             issues: [],
+            projectsList: [],
             popupFlag: false
         }
     },
@@ -32,10 +33,10 @@ export default {
         'pop-up': popup
     },
     methods: {
-        getIssueList: async function(search) {
+        getIssueList: async function(props) {
             this.issues = await this.store.getIssueList({
-                'search_query': search,
-                'project_id': null
+                'search_query': props.search_query,
+                'project_id': props.project_id
             });
             if(!this.issues || this.issues.hasOwnProperty('error'))
                 this.openPopup();
@@ -45,10 +46,17 @@ export default {
         },
         closePopup: function() {
             this.popupFlag = false;
+        },
+        getProjects: async function() {
+            var projectsStore = this.factory.createProjectsListStore();
+            this.projectsList = await projectsStore.getProjectsList();
+            if(!this.projectsList || this.projectsList.hasOwnProperty('error'))
+                this.$emit('error');
         }
     },
     async beforeMount() {
-        await this.getIssueList('');
+        await this.getProjects();
+        await this.getIssueList({ 'search_query': '', 'project_id': null });
     }
 }
 </script>

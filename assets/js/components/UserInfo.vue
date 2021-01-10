@@ -23,7 +23,7 @@
                     <img src="" alt="sorry(" class="preview_avatar" id="preview">
                 </div>
                 <div v-if="!createFlag" v-on:click="addAvatar()" class="add_avatar">
-                    <img :src="userInfo.avatar_url" alt="sorry(" class="avatar">
+                    <img :src="userInfo.avatar_url" alt="sorry(" class="avatar" id="change_avatar">
                 </div>
                 <input class="user_avatar" title="some test" v-on:change="preloadFile()" type="file" ref="file" id="avatar"/>
             </div>
@@ -148,7 +148,11 @@ export default {
         },
         preloadFile: function() {
             this.avatar = this.$refs.file.files[0];
-            var preview = document.getElementById('preview');
+            var preview;
+            if(this.$route.name == 'create_user')
+                preview = document.getElementById('preview');
+            else
+                preview = document.getElementById('change_avatar')
             var reader = new FileReader();
 
             reader.onloadend = function() {
@@ -192,7 +196,8 @@ export default {
             this.createFlag = true;
     },
     beforeUpdate() {
-        this.previewComp;
+        if(this.$route.name == 'create_user')
+            this.previewComp;
     }
 }
 </script>

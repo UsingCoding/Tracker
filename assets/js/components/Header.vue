@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="user_menu">
-                <a href="/api/logout" class="menu_link settings_margin" >Log Out</a>
+                <a href="/logout" class="menu_link settings_margin" >Log Out</a>
             </div>
         </header>
     </div>

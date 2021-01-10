@@ -5,7 +5,7 @@
             <form class="login_form" action="index.html" method="post">
                 <input required placeholder="Username" v-model="username" class="login_style width_100" type="text" name="username" id="username"/>
                 <input v-if="sign_up_flag" v-model="email" required placeholder="Email" class="login_style width_100" type="text" name="email"/>
-                <input required placeholder="Password" v-model="password" class="login_style width_100" type="password" name="password" id="password"/>
+                <input required placeholder="Password" v-on:keyup.enter="login()" v-model="password" class="login_style width_100" type="password" name="password" id="password"/>
                 <input v-if="sign_up_flag" v-model="confirm_password" required placeholder="Confirm password" class="login_style width_100" type="password" name="password"/>
                 <button v-if="!sign_up_flag" v-on:click="login()" class="log_in" type="button" name="log_in">Login</button>
                 <button v-if="!sign_up_flag" v-on:click="sign_up_flag = !sign_up_flag" class="sign_up" type="button" name="sign_up">Sign Up</button>

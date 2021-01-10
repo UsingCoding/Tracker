@@ -4,7 +4,7 @@
       <div v-for="issue in issues" class="issue">
         <div class="issue_details">
           <span class="issue_header">{{issue.issue_code}}</span>
-          <router-link :to="{ name: 'issue_details', params: { code: issue.issue_code }}" class="issue_title" exact>{{strings.trimString(issue.name)}}</router-link>
+          <router-link :to="{ name: 'issue_details', params: { code: issue.issue_code }}" class="issue_title" exact>{{strings.trimString(issue.name, 25)}}</router-link>
           <span class="issue_date">{{issue.updated_at}}</span>
         </div>
         <div class="issue_footer">

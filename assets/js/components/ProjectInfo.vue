@@ -6,7 +6,7 @@
             <span v-if="issuesList.length == 0" class="no_issues">Seems there no issues for project</span>
             <div v-for="issue in issuesList" class="issue_in_project">
                 <span>{{issue.issue_code}}</span>
-                <router-link :to="{ name: 'issue_details', params: { code: issue.issue_code }}" class="issue_name">{{strings.trimString(issue.name)}}</router-link>
+                <router-link :to="{ name: 'issue_details', params: { code: issue.issue_code }}" class="issue_name">{{strings.trimString(issue.name, 25)}}</router-link>
             </div>
         </div>
         <div class="project_stat_div">

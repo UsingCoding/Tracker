@@ -187,6 +187,7 @@ header
 {
   box-sizing: border-box;
   border: 1px solid #3b3b3b;
+  background: #ffffff;
   border-radius: 7px;
   margin-right: 9px;
   font: 18px/26px "Montserrat";
@@ -194,6 +195,9 @@ header
   height: 39px;
   display: inline-block;
   cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .search_field
