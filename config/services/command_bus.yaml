@@ -47,3 +47,14 @@ services:
         class: App\Common\App\Command\Bus\AppCommandBus
         arguments:
             $commandHandlerRegistry: '@user.command_handler_registry'
+
+
+    account.command_handler_registry:
+        class: App\Common\App\Command\Handler\Registry\CommandHandlerRegistry
+        calls:
+            - [ registerHandler, [ !php/const App\Module\Account\App\Command\CreateAccountCommand::TYPE, '@App\Module\Account\App\Command\Handler\CreateAccountCommandHandler' ] ]
+
+    account.command_bus:
+        class: App\Common\App\Command\Bus\AppCommandBus
+        arguments:
+            $commandHandlerRegistry: '@account.command_handler_registry'

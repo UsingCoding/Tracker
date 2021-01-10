@@ -15,7 +15,7 @@ class AccountRepository implements AccountRepositoryInterface
     public function __construct(EntityManagerInterface $mainEntityManager)
     {
         $this->mainEntityManager = $mainEntityManager;
-//        $this->repo = $this->mainEntityManager->getRepository(Account::class);
+        $this->repo = $this->mainEntityManager->getRepository(Account::class);
     }
 
     public function add(Account $account): void
@@ -23,16 +23,9 @@ class AccountRepository implements AccountRepositoryInterface
         $this->mainEntityManager->persist($account);
     }
 
-    public function findById(int $accountId): ?Account
+    public function get(): ?Account
     {
-        return null;
-//        return $this->repo->findOneBy(['account_id' => $accountId]);
-    }
-
-    public function findByDomainName(string $domainName): ?Account
-    {
-        return null;
-//        return $this->repo->findOneBy(['domain_name' => $domainName]);
+        return $this->repo->findBy([], null, 1);
     }
 
     public function remove(Account $account): void

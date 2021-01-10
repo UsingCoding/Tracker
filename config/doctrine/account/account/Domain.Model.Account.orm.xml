@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Module\Account\Domain\Model\Account" table="account">
+        <id name="id" type="integer" column="account_id">
+            <generator strategy="IDENTITY" />
+        </id>
+
+        <field name="ownerId" type="integer" column="owner_id" />
+        <field name="createdAt" type="datetime_immutable" column="created_at" />
+    </entity>
+</doctrine-mapping>

@@ -2,29 +2,57 @@
 
 namespace App\Module\Account\Api;
 
+use App\Common\App\Command\Bus\AppCommandBusInterface;
+use App\Common\App\Command\CommandInterface;
 use App\Module\Account\Api\Exception\ApiException;
 use App\Module\Account\Api\Mapper\AccountMapper;
 use App\Module\Account\Api\Output\AccountOutput;
+use App\Module\Account\App\Command\CreateAccountCommand;
 use App\Module\Account\App\Query\AccountQueryServiceInterface;
 
 class Api implements ApiInterface
 {
+    private AppCommandBusInterface $commandBus;
     private AccountQueryServiceInterface $accountQueryService;
 
-    public function __construct(AccountQueryServiceInterface $accountQueryService)
+    public function __construct(AppCommandBusInterface $commandBus, AccountQueryServiceInterface $accountQueryService)
     {
+        $this->commandBus = $commandBus;
         $this->accountQueryService = $accountQueryService;
     }
 
-    public function getAccountByDomain(string $domainName): AccountOutput
+    public function createAccount(CreateAccountInput $input): void
+    {
+        $command = new CreateAccountCommand($input);
+
+        $this->publish($command);
+    }
+
+    public function getAccount(): AccountOutput
     {
         try
         {
-            return AccountMapper::getAccountOutput($this->accountQueryService->getByDomainName($domainName));
+            $account = $this->accountQueryService->get();
+
+            return AccountMapper::getAccountOutput($account);
         }
-        catch (\Throwable $e)
+        catch (\Throwable $throwable)
         {
-            ApiException::from($e);
+            throw ApiException::from($throwable);
+        }
+    }
+
+
+
+    private function publish(CommandInterface $command): void
+    {
+        try
+        {
+            $this->commandBus->publish($command);
+        }
+        catch (\Throwable $throwable)
+        {
+            throw ApiException::from($throwable);
         }
     }
 }

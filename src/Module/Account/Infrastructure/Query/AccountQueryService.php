@@ -17,13 +17,13 @@ class AccountQueryService implements AccountQueryServiceInterface
         $this->accountRepo = $accountRepo;
     }
 
-    public function getByDomainName(string $domainName): AccountData
+    public function get(): AccountData
     {
-        $account = $this->accountRepo->findByDomainName($domainName);
+        $account = $this->accountRepo->get();
 
         if ($account === null)
         {
-            throw new AccountNotFoundException('account by domain name not found', ['domainName' => $domainName]);
+            throw new AccountNotFoundException('account not found');
         }
 
         return AccountDataMapper::accountToAccountData($account);
