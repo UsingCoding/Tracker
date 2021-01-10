@@ -75,6 +75,7 @@ export default class ServerApi
             },
             body: JSON.stringify({
                 'search_query': props.search_query,
+                'page': props.page,
                 'project_id': props.project_id
             })
         })
