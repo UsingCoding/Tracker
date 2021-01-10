@@ -5,18 +5,14 @@ namespace App\Module\Account\Api\Output;
 class AccountOutput
 {
     private int $id;
-    private string $domainName;
-    private bool $isActive;
+    private int $ownerId;
     private \DateTimeImmutable $createdAt;
-    private string $dbName;
 
-    public function __construct(int $id, string $domainName, bool $isActive, \DateTimeImmutable $createdAt, string $dbName)
+    public function __construct(int $id, int $ownerId, \DateTimeImmutable $createdAt)
     {
         $this->id = $id;
-        $this->domainName = $domainName;
-        $this->isActive = $isActive;
+        $this->ownerId = $ownerId;
         $this->createdAt = $createdAt;
-        $this->dbName = $dbName;
     }
 
     /**
@@ -28,19 +24,11 @@ class AccountOutput
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getDomainName(): string
+    public function getOwnerId(): int
     {
-        return $this->domainName;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isActive(): bool
-    {
-        return $this->isActive;
+        return $this->ownerId;
     }
 
     /**
@@ -49,13 +37,5 @@ class AccountOutput
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDbName(): string
-    {
-        return $this->dbName;
     }
 }

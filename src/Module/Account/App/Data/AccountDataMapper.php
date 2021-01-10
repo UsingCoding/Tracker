@@ -10,10 +10,8 @@ class AccountDataMapper
     {
         return new AccountData(
             $account->getId(),
-            $account->getDomainName(),
-            $account->isActive(),
-            $account->getCreatedAt(),
-            $account->getDbName()
+            $account->getOwnerId(),
+            $account->getCreatedAt()
         );
     }
 }

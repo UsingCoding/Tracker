@@ -5,6 +5,9 @@ namespace App\Command\AppBoot\BootStage;
 use App\Command\AppBoot\Exception\BootStageExecutionFailedException;
 use App\Common\Domain\Utils\Arrays;
 use App\Framework\Infrastructure\Command\ApplicationProviderInterface;
+use App\Module\Account\Api\ApiInterface as AccountApi;
+use App\Module\Account\Api\Exception\ApiException as AccountApiException;
+use App\Module\Account\Api\Input\CreateAccountInput;
 use App\Module\Project\Api\ApiInterface as ProjectApi;
 use App\Module\Project\Api\Exception\ApiException as ProjectApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
@@ -17,12 +20,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateDefaultContentBootStage implements BootStageInterface
 {
     private UserApi $userApi;
+    private AccountApi $accountApi;
     private ProjectApi $projectApi;
     private LoggerInterface $logger;
 
-    public function __construct(UserApi $userApi, ProjectApi $projectApi, LoggerInterface $logger)
+    public function __construct(UserApi $userApi, AccountApi $accountApi, ProjectApi $projectApi, LoggerInterface $logger)
     {
         $this->userApi = $userApi;
+        $this->accountApi = $accountApi;
         $this->projectApi = $projectApi;
         $this->logger = $logger;
     }
@@ -37,12 +42,14 @@ class CreateDefaultContentBootStage implements BootStageInterface
                 return;
             }
 
-            $this->createUser();
-            $this->createProject();
+            $userId = $this->createUser();
+
+            $this->createAccount($userId);
+            $this->createProject($userId);
         }
         catch (\Throwable $throwable)
         {
-            throw new BootStageExecutionFailedException();
+            throw new BootStageExecutionFailedException($throwable->getMessage(), [], $throwable->getCode(), $throwable);
         }
     }
 
@@ -56,12 +63,13 @@ class CreateDefaultContentBootStage implements BootStageInterface
     }
 
     /**
+     * @return int
      * @throws UserApiException
      */
-    private function createUser(): void
+    private function createUser(): int
     {
-        $this->userApi->addUser(new AddUserInput(
-            'example@mail.com',
+        return $this->userApi->addUser(new AddUserInput(
+            'mail@mail.com',
             'root',
             '12345Q',
             3,
@@ -70,14 +78,24 @@ class CreateDefaultContentBootStage implements BootStageInterface
     }
 
     /**
+     * @param int $ownerId
+     * @throws AccountApiException
+     */
+    public function createAccount(int $ownerId): void
+    {
+        $this->accountApi->createAccount(new CreateAccountInput($ownerId));
+    }
+
+    /**
+     * @param int $ownerId
      * @throws ProjectApiException
      */
-    private function createProject(): void
+    private function createProject(int $ownerId): void
     {
         $this->projectApi->createProject(new CreateProjectInput(
             'Default',
             'PANDA',
-            1,
+            $ownerId,
             null
         ));
     }

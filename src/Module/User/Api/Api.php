@@ -4,6 +4,9 @@ namespace App\Module\User\Api;
 
 use App\Common\App\Command\Bus\AppCommandBusInterface;
 use App\Common\App\Command\CommandInterface;
+use App\Common\App\Event\AppEventHandlerInterface;
+use App\Common\App\Event\AppEventInterface;
+use App\Common\App\Event\AppEventSourceInterface;
 use App\Module\User\Api\Exception\ApiException;
 use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Input\EditUserInput;
@@ -13,6 +16,7 @@ use App\Module\User\Api\Output\UserOutput;
 use App\Module\User\App\Command\AddUserCommand;
 use App\Module\User\App\Command\DeleteUserCommand;
 use App\Module\User\App\Command\EditUserCommand;
+use App\Module\User\App\Event\UserAddedEvent;
 use App\Module\User\App\Query\UserQueryServiceInterface;
 use App\Module\User\App\Service\AuthenticationService;
 
@@ -21,16 +25,19 @@ class Api implements ApiInterface
     private AuthenticationService $authenticationService;
     private UserQueryServiceInterface $userQueryService;
     private AppCommandBusInterface $commandBus;
+    private AppEventSourceInterface $eventSource;
 
     public function __construct(
-        AuthenticationService $authenticationService, 
-        UserQueryServiceInterface $userQueryService, 
-        AppCommandBusInterface $userCommandBus
+        AuthenticationService $authenticationService,
+        UserQueryServiceInterface $userQueryService,
+        AppCommandBusInterface $userCommandBus,
+        AppEventSourceInterface $eventSource
     )
     {
         $this->authenticationService = $authenticationService;
         $this->userQueryService = $userQueryService;
         $this->commandBus = $userCommandBus;
+        $this->eventSource = $eventSource;
     }
 
     public function authorizeUserByEmail(string $email, string $password): UserOutput
@@ -69,11 +76,11 @@ class Api implements ApiInterface
         }
     }
 
-    public function addUser(AddUserInput $input): void
+    public function addUser(AddUserInput $input): int
     {
         $command = new AddUserCommand($input);
 
-        $this->publish($command);
+        return $this->publishCommandWithUserAddedEventHandler($command);
     }
 
     public function editUser(EditUserInput $input): void
@@ -102,6 +109,39 @@ class Api implements ApiInterface
         $command = new DeleteUserCommand($userId);
 
         $this->publish($command);
+    }
+
+    public function publishCommandWithUserAddedEventHandler(CommandInterface $command): int
+    {
+        $handler = new class implements AppEventHandlerInterface {
+            private int $userId;
+
+            public function handle(AppEventInterface $event): void
+            {
+                if ($event instanceof UserAddedEvent)
+                {
+                    $this->userId = $event->getUserId();
+                }
+            }
+
+            public function getUserId(): int
+            {
+                return $this->userId;
+            }
+        };
+
+        $this->eventSource->subscribe($handler);
+
+        try
+        {
+            $this->publish($command);
+        }
+        finally
+        {
+            $this->eventSource->unsubscribe($handler);
+        }
+
+        return $handler->getUserId();
     }
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="PostgreSQL - postgres@localhost" uuid="c78db80f-f14e-4171-b5fb-296825ac50d2">
+    <data-source name="account@localhost" uuid="95606288-582c-4357-9811-382287449dce">
       <database-info product="PostgreSQL" version="13.0 (Debian 13.0-1.pgdg100+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="13.0" exact-driver-version="42.2">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
@@ -10,16 +10,13 @@
       <user-name>root</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node negative="1">
-            <node kind="database" qname="main">
-              <node kind="schema" qname="public" />
-            </node>
-            <node kind="database" qname="postgres" />
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
           </node>
         </introspection-scope>
       </schema-mapping>
     </data-source>
-    <data-source name="client_1@localhost" uuid="5fb709b8-7a8e-4979-ad56-ec9734ff8107">
+    <data-source name="account_kek@localhost" uuid="ec595b7c-c25c-4521-a23d-ad4161cee289">
       <database-info product="PostgreSQL" version="13.0 (Debian 13.0-1.pgdg100+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="13.0" exact-driver-version="42.2">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>

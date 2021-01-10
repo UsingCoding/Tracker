@@ -34,9 +34,10 @@ interface ApiInterface
 
     /**
      * @param AddUserInput $input
+     * @return int
      * @throws ApiException
      */
-    public function addUser(AddUserInput $input): void;
+    public function addUser(AddUserInput $input): int;
 
     /**
      * @param EditUserInput $input

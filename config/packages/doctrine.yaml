@@ -51,3 +51,9 @@ doctrine:
                         dir: '%kernel.project_dir%/config/doctrine/account/issue'
                         prefix: 'App\Module\Issue'
                         alias: Issue
+                    App\Module\Account:
+                        is_bundle: false
+                        type: xml
+                        dir: '%kernel.project_dir%/config/doctrine/account/account'
+                        prefix: 'App\Module\Account'
+                        alias: Issue

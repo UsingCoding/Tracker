@@ -11,10 +11,8 @@ class AccountMapper
     {
         return new AccountOutput(
             $data->getId(),
-            $data->getDomainName(),
-            $data->isActive(),
-            $data->getCreatedAt(),
-            $data->getDbName()
+            $data->getOwnerId(),
+            $data->getCreatedAt()
         );
     }
 }
