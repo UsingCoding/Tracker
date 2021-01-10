@@ -13,6 +13,12 @@ Encore
     .addEntry('app', './assets/js/App.js')
     .splitEntryChunks()
 
+    .copyFiles({
+        from: './assets/images',
+        to: 'images/[path].[name].[ext]',
+        pattern: /\.(png|jpg|jpeg|ico)$/
+    })
+
     .enableSingleRuntimeChunk()
 
     .cleanupOutputBeforeBuild()
