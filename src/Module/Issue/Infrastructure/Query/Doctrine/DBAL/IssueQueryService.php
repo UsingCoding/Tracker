@@ -95,7 +95,7 @@ class IssueQueryService implements IssueQueryServiceInterface
         if ($currentUserId !== null)
         {
             $queryBuilder
-                ->leftJoin('p', 'team_member', 'tm', 'p.project_id = tm.project_id')
+                ->leftJoin('p', 'team_member', 'tm', 'p.project_id = tm.project_id and ac.user_id = tm.user_id')
                 ->where($queryBuilder->expr()->eq('tm.user_id', ':current_user_id'))
                 ->setParameter('current_user_id', $currentUserId, ParameterType::INTEGER)
             ;
