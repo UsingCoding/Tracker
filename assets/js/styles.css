@@ -1,0 +1,984 @@
+.all_screen
+{
+    /*margin: 15% auto;*/
+    width: 100%;
+    height: 100%;
+}
+
+.center
+{
+  text-align: center;
+}
+
+html, body
+{
+  /*background-color: #23272b;*/
+  height: 100%;
+  margin: 0;
+}
+
+.greeting
+{
+  font: 24px/30px "Montserrat";
+  width: 260px;
+  display: block;
+}
+
+.spacer
+{
+  display: inline-block;
+  vertical-align: middle;
+  height: calc(100% - 120px);
+}
+
+.clear
+{
+  clear: both;
+}
+
+.container
+{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.login_form
+{
+  width: 260px;
+  margin-top: 10%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.login_style
+{
+  /*color: #bbb4b2;*/
+  font: 12px/14px "Montserrat";
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  height: 30px;
+  box-sizing: border-box;
+  margin-top: 5%;
+  color: #555555;
+  /*border: 2px solid #dbd7d6;
+  padding-left: 15px;*/
+}
+
+.login_style:hover
+{
+  border-color: #969696;
+}
+
+.login_style:focus
+{
+  outline: none;
+  border-color: #7a6af9;
+}
+
+.log_in
+{
+  margin-top: 10%;
+  width: 260px;
+  text-decoration: none;
+  border-radius: 3px;
+  border-style: none;
+  cursor: pointer;
+  height: 40px;
+  color: #ffffff;
+  background-color: #3b3b3b;
+  font: 12px/14px "Montserrat";
+}
+
+.sign_up
+{
+  margin-top: 7%;
+  width: 260px;
+  text-decoration: none;
+  border-radius: 3px;
+  border-style: none;
+  border: 1.5px solid #b8d1e5;
+  cursor: pointer;
+  height: 40px;
+  font: 12px/14px "Montserrat";
+}
+
+.register
+{
+  margin-top: 10%;
+  width: 260px;
+  text-decoration: none;
+  border-radius: 3px;
+  border-style: none;
+  border: 1.5px solid #b8d1e5;
+  cursor: pointer;
+  height: 40px;
+  font: 12px/14px "Montserrat";
+}
+
+.return_log_in
+{
+  text-decoration: none;
+  color: #008eff;
+  margin-top: 7%;
+  display: block;
+  cursor: pointer;
+  font: 12px/14px "Montserrat";
+}
+
+.width_100
+{
+  width: 100%;
+}
+
+.float_left
+{
+  float: left;
+}
+
+header
+{
+  line-height: 61px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.navbar
+{
+  margin-left: 169px;
+  align-items: baseline;
+  flex-wrap: nowrap;
+}
+
+.menu_link
+{
+  flex-shrink: 0;
+  margin-right: 38px;
+  box-sizing: border-box;
+  border: 1px solid #3b3b3b;
+  border-radius: 5px;
+  font: 18px/22px "Montserrat";
+  padding: 0 15px;
+  height: 28px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
+}
+
+.user_menu
+{
+  margin-left: auto;
+}
+
+.settings_margin
+{
+  margin-right: 45px;
+}
+
+.search_panel
+{
+  display: flex;
+  height: 39px;
+  margin: 0 45px 0 28px;
+}
+
+.search_type
+{
+  box-sizing: border-box;
+  border: 1px solid #3b3b3b;
+  background: #ffffff;
+  border-radius: 7px;
+  margin-right: 9px;
+  font: 18px/26px "Montserrat";
+  padding: 4px 15px;
+  height: 39px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.search_field
+{
+  border: 2px solid #3b3b3b;
+  box-sizing: border-box;
+  border-radius: 5px;
+  cursor: text;
+  width: calc(100% - 120px);
+  display: flex;
+}
+
+.search_input
+{
+  width: 95%;
+  padding: 8px 10px;
+  border: none;
+  outline: none;
+}
+
+.border
+{
+  border: 1px solid #3b3b3b;
+  width: 38px;
+  transform: rotate(90deg);
+}
+
+.search_button
+{
+  box-sizing: border-box;
+  margin: 0 0 0 auto;
+  width: 92px;
+  font: 18px/24px "Montserrat";
+  border: 1px solid #000000;
+  border-top: 0;
+  border-bottom: 0;
+  border-right: 0;
+  padding: 4px 15px;
+  height: 36px;
+  display: flex;
+  cursor: pointer;
+}
+
+.toolbar
+{
+  display: flex;
+  margin: 17px 0 30px 0;
+}
+
+.tools
+{
+  box-sizing: border-box;
+  display: inline-block;
+  border: 1px solid #000000;
+  border-radius: 7px;
+  margin-left: 236px;
+}
+
+.tool
+{
+  padding: 4px 14px;
+  border: 1px solid #000000;
+  border-left: 0;
+  border-bottom: 0;
+  border-top: 0;
+  cursor: pointer;
+}
+
+.right_tool
+{
+  border-right: 0;
+}
+
+.trash
+{
+  margin-left: 20px;
+  padding: 3px 14px;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid #000000;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.list_view
+{
+  margin-left: 236px;
+  margin-right: 45px;
+}
+
+.issue
+{
+  margin-top: 25px;
+}
+
+.issue_details
+{
+  width: 95%;
+  margin: 0 auto;
+}
+
+.issue_header
+{
+  font: 16px/18px "Montserrat";
+  margin-right: 20px;
+}
+
+.issue_title
+{
+  font: 16px/18px "Montserrat";
+  color: #0f5b99;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.issue_title:hover,
+.issue_field:hover,
+.return_log_in:hover,
+.issue_project_title:hover,
+.sidebar_link:hover,
+.issue_name:hover
+{
+    text-decoration: underline;
+    color: #ff318c;
+}
+
+.issue_date
+{
+  font: 16px/18px "Montserrat";
+  margin-left: auto;
+  float: right;
+}
+
+.issue_footer
+{
+  width: 95%;
+  display: flex;
+  align-items: baseline;
+  margin: 25px auto 0 auto;
+  height: 30px;
+}
+
+.issue_fields
+{
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.issue_field
+{
+  font: 14px/17px "Montserrat";
+  margin: 0 25px 0 0;
+  padding-right: 20px;
+  text-align: left;
+  box-sizing: border-box;
+  display: inline-block;
+  cursor: pointer;
+  height: 18px;
+  border: 1px solid #000000;
+  border-top: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.difficulty
+{
+  border-right: 0;
+}
+
+.issue_border
+{
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  cursor: default;
+}
+
+.create_issue
+{
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  margin: 0 7% 0 18.4%;
+}
+
+.new_issue_header
+{
+  font: 24px/28px "Montserrat";
+  font-weight: 600;
+  margin: 2% 7% 0 18.4%;
+  width: 75%;
+}
+
+.second_tools
+{
+  margin-left: 4%;
+}
+
+.issue_project_title
+{
+  color: #3c93e6;
+  cursor: pointer;
+}
+
+.new_issue_body
+{
+  margin-top: 2%;
+  width: 70%;
+  height: 70%;
+}
+
+.new_issue_title
+{
+  margin-top: 1%;
+  box-sizing: border-box;
+  border: 0.6px solid #3b3b3b;
+  border-radius: 5px;
+  height: 39px;
+  font: 16px/18px "Montserrat";
+  padding-left: 10px;
+  outline: none;
+}
+
+.new_issue_description
+{
+  resize: none;
+  font: 16px/18px "Montserrat";
+  height: 240px;
+  border: 0.6px solid #3b3b3b;
+  border-radius: 5px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  margin: 4% 0 5% 0;
+  padding:  10px;
+  outline: none;
+}
+
+.create_button
+{
+  font: 18px/22px "Montserrat";
+  border: 1px solid #3b3b3b;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin: 4% 4% 0 0;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.tags_rectangle
+{
+  border: 1px solid #3b3b3b;
+  border-radius: 3px;
+  box-sizing: border-box;
+  background: #efefef;
+  height: 220px;
+  width: 30%;
+  margin: 0 0 0 3%;
+}
+
+.tags
+{
+  margin: 8% auto;
+  width: 80%;
+  font: 14px/17px "Montserrat";
+}
+
+.tags_table
+{
+  width: 100%;
+}
+
+.tag_row
+{
+  margin-bottom: 8%;
+  height: 35px;
+}
+
+.tag
+{
+  display: flex;
+}
+
+.tag_value
+{
+  margin-left: calc(30% - 35px); /*В идеале высчитывать бы от длины лейбла*/
+  box-sizing: border-box;
+  border: 0;
+  background: #efefef;
+  cursor: pointer;
+  -webkit-appearance: none;
+  font: 14px/17px "Montserrat";
+}
+
+.estimation
+{
+  margin-left: calc(30% - 30px);
+  border-radius: 5px;
+  width: 16%;
+  font: 14px/17px "Montserrat";
+  height: 17px;
+  border: 0px solid #ffffff;
+  background: #efefef;
+  outline: none;
+}
+
+.estimation:focus
+{
+  background: #ffffff;
+}
+
+.issue_view
+{
+  width: 73%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.top_issue_view
+{
+  font: 16px/19px "Montserrat";
+  margin-left: 10%;
+  width: 66%;
+}
+
+.created_date
+{
+  margin-left: 3%;
+}
+
+.top_issue_view
+{
+  width: 77%;
+}
+
+.issue_view_body
+{
+  margin: 2.5% 0 0 10%;
+}
+
+.issue_view_title
+{
+  font: 24px/29px "Montserrat";
+}
+
+.issue_view_description
+{
+  font: 24px/29px "Montserrat";
+}
+
+.issue_view_info
+{
+  width: 68%;
+}
+
+.comments
+{
+  margin-top: 4%;
+}
+
+.comment
+{
+  margin-top: 4%;
+  display: flex;
+  flex-direction: row;
+  font: 14px/17px "Montserrat";
+}
+
+.user_img
+{
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+}
+
+.comment_content
+{
+  margin-left: 3%;
+}
+
+.project_view_width
+{
+  margin: 3% 13% 0;
+}
+
+.projects_count
+{
+  display: block;
+  font: 20px/24px "Montserrat";
+  margin-bottom: 3%;
+}
+
+.projects_list_el
+{
+  margin-top: 2%;
+  box-sizing: border-box;
+  text-align: left;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  padding: 0 1%;
+  font: 18px/22px "Montserrat";
+}
+
+.projects_list_el:hover
+{
+  box-shadow: 0px 0px 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+.create_project
+{
+  width: 56%;
+  margin-top: 7%;
+}
+
+.create_project_label
+{
+  margin-top: 8%;
+  font: 18px/22px "Montserrat";
+}
+
+.project_input
+{
+  font: 18px/22px "Montserrat";
+  height: 36px;
+  width: 224px;
+  padding-left: 5px;
+  border: 1px solid #3b3b3b;
+}
+
+.project_input_margin
+{
+  margin-left: 94px;
+}
+
+.has_description
+{
+  display: inline-flex;
+  flex-direction: column;
+  margin-left: 129px;
+}
+
+.description_label
+{
+  font: 14px/17px "Montserrat";
+  color: #878787;
+  margin-top: 1.5%;
+}
+
+.description_project
+{
+  display: inline-flex;
+}
+
+.new_project_description
+{
+  font: 18px/22px "Montserrat"; 
+  resize: none;
+  height: 178px;
+  width: 327px;
+  margin: 0 0 10% 50px;
+  padding-left: 5px;
+  border: 1px solid #3b3b3b;
+}
+
+.project_input:focus,
+.new_project_description:focus,
+.name_input:focus,
+.field_input:focus
+{
+  outline: none; 
+  border: 2px solid #0f5b99;
+}
+
+.project_form_btn
+{
+  border-radius: 5px;
+  font: 18px/22px "Montserrat";
+  box-sizing: border-box;
+  height: 28px;
+  cursor: pointer;
+}
+
+.create_project_btn
+{
+  background: #3b3b3b;
+  border: none;
+  color: #ffffff;
+  width: 76px;
+}
+
+.cancel_btn
+{
+  margin-left: 4%;
+  background: #ffffff;
+  border: 1px solid #3b3b3b;
+  width: 93px;
+}
+
+.project_info_view
+{
+  display: flex;
+}
+
+.project_info
+{
+  width: 80%;
+}
+
+.project_name
+{
+  margin: 0;
+  font: bold 24px/32px "Montserrat";
+  display: block;
+  box-sizing: border-box;
+  padding: 7px 0 7px 8%;
+  height: 48px;
+  border-radius: 3px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar_project
+{
+  width: 30%;
+  height: 268px;
+  margin-left: 3%;
+  background: #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+.sidebar_content
+{
+  margin-left: 9%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar_project_header
+{
+  font: bold 24px/29px "Montserrat";
+}
+
+.sidebar_link
+{
+  font: 18px/22px "Montserrat";
+  margin-top: 5%;
+  color: #0f5b99;
+}
+
+.delete_project
+{
+  font: 18px/22px "Montserrat";
+  margin-top: 5%;
+  margin-bottom: 7%;
+  color: #e91e1e;
+  cursor: pointer;
+}
+
+.delete_project:hover
+{
+  text-decoration: underline;
+}
+
+.issues_in_project,
+.project_stat_div
+{
+  background: #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  margin-top: 4%;
+  padding: 3% 0;
+}
+
+.issue_in_project
+{
+  font: 18px/22px "Montserrat";
+  color: #0f5b99;
+  margin: 1% 7% 0 3%;
+}
+
+.issue_name
+{
+  font: 18px/22px "Montserrat";
+  color: #0f5b99;
+  margin-left: 4%;
+}
+
+.administration_path
+{
+  margin: 0;
+  font: bold 36px/44px "Montserrat";
+  display: block;
+  box-sizing: border-box;
+}
+
+.owner_input
+{
+  margin-left: 89px;
+  width: 233px;
+  background: #ffffff;
+}
+
+.edit_team_btns
+{
+  margin-top: 3%;
+}
+
+.add_member
+{
+  background: #3b3b3b;
+  border: none;
+  color: #ffffff;
+  padding: 0 15px;
+}
+
+.remove_member
+{
+  margin-left: 1%;
+  background: #ffffff;
+  border: 1px solid #3b3b3b;
+  padding: 0 10px;
+}
+
+.project_team
+{
+  margin-top: 5%;
+}
+
+.member_div
+{
+  margin-top: 1%;
+}
+
+.team_member
+{
+  font: 18px/20px "Montserrat";
+  color: #0f5b99;
+}
+
+.member_checkbox
+{
+  width: 20px;
+  height: 20px;
+  margin: 0 4% 0 0;
+  border: 1.5px solid #0f5b99;
+  border-radius: 3px;
+  float: left;
+}
+
+.arrow
+{
+  font-size: 30px;
+}
+
+.delete_field
+{
+  color: #e91e1e;
+  margin-left: 1%;
+  background: #ffffff;
+  border: 1px solid #e91e1e;
+  padding: 0 10px;
+}
+
+.edited_field
+{
+  margin-top: 3%;
+  border-radius: 3px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+}
+
+.field_name
+{
+  font: 18px/22px "Montserrat";
+}
+
+.name_block
+{
+  margin-left: 1%;
+  padding-top: 2%;
+}
+
+.name_input
+{
+  font: 18px/22px "Montserrat";
+  width: 224px;
+  margin-left: 17px;
+}
+
+.field_type
+{
+  margin: 2% 0 0 1%;
+  font: 18px/22px "Montserrat";
+}
+
+.type_options
+{
+  margin-left: 3%;
+  font: 18px/22px "Montserrat";
+  padding-right: 13px;
+}
+
+.field_buttons
+{
+  margin: 5% 0 0 1%;
+  padding-bottom: 2%;
+}
+
+.field_input
+{
+  font: 14px/17px "Montserrat";
+  width: 92px;
+}
+
+.lost
+{
+  font: 48px/59px "Montserrat";
+  display: block;
+}
+
+.popup_div
+{
+  width: 298px;
+  height: 93px;
+  background: #111314;
+  border-radius: 5px;
+  z-index: 1;
+  position: fixed;
+  left: 73%;
+  top: 80%;
+}
+
+.popup_content
+{
+  width: 95%;
+  padding: 4% 2.5%;
+}
+
+.popup_header
+{
+  display: flex;
+  justify-content: space-between;
+}
+
+.popup_title
+{
+  padding-top: 5px;
+  font: 18px/22px "Montserrat";
+  color: #ffffff;
+}
+
+.popup_close
+{
+  font-size: 22px;
+  color: #c4c4c4;
+  cursor: pointer;
+}
+
+.popup_warn
+{
+  display: block;
+  margin-top: 3%;
+  font: 14px/17px "Montserrat";
+  color: #ffffff;
+}
+
+.unclickable_checkbox
+{
+  border: 1.5px solid #b2b2b2;
+  box-sizing: border-box;
+}
+
+.loader_margin
+{
+  margin-top: 150px;
+  margin-left: 50%;
+}

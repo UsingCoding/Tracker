@@ -28,6 +28,7 @@ class ProjectStatisticsService implements ProjectStatisticsServiceInterface
             ->from('issue', 'i')
             ->leftJoin('i', 'account_user', 'ac', 'ac.user_id = i.user_id')
             ->where($queryBuilder->expr()->eq('project_id', ':project_id'))
+            ->andWhere($queryBuilder->expr()->isNotNull('i.user_id'))
             ->groupBy('ac.user_id')
             ->setParameter('project_id', $projectId, ParameterType::INTEGER)
             ->execute()

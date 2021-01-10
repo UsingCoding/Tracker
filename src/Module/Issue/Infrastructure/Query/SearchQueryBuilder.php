@@ -8,7 +8,6 @@ use App\Common\Infrastructure\Persistence\OrderByType;
 use App\Module\Issue\App\Exception\SearchQueryParsingException;
 use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Psr\Log\LoggerInterface;
 
 class SearchQueryBuilder
 {
@@ -27,13 +26,6 @@ class SearchQueryBuilder
         IssueTable::UPDATED_AT
     ];
 
-    private LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
     /**
      * @param string $searchQuery
      * @param QueryBuilder $queryBuilder
@@ -41,6 +33,11 @@ class SearchQueryBuilder
      */
     public function build(string $searchQuery, QueryBuilder $queryBuilder): void
     {
+        if ($searchQuery === '')
+        {
+            return;
+        }
+
         /** @var string[] $tokens */
         $tokens = Strings::split($searchQuery, ' ');
 
