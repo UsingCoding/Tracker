@@ -40,11 +40,11 @@ class Api implements ApiInterface
         $this->eventSource = $eventSource;
     }
 
-    public function authorizeUserByEmail(string $email, string $password): UserOutput
+    public function authorizeUserByEmail(string $usernameOrEmail, string $password): UserOutput
     {
         try
         {
-            return UserMapper::getUserOutput($this->authenticationService->authenticate($email, $password));
+            return UserMapper::getUserOutput($this->authenticationService->authenticate($usernameOrEmail, $password));
         }
         catch (\Throwable $throwable)
         {

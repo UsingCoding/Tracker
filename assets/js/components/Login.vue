@@ -53,15 +53,14 @@ export default{
         },
         showError: function(container) {
             container.style ['border-color'] = '#ff0000';
-	        container.setAttribute('onclick', 'this.style=""');
+            container.setAttribute('onclick', 'this.style=""');
         },
         validate: function() {
             var error = false;
             var username = document.getElementById('username');
             var password = document.getElementById('password');
-            var emailRegex = /[^@]+@[^\.]+\..+/g;
 
-            if(!emailRegex.test(this.username))
+            if(!this.username)
             {
                 error = true;
                 this.showError(username);

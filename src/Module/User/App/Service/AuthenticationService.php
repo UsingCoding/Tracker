@@ -5,32 +5,38 @@ namespace App\Module\User\App\Service;
 use App\Module\User\App\Data\UserData;
 use App\Module\User\App\Exception\IncorrectUserPasswordException;
 use App\Module\User\App\Exception\UserNotFoundException;
-use App\Module\User\Domain\Service\UserService;
-use Psr\Log\LoggerInterface;
+use App\Module\User\App\Query\UserQueryServiceInterface;
+use Exception;
 
 class AuthenticationService
 {
-    private UserService $userService;
-    private LoggerInterface $logger;
+    private UserQueryServiceInterface $userQueryService;
 
-    public function __construct(UserService $userService, LoggerInterface $logger)
+    public function __construct(UserQueryServiceInterface $userQueryService)
     {
-        $this->userService = $userService;
-        $this->logger = $logger;
+        $this->userQueryService = $userQueryService;
     }
 
-    public function authenticate(string $email, string $password): UserData
+    /**
+     * @param string $usernameOrEmail
+     * @param string $password
+     * @return UserData
+     * @throws IncorrectUserPasswordException
+     * @throws UserNotFoundException
+     * @throws Exception
+     */
+    public function authenticate(string $usernameOrEmail, string $password): UserData
     {
-        $user = $this->userService->getUserByEmail($email);
+        $user = $this->userQueryService->findByUsernameOrEmail($usernameOrEmail);
 
         if ($user === null)
         {
-            throw new UserNotFoundException('', ['email' => $email, 'password' => $password]);
+            throw new UserNotFoundException('', ['username_or_email' => $usernameOrEmail, 'password' => $password]);
         }
 
         if ($user->getPassword() !== $password)
         {
-            throw new IncorrectUserPasswordException('', ['email' => $email, 'password' => $password]);
+            throw new IncorrectUserPasswordException('', ['username_or_email' => $usernameOrEmail, 'password' => $password]);
         }
 
         return $user;
