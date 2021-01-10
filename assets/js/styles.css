@@ -455,7 +455,7 @@ header
   border-radius: 3px;
   box-sizing: border-box;
   background: #efefef;
-  height: 220px;
+  height: max-content;
   width: 30%;
   margin: 0 0 0 3%;
 }
@@ -485,7 +485,6 @@ header
 
 .tag_value
 {
-  margin-left: calc(30% - 35px); /*В идеале высчитывать бы от длины лейбла*/
   box-sizing: border-box;
   border: 0;
   background: #efefef;
@@ -720,7 +719,7 @@ header
   font: bold 24px/32px "Montserrat";
   display: block;
   box-sizing: border-box;
-  padding: 7px 0 7px 8%;
+  padding: 7px 0 7px 3%;
   height: 48px;
   border-radius: 3px;
   background: #ffffff;

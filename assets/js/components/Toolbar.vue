@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="toolbar">
-            <div class="tools">
+            <!-- <div class="tools">
                 <i class="tool fas fa-rocket"></i>
                 <i v-if="this.$route.name != 'create_issue'" v-on:click="openModal()" class="tool fas fa-user-alt"></i>
                 <i class="tool right_tool fas fa-beer"></i>
-            </div>
-            <div class="tools second_tools">
-                <i v-if="this.$route.name == 'issue_details'" v-on:click="goEdit()" class="tool far fa-edit"></i>
+            </div> -->
+            <div v-if="this.$route.name == 'issue_details'" class="tools">
+                <i  v-on:click="goEdit()" class="tool far fa-edit"></i>
                 <i v-on:click="deleteIssue()" class="tool right_tool fas fa-trash"></i>
             </div>
         </div>

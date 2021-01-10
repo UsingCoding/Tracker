@@ -83,6 +83,9 @@ export default {
             if(!this.validate()){
                 if(this.assignee == 'null')
                     this.assignee = null;
+                if(this.issue_description == '')
+                    this.issue_description = null;
+
                 issue_code = await this.issueStore.createIssue({
                     "title": this.issue_title,
                     "description": this.issue_description,
@@ -127,12 +130,6 @@ export default {
             {
                 error = true;
                 this.showError(title);
-            }
-
-            if(!this.issue_description)
-            {
-                error = true;
-                this.showError(description);
             }
 
             return error;

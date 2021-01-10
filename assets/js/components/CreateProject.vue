@@ -41,6 +41,8 @@ export default {
     methods: {
          create_project: async function() {
             if(!this.validate()){
+                if(this.new_project_description == '')
+                    this.new_project_description = null;
                 let response =  await this.store.createProject({
                     "name": this.new_project_title,
                     "nameId": this.new_project_id,
@@ -76,12 +78,6 @@ export default {
             {
                 error = true;
                 this.showError(id);
-            }
-
-            if(!this.new_project_description)
-            {
-                error = true;
-                this.showError(description);
             }
 
             return error;
