@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import App from "./components/App";
 import issues from "./pages/IssuesPage";
 import login from "./components/Login";
 import create_issue from "./pages/CreateIssuePage";
@@ -20,7 +19,6 @@ Vue.use(VueRouter);
 export default new VueRouter({
     mode: 'history',
     routes:[
-        { path:'/', name:'home', component: App },
         { path:'/login', name: 'login', component: login },
         { path:'/issues', name:'issues', component: issues },
         { path:'/create-issue', name:'create_issue', component: create_issue },
@@ -34,6 +32,7 @@ export default new VueRouter({
         { path: '/user/:code', name: 'user_info', component: user_info},
         { path: '/add/user', name: 'create_user', component: user_info},
         { path: '/users', name: 'users_list', component: users_list},
-        { path: '*', name: 'access_denied', component: access_denied}
+        { path: '/404', name: 'access_denied', component: access_denied },
+        { path: '*', redirect: '/404' }
     ]
 });
