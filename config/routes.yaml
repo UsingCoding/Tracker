@@ -1,5 +1,11 @@
 api:
     resource: routes/api.yaml
 
+logout:
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+    path: /logout
+    defaults:
+        path: /api/logout
+
 frontend:
     resource: routes/frontend.yaml

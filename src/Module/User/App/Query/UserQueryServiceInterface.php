@@ -27,4 +27,11 @@ interface UserQueryServiceInterface
      * @throws Exception
      */
     public function getList(): array;
+
+    /**
+     * @param string $usernameOrEmail
+     * @return UserData|null
+     * @throws Exception
+     */
+    public function findByUsernameOrEmail(string $usernameOrEmail): ?UserData;
 }

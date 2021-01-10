@@ -10,6 +10,8 @@ use App\Module\User\Domain\Model\UserRepositoryInterface;
 use App\Module\User\Infrastructure\Hydration\UserDataHydrator;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\FetchMode;
+use Doctrine\DBAL\ParameterType;
+use function Doctrine\DBAL\Query\QueryBuilder;
 
 class UserQueryService implements UserQueryServiceInterface
 {
@@ -73,5 +75,41 @@ class UserQueryService implements UserQueryServiceInterface
         $hydrator = new UserDataHydrator($this->connection->getDatabasePlatform());
 
         return $hydrator->hydrateAll($row);
+    }
+
+    public function findByUsernameOrEmail(string $usernameOrEmail): ?UserData
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->addSelect('u.user_id')
+            ->addSelect('u.username')
+            ->addSelect('u.password')
+            ->addSelect('u.created_at')
+            ->addSelect('u.email')
+            ->addSelect('u.grade')
+            ->addSelect('u.avatar_url')
+            ->from('account_user', 'u')
+            ->where($queryBuilder->expr()->eq('u.username', ':usernameOrEmail'))
+            ->orWhere($queryBuilder->expr()->eq('u.email', ':usernameOrEmail'))
+            ->setParameter('usernameOrEmail', $usernameOrEmail, ParameterType::STRING)
+        ;
+
+        $stmt = $queryBuilder->execute();
+        $row = $stmt->fetch(FetchMode::ASSOCIATIVE);
+        $stmt->closeCursor();
+
+        if ($row === false)
+        {
+            return null;
+        }
+
+        $hydrator = new UserDataHydrator($this->connection->getDatabasePlatform());
+
+        $result = [];
+
+        $hydrator->hydrate($row, $result);
+
+        return $result[0];
     }
 }
