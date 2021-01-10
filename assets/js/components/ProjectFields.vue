@@ -147,19 +147,15 @@ export default {
             await this.getFieldsList();
         },
         getFieldsList: async function() {
-            this.$parent.loading = true;
             var response = await this.fieldListStore.getFields(this.$route.params.code);
             if(response)
             {
-                setTimeout(() => {
-                    this.projectTitle = response.project_name;
-                    this.projectFields = response.fields
-                    for(var field of this.projectFields)
-                    {
-                        this.map.set(field.id, -1);
-                    }
-                    this.$parent.loading = false;
-                }, 500);
+                this.projectTitle = response.project_name;
+                this.projectFields = response.fields
+                for(var field of this.projectFields)
+                {
+                    this.map.set(field.id, -1);
+                }
             }
             else
                 this.$emit('error');
@@ -208,7 +204,11 @@ export default {
         }
     },
     async beforeMount() {
+        this.$parent.loading = true;
         await this.getFieldsList();
+        setTimeout(() => {
+            this.$parent.loading = false;
+        }, 500);
     }
 }
 </script>

@@ -54,17 +54,13 @@ export default {
     },
     methods: {
         getMembers: async function() {
-            this.$parent.loading = true;
             this.team = await this.membersListStore.getMembersList(this.$route.params.code);
             this.usersToAdd = await this.membersListStore.getUsersToAddList(this.$route.params.code);
             if(this.team && this.usersToAdd){
-                setTimeout(() => {
-                    for(var member of this.team.team_members)
-                    {
-                        this.map.set(member.team_member_id, -1);
-                    }
-                    this.$parent.loading = false;
-                }, 500);
+                for(var member of this.team.team_members)
+                {
+                    this.map.set(member.team_member_id, -1);
+                }
             }
         },
         addMember: async function() {
@@ -111,7 +107,11 @@ export default {
         }
     },
     async beforeMount() {
+        this.$parent.loading = true;
         await this.getMembers();
+        setTimeout(() => {
+            this.$parent.loading = false;
+        }, 500);
     }
 }
 </script>
