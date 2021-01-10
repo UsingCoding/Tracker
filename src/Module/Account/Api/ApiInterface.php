@@ -3,6 +3,7 @@
 namespace App\Module\Account\Api;
 
 use App\Module\Account\Api\Exception\ApiException;
+use App\Module\Account\Api\Input\CreateAccountInput;
 use App\Module\Account\Api\Output\AccountOutput;
 
 interface ApiInterface

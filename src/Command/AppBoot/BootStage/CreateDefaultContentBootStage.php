@@ -6,8 +6,8 @@ use App\Command\AppBoot\Exception\BootStageExecutionFailedException;
 use App\Common\Domain\Utils\Arrays;
 use App\Framework\Infrastructure\Command\ApplicationProviderInterface;
 use App\Module\Account\Api\ApiInterface as AccountApi;
-use App\Module\Account\Api\CreateAccountInput;
 use App\Module\Account\Api\Exception\ApiException as AccountApiException;
+use App\Module\Account\Api\Input\CreateAccountInput;
 use App\Module\Project\Api\ApiInterface as ProjectApi;
 use App\Module\Project\Api\Exception\ApiException as ProjectApiException;
 use App\Module\Project\Api\Input\CreateProjectInput;
@@ -49,7 +49,7 @@ class CreateDefaultContentBootStage implements BootStageInterface
         }
         catch (\Throwable $throwable)
         {
-            throw new BootStageExecutionFailedException();
+            throw new BootStageExecutionFailedException($throwable->getMessage(), [], $throwable->getCode(), $throwable);
         }
     }
 

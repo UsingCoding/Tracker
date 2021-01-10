@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Account\Api;
+namespace App\Module\Account\Api\Input;
 
 use App\Module\Account\App\Data\CreateAccountRequestInterface;
 

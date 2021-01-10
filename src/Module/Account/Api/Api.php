@@ -5,6 +5,7 @@ namespace App\Module\Account\Api;
 use App\Common\App\Command\Bus\AppCommandBusInterface;
 use App\Common\App\Command\CommandInterface;
 use App\Module\Account\Api\Exception\ApiException;
+use App\Module\Account\Api\Input\CreateAccountInput;
 use App\Module\Account\Api\Mapper\AccountMapper;
 use App\Module\Account\Api\Output\AccountOutput;
 use App\Module\Account\App\Command\CreateAccountCommand;
@@ -15,9 +16,9 @@ class Api implements ApiInterface
     private AppCommandBusInterface $commandBus;
     private AccountQueryServiceInterface $accountQueryService;
 
-    public function __construct(AppCommandBusInterface $commandBus, AccountQueryServiceInterface $accountQueryService)
+    public function __construct(AppCommandBusInterface $accountCommandBus, AccountQueryServiceInterface $accountQueryService)
     {
-        $this->commandBus = $commandBus;
+        $this->commandBus = $accountCommandBus;
         $this->accountQueryService = $accountQueryService;
     }
 

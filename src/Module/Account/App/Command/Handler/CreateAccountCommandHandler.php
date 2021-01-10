@@ -15,6 +15,12 @@ class CreateAccountCommandHandler implements AppCommandHandlerInterface
     private SynchronizationInterface $synchronization;
     private AccountService $service;
 
+    public function __construct(SynchronizationInterface $synchronization, AccountService $service)
+    {
+        $this->synchronization = $synchronization;
+        $this->service = $service;
+    }
+
     public function execute(CommandInterface $command): void
     {
         if (!$command instanceof CreateAccountCommand)

@@ -27,11 +27,16 @@ class Api implements ApiInterface
     private AppCommandBusInterface $commandBus;
     private AppEventSourceInterface $eventSource;
 
-    public function __construct(AuthenticationService $authenticationService, UserQueryServiceInterface $userQueryService, AppCommandBusInterface $commandBus, AppEventSourceInterface $eventSource)
+    public function __construct(
+        AuthenticationService $authenticationService,
+        UserQueryServiceInterface $userQueryService,
+        AppCommandBusInterface $userCommandBus,
+        AppEventSourceInterface $eventSource
+    )
     {
         $this->authenticationService = $authenticationService;
         $this->userQueryService = $userQueryService;
-        $this->commandBus = $commandBus;
+        $this->commandBus = $userCommandBus;
         $this->eventSource = $eventSource;
     }
 
