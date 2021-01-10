@@ -1,5 +1,5 @@
 <template>
-  <div class="project_view_width">
+  <div v-if="!loading" class="project_view_width">
       <h1 class="administration_path">{{projectInfo.name}} <i class="arrow fas fa-chevron-right"></i> Settings</h1>
       <form class="create_project">
             <div class="create_project_label">
@@ -37,7 +37,10 @@
 <script>
 
 export default {
-    props: ['factory'],
+    props: [
+        'factory',
+        'loading'    
+    ],
     data() {
         return {
             store: this.factory.createProjectStore(),
@@ -112,12 +115,16 @@ export default {
         }
     },
     async beforeMount() {
+        this.$parent.loading = true;
         await this.getProjectInfo();
         await this.getMembers();
-        this.new_project_title = this.projectInfo.name;
-        this.new_project_id = this.projectInfo.nameId;
-        this.new_project_description = this.projectInfo.description;
-        this.project_owner = this.projectInfo.owner_id;
+        setTimeout(() => {
+            this.new_project_title = this.projectInfo.name;
+            this.new_project_id = this.projectInfo.nameId;
+            this.new_project_description = this.projectInfo.description;
+            this.project_owner = this.projectInfo.owner_id;
+            this.$parent.loading = false;
+        }, 500);
     }
 }
 </script>

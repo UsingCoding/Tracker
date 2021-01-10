@@ -1,7 +1,8 @@
 <template>
     <div>
         <app-header></app-header>
-        <projects-list v-bind:factory="factory" v-on:error="openPopup()"></projects-list>
+        <loader v-if="loading"></loader>
+        <projects-list v-bind:factory="factory" v-bind:loading="loading" v-on:error="openPopup()"></projects-list>
         <pop-up v-bind:popupFlag="popupFlag" v-on:close="closePopup()"></pop-up>
     </div>
 </template>
@@ -10,19 +11,21 @@
 import header from "../components/Header";
 import projects_list from "../components/ProjectsList";
 import popup from "../components/Popup";
+import loader from "../components/Loader";
 
 export default {
     props: ['factory'],
     data(){
         return {
-            popupFlag: false
+            popupFlag: false,
+            loading: true
         }
     },
     components: {
         'app-header': header,
         'projects-list': projects_list,
-        'pop-up': popup
-
+        'pop-up': popup,
+        'loader': loader
     },
     methods: {
         openPopup: function() {

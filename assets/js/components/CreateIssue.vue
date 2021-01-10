@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <div>
             <h1 class="new_issue_header">
                 <span>New issue in</span>
@@ -59,7 +59,10 @@
 <script>
 
 export default {
-    props: ['factory'],
+    props: [
+        'factory',
+        'loading'
+    ],
     data() {
         return {
             issue_title: '',
@@ -154,6 +157,7 @@ export default {
         let projectsStore = this.factory.createProjectsListStore();
         this.projects = await projectsStore.getProjectsList();
         this.chosenProject = this.projects[0];
+        this.$parent.loading = false;
     },
     async beforeUpdate() {
         this.teamC;

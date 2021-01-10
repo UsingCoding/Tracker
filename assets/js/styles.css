@@ -977,3 +977,8 @@ header
   box-sizing: border-box;
 }
 
+.loader_margin
+{
+  margin-top: 150px;
+  margin-left: 50%;
+}

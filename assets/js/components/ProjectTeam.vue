@@ -1,5 +1,5 @@
 <template>
-  <div class="project_view_width">
+  <div v-if="!loading" class="project_view_width">
       <h1 class="administration_path">{{team.project_name}} <i class="arrow fas fa-chevron-right"></i> Team</h1>
       <div>
           <div class="edit_team_btns">
@@ -36,7 +36,10 @@
 
 <script>
 export default {
-    props: ['factory'],
+    props: [
+        'factory',
+        'loading'    
+    ],
     data() {
         return {
             memberStore: this.factory.createMemberStore(),
@@ -51,11 +54,17 @@ export default {
     },
     methods: {
         getMembers: async function() {
+            this.$parent.loading = true;
             this.team = await this.membersListStore.getMembersList(this.$route.params.code);
             this.usersToAdd = await this.membersListStore.getUsersToAddList(this.$route.params.code);
-            for(var member of this.team.team_members)
-            {
-                this.map.set(member.team_member_id, -1);
+            if(this.team && this.usersToAdd){
+                setTimeout(() => {
+                    for(var member of this.team.team_members)
+                    {
+                        this.map.set(member.team_member_id, -1);
+                    }
+                    this.$parent.loading = false;
+                }, 500);
             }
         },
         addMember: async function() {

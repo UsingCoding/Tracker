@@ -1,5 +1,5 @@
 <template>
-  <div class="project_view_width">
+    <div v-if="!loading" class="project_view_width">
         <h1 class="administration_path">{{projectTitle}} <i class="fas fa-chevron-right arrow"></i> Fields</h1>
         <div>
             <span class="autoassigneeWarning" >
@@ -62,12 +62,15 @@
                 <span v-if="projectFields.length == 0" class="no_fields">There is no fields...</span>
             </div>
         </div>
-  </div>
+    </div>
 </template>
 
 <script>
 export default {
-    props: ['factory'],
+    props: [
+        'factory',
+        'loading'
+    ],
     data() {
         return {
             projectTitle: '',
@@ -144,15 +147,19 @@ export default {
             await this.getFieldsList();
         },
         getFieldsList: async function() {
+            this.$parent.loading = true;
             var response = await this.fieldListStore.getFields(this.$route.params.code);
             if(response)
             {
-                this.projectTitle = response.project_name;
-                this.projectFields = response.fields
-                for(var field of this.projectFields)
-                {
-                    this.map.set(field.id, -1);
-                }
+                setTimeout(() => {
+                    this.projectTitle = response.project_name;
+                    this.projectFields = response.fields
+                    for(var field of this.projectFields)
+                    {
+                        this.map.set(field.id, -1);
+                    }
+                    this.$parent.loading = false;
+                }, 500);
             }
             else
                 this.$emit('error');

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <div class="project_view_width">
             <span class="projects_count">Projects {{projectsList.length}}</span>
             <router-link v-for="pro in projectsList" :to="{ name: 'project_info', params: { code: pro.project_id }}" class="projects_list_el" exact>{{pro.name}}</router-link>
@@ -13,7 +13,10 @@
 <script>
 
 export default {
-    props: ['factory'],
+    props: [
+        'factory',
+        'loading'    
+    ],
     data() {
         return {
             store: this.factory.createProjectsListStore(),
@@ -22,9 +25,14 @@ export default {
     },
     methods: {
         getProjects: async function() {
+            this.$parent.loading = true;
             this.projectsList = await this.store.getProjectsList();
-            if(!this.projectsList || this.projectsList.hasOwnProperty('error'))
-                this.$emit('error');
+            
+            setTimeout(() => {
+                if(!this.projectsList || this.projectsList.hasOwnProperty('error'))
+                    this.$emit('error');
+                this.$parent.loading = false;
+            }, 500);
         }
     },
     async beforeMount() {

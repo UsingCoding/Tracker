@@ -12,7 +12,9 @@ import usersList from "../components/UsersList";
 export default {
     props: ['factory'],
     data(){
-        return {}
+        return {
+                        
+        }
     },
     components: {
         'app-header': header,

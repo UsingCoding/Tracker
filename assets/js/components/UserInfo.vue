@@ -1,8 +1,8 @@
 <template>
-  <div class="project_view_width">
-      <h1 v-if="createFlag" class="administration_path">New User</h1>
-      <h1 v-else class="administration_path">{{username}}</h1>
-      <form class="create_project">
+    <div v-if="!loading" class="project_view_width">
+        <h1 v-if="createFlag" class="administration_path">New User</h1>
+        <h1 v-else class="administration_path">{{username}}</h1>
+        <form class="create_project">
 
             <div class="create_project_label">
                 <label for="email">EMAIL</label>
@@ -45,14 +45,17 @@
 
             <button v-on:click="edit_user()" type="button" class="project_form_btn create_project_btn">Save</button>
             <button v-on:click="cancel()" type="button" class="project_form_btn cancel_btn">Cancel</button>
-      </form>
-  </div>
+        </form>
+    </div>
 </template>
 
 <script>
 
 export default {
-    props: ['factory'],
+    props: [
+        'factory',
+        'loading'    
+    ],
     data() {
         return {
             store: this.factory.createUserStore(),
@@ -94,13 +97,17 @@ export default {
             this.$router.push({ name: 'users_list'});
         },
         getUserInfo: async function() {
+            this.$parent.loading = true;
             this.userInfo = await this.store.getUserInfo(this.$route.params.code);
             if(this.userInfo && !this.userInfo.hasOwnProperty('error'))
             {
-                this.username = this.userInfo.username;
-                this.email = this.userInfo.email;
-                this.password = this.userInfo.password;
-                this.grade = this.userInfo.grade + 1;
+                setTimeout(() => {
+                    this.username = this.userInfo.username;
+                    this.email = this.userInfo.email;
+                    this.password = this.userInfo.password;
+                    this.grade = this.userInfo.grade + 1;
+                    this.$parent.loading = false;
+                }, 500);
             }
             else    
                 this.$emit('error');
@@ -193,7 +200,12 @@ export default {
             this.createFlag = false;
         }
         else
+        {
             this.createFlag = true;
+            setTimeout(() => {
+                this.$parent.loading = false;
+            }, 500);
+        }
     },
     beforeUpdate() {
         if(this.$route.name == 'create_user')

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <div v-if="!edit_flag" class="issue_view">
             <div class="issue_view_info">
                 <div class="top_issue_view">
@@ -124,7 +124,8 @@
 export default {
   props: [
     'edit_flag',
-    'factory'
+    'factory',
+    'loading'
   ],
   data() {
     return {
@@ -169,19 +170,26 @@ export default {
       this.$emit('cancel_edit');
     },
     getIssueInfo: async function() {
-      this.issueInfo = await this.store.getIssueInformation(this.$route.params.code);  
+      this.$parent.loading = true;
+      this.issueInfo = await this.store.getIssueInformation(this.$route.params.code); 
       let projectsStore = this.factory.createProjectsListStore();
       this.projects = await projectsStore.getProjectsList();
-      this.new_title = this.issueInfo.name;
-      this.new_description = this.issueInfo.description;
       await this.getCommentsList();
-      if(this.issueInfo.user)
-      {
-        this.assignee = this.issueInfo.user;
+      if(this.issueInfo)
+      { 
+        setTimeout(() => {
+          this.new_title = this.issueInfo.name;
+          this.new_description = this.issueInfo.description;
+          if(this.issueInfo.user)
+          {
+            this.assignee = this.issueInfo.user;
+          }
+          else
+            this.assignee.id = null;
+          this.project = this.issueInfo.project;
+          this.$parent.loading = false;
+        }, 500);
       }
-      else
-        this.assignee.id = null;
-      this.project = this.issueInfo.project;
     },
     delete_issue: async function() {
       let result = await this.store.deleteIssue(this.issueInfo.issue_id);
