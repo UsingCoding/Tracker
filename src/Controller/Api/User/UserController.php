@@ -7,8 +7,11 @@ use App\Common\App\View\RenderableViewInterface;
 use App\Common\Infrastructure\Context\AvatarUrlProvider;
 use App\Common\Infrastructure\Persistence\FileRepositoryInterface;
 use App\Controller\Api\ApiController;
-use App\Module\User\Api\ApiInterface;
-use App\Module\User\Api\Exception\ApiException;
+use App\Controller\Api\Exception\NoLoggedUserException;
+use App\Module\Account\Api\ApiInterface as AccountApi;
+use App\Module\Account\Api\Exception\ApiException as AccountApiException;
+use App\Module\User\Api\ApiInterface as UserApi;
+use App\Module\User\Api\Exception\ApiException as UserApiException;
 use App\Module\User\Api\Input\AddUserInput;
 use App\Module\User\Api\Input\EditUserInput;
 use App\View\UserInfoView;
@@ -21,15 +24,15 @@ class UserController extends ApiController
 {
     /**
      * @param Request $request
-     * @param ApiInterface $api
+     * @param UserApi $api
      * @param FileRepositoryInterface $fileRepository
      * @return Response
-     * @throws ApiException
+     * @throws UserApiException
      * @throws CantStoreFileException
      */
     public function addUser(
         Request $request,
-        ApiInterface $api,
+        UserApi $api,
         FileRepositoryInterface $fileRepository
     ): Response
     {
@@ -56,24 +59,24 @@ class UserController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (UserApiException $exception)
         {
-            if ($exception->getType() === ApiException::DUPLICATE_EMAIL)
+            if ($exception->getType() === UserApiException::DUPLICATE_EMAIL)
             {
                 return $this->json(['error' => 'duplicate_email']);
             }
 
-            if ($exception->getType() === ApiException::DUPLICATE_USERNAME)
+            if ($exception->getType() === UserApiException::DUPLICATE_USERNAME)
             {
                 return $this->json(['error' => 'duplicate_username']);
             }
 
-            if ($exception->getType() === ApiException::UNKNOWN_GRADE)
+            if ($exception->getType() === UserApiException::UNKNOWN_GRADE)
             {
                 return $this->json(['error' => 'unknown_grade']);
             }
 
-            if ($exception->getType() === ApiException::INVALID_USER_DATA)
+            if ($exception->getType() === UserApiException::INVALID_USER_DATA)
             {
                 return $this->json(['error' => 'invalid_user_data']);
             }
@@ -84,13 +87,13 @@ class UserController extends ApiController
 
     /**
      * @param Request $request
-     * @param ApiInterface $api
+     * @param UserApi $api
      * @param FileRepositoryInterface $fileRepository
      * @return Response
-     * @throws ApiException
+     * @throws UserApiException
      * @throws CantStoreFileException
      */
-    public function editUser(Request $request, ApiInterface $api, FileRepositoryInterface $fileRepository): Response
+    public function editUser(Request $request, UserApi $api, FileRepositoryInterface $fileRepository): Response
     {
         try
         {
@@ -116,29 +119,29 @@ class UserController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (UserApiException $exception)
         {
-            if ($exception->getType() === ApiException::DUPLICATE_EMAIL)
+            if ($exception->getType() === UserApiException::DUPLICATE_EMAIL)
             {
                 return $this->json(['error' => 'duplicate_email']);
             }
 
-            if ($exception->getType() === ApiException::DUPLICATE_USERNAME)
+            if ($exception->getType() === UserApiException::DUPLICATE_USERNAME)
             {
                 return $this->json(['error' => 'duplicate_username']);
             }
 
-            if ($exception->getType() === ApiException::UNKNOWN_GRADE)
+            if ($exception->getType() === UserApiException::UNKNOWN_GRADE)
             {
                 return $this->json(['error' => 'unknown_grade']);
             }
 
-            if ($exception->getType() === ApiException::USER_BY_ID_NOT_FOUND)
+            if ($exception->getType() === UserApiException::USER_BY_ID_NOT_FOUND)
             {
                 return $this->json(['error' => 'user_not_found']);
             }
 
-            if ($exception->getType() === ApiException::INVALID_USER_DATA)
+            if ($exception->getType() === UserApiException::INVALID_USER_DATA)
             {
                 return $this->json(['error' => 'invalid_user_data']);
             }
@@ -149,11 +152,11 @@ class UserController extends ApiController
 
     /**
      * @param Request $request
-     * @param ApiInterface $api
+     * @param UserApi $api
      * @return Response
-     * @throws ApiException
+     * @throws UserApiException
      */
-    public function deleteUser(Request $request, ApiInterface $api): Response
+    public function deleteUser(Request $request, UserApi $api): Response
     {
         try
         {
@@ -161,14 +164,14 @@ class UserController extends ApiController
 
             return new Response();
         }
-        catch (ApiException $exception)
+        catch (UserApiException $exception)
         {
-            if ($exception->getType() === ApiException::USER_BY_ID_NOT_FOUND)
+            if ($exception->getType() === UserApiException::USER_BY_ID_NOT_FOUND)
             {
                 return $this->json(['error' => 'user_not_found']);
             }
 
-            if ($exception->getType() === ApiException::USER_CANT_DELETE_HIM_SELF)
+            if ($exception->getType() === UserApiException::USER_CANT_DELETE_HIM_SELF)
             {
                 return $this->json(['error' => 'user_cant_delete_him_self']);
             }
@@ -179,12 +182,12 @@ class UserController extends ApiController
 
     /**
      * @param Request $request
-     * @param ApiInterface $api
+     * @param UserApi $api
      * @param AvatarUrlProvider $avatarUrlProvider
      * @return RenderableViewInterface
-     * @throws ApiException
+     * @throws UserApiException
      */
-    public function user(Request $request, ApiInterface $api, AvatarUrlProvider $avatarUrlProvider): RenderableViewInterface
+    public function user(Request $request, UserApi $api, AvatarUrlProvider $avatarUrlProvider): RenderableViewInterface
     {
         try
         {
@@ -192,9 +195,9 @@ class UserController extends ApiController
 
             return new UserInfoView($user, $avatarUrlProvider);
         }
-        catch (ApiException $exception)
+        catch (UserApiException $exception)
         {
-            if ($exception->getType() === ApiException::USER_BY_ID_NOT_FOUND)
+            if ($exception->getType() === UserApiException::USER_BY_ID_NOT_FOUND)
             {
                 return $this->renderableJson(['error' => 'user_by_id_not_found']);
             }
@@ -204,17 +207,18 @@ class UserController extends ApiController
     }
 
     /**
-     * @param ApiInterface $api
-     * @return Response
-     * @throws ApiException
-     * @throws \App\Controller\Api\Exception\NoLoggedUserException
+     * @param UserApi $userApi
+     * @param AccountApi $accountApi
+     * @return RenderableViewInterface
+     * @throws UserApiException
+     * @throws NoLoggedUserException
+     * @throws AccountApiException
      */
-    public function list(ApiInterface $api): Response
+    public function list(UserApi $userApi, AccountApi $accountApi): RenderableViewInterface
     {
-        $list = $api->list();
+        $list = $userApi->list();
+        $account = $accountApi->getAccount();
 
-        $view = new UserListView($list, $this->getLoggedUser());
-
-        return $view->render();
+        return new UserListView($list, $account, $this->getLoggedUser());
     }
 }

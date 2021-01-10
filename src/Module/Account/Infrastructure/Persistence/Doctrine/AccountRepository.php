@@ -25,7 +25,7 @@ class AccountRepository implements AccountRepositoryInterface
 
     public function get(): ?Account
     {
-        return $this->repo->findBy([], null, 1);
+        return $this->repo->findOneBy([]);
     }
 
     public function remove(Account $account): void
