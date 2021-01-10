@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IssueManagementController extends ApiController
 {
+    private const DEFAULT_PAGE = 1;
+
     /**
      * @param Request $request
      * @param ApiInterface $issueApi
@@ -148,8 +150,9 @@ class IssueManagementController extends ApiController
      */
     public function issuesList(Request $request, ApiInterface $issueApi): Response
     {
-        $list = $issueApi->list(
+        $list = $issueApi->issuesList(
             $request->get('search_query'),
+            $request->get('page', self::DEFAULT_PAGE),
             $request->get('project_id'),
         );
 

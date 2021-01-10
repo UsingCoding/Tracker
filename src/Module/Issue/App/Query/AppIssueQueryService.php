@@ -23,7 +23,7 @@ class AppIssueQueryService
      */
     public function getIssue(string $issueId): ?ExtendedIssueData
     {
-        $issue = $this->issueQueryService->getIssue($issueId);
+        $issue = $this->issueQueryService->getIssue($issueId, 1);
 
         if ($issue === null)
         {

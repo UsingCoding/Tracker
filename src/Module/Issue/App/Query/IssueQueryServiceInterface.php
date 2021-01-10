@@ -21,13 +21,14 @@ interface IssueQueryServiceInterface
 
     /**
      * @param string $query
+     * @param int $page
      * @param int|null $currentUserId
      * @param int|null $projectId
      * @return IssueListItemData[]
      * @throws SearchQueryParsingException
      * @throws Exception
      */
-    public function issuesList(string $query, ?int $currentUserId, ?int $projectId): array;
+    public function issuesList(string $query, int $page, ?int $currentUserId, ?int $projectId): array;
 
     /**
      * @param int|null $projectId
