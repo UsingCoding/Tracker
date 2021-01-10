@@ -34,6 +34,6 @@ export default new VueRouter({
         { path: '/user/:code', name: 'user_info', component: user_info},
         { path: '/add/user', name: 'create_user', component: user_info},
         { path: '/users', name: 'users_list', component: users_list},
-        { path: '/access-denied', name: 'access_denied', component: access_denied}
+        { path: '*', name: 'access_denied', component: access_denied}
     ]
 });
