@@ -245,7 +245,7 @@ export default {
     deleteComment: async function() {
       let response = await this.commentStore.deleteComment(this.commentId)
       if(response.ok)
-        await this.getIssueInfo();
+        await this.getCommentsList();
     },
     getCommentsList: async function() {
       var commentsStore = this.factory.createCommentsListStore();
@@ -321,7 +321,7 @@ export default {
 
 .comment_btns
 {
-  width: 35.5%;
+  width: 36%;
 }
 
 .add_comment_btn
