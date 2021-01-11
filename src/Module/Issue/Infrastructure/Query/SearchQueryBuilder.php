@@ -164,12 +164,12 @@ class SearchQueryBuilder
 
         if (Arrays::length($tokens) > $i + 2)
         {
-            $order = $tokens[$i + 2];
+            $order = Strings::lower($tokens[$i + 2]);
 
-            if ($order === Strings::lower(OrderByType::DESC) || $order === Strings::lower(OrderByType::ASC))
+            if (($order) === Strings::lower(OrderByType::DESC) || $order === Strings::lower(OrderByType::ASC))
             {
                 $queryBuilder
-                    ->orderBy('i.' . $value, Strings::lower($order))
+                    ->orderBy('i.' . $value, $order)
                 ;
 
                 $i += 2;
