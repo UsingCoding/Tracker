@@ -92,6 +92,6 @@ class FuzzyService:
          employeeLevel_activation3, employeeLevel_activation2, employeeLevel_activation1):
             aggregated = np.fmax(level_activation, aggregated)
 
-        tip = fuzz.defuzz(employeeLevel, aggregated, 'centroid')
+        result = fuzz.defuzz(employeeLevel, aggregated, 'centroid')
 
-        return tip
+        return result
