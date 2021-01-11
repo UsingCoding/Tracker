@@ -2,6 +2,7 @@
 
 namespace App\Module\Issue\Infrastructure\Query\Doctrine\DBAL;
 
+use App\Common\Domain\Utils\Arrays;
 use App\Module\Issue\App\Query\Data\IssueData;
 use App\Module\Issue\App\Query\IssueQueryServiceInterface;
 use App\Module\Issue\Domain\Service\IssueCodeService;
@@ -151,5 +152,29 @@ class IssueQueryService implements IssueQueryServiceInterface
         $hydrator = new IssueWithFieldsHydrator($this->connection->getDatabasePlatform());
 
         return $hydrator->hydrateAll($rows);
+    }
+
+    public function getIssuesIdAllowedForUserTeamMember(int $userId): array
+    {
+        $queryBuilder = $this->connection->createQueryBuilder();
+
+        $queryBuilder
+            ->addSelect('i.issue_id')
+            ->from('issue', 'i')
+            ->leftJoin('i', 'project', 'p', 'p.project_id = i.project_id')
+            ->leftJoin('p', 'team_member', 'tm', 'p.project_id = tm.project_id and tm.user_id = :current_user_id')
+            ->setParameter('current_user_id', $userId, ParameterType::INTEGER)
+        ;
+
+        $stmt = $queryBuilder->execute();
+        $rows = $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+        $stmt->closeCursor();
+
+        if ($rows === false)
+        {
+            return [];
+        }
+
+        return (array) Arrays::map($rows, static fn($row) => $row['issue_id']);
     }
 }

@@ -44,9 +44,3 @@ vueRouter.beforeEach(( to, from, next) => {
 });
 
 export default vueRouter;
-
-// VueRouter.afterEach(( to, from) => {
-//     Vue.nextTick(() => {
-//         document.title = to.meta.title;
-//     });
-// });

@@ -113,7 +113,7 @@ class Api implements ApiInterface
     {
         try
         {
-            $issues = $this->issueQueryService->issuesList($query, $page, $this->loggedUserIdProvider->getUserId(), $projectId);
+            $issues = $this->appIssueQueryService->issuesList($query, $page, $this->loggedUserIdProvider->getUserId(), $projectId);
 
             return IssueOutputMapper::getIssueListOutput($issues);
         }

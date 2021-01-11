@@ -36,4 +36,10 @@ interface IssueQueryServiceInterface
      * @throws Exception
      */
     public function getIssueForProject(int $projectId): array;
+
+    /**
+     * @param int $userId
+     * @return int[]
+     */
+    public function getIssuesIdAllowedForUserTeamMember(int $userId): array;
 }

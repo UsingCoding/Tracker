@@ -58,6 +58,8 @@ export default {
             }
             this.loadMore = false;
             this.loading = false;
+            if(response.length < 20)
+                this.loadMore = true;
         },
         getMoreIssueList: async function(props) {
             this.page += 1;
@@ -73,7 +75,7 @@ export default {
             {
                 this.issues = this.issues.concat(response);
             }
-            else
+            if(response.length < 20)
                 this.loadMore = true;
             if(this.page == 1)
                 this.loading = false;
