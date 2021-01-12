@@ -27,12 +27,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     apt-get update && \
     apt-get install -y yarn
 
-#composer require symfony/security-bundle --ignore-platform-reqs
-
-#RUN usermod -u ${USER_ID} www-data && groupmod -g ${GROUP_ID} www-data
-
 WORKDIR /var/www
-
-#USER "${USER_ID}:${GROUP_ID}"
 
 ENTRYPOINT ["make", "-f", "~dev/Makefile"]

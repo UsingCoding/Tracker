@@ -54,12 +54,3 @@ services:
     environment:
       PORT: 9000
       DEBUG: 1
-
-#  redis:
-#    image: redis
-#    container_name: tracker_redis
-#    restart: always
-#    volumes:
-#      - ./redis/conf/redis.conf:/usr/local/etc/redis
-#      - ./redis/data:/data/storage
-#    command: redis-server
