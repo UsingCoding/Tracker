@@ -11,7 +11,7 @@
                 <label for="id">ID</label>
                 <div class="has_description">
                     <input v-model="new_project_id" class="project_input" type="text" id="id">
-                    <span class="description_label">Must be in uppercase</span>
+                    <span class="description_label">Will be in uppercase</span>
                 </div>
             </div>
 

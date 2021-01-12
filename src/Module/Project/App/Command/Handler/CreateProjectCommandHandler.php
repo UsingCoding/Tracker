@@ -6,6 +6,7 @@ use App\Common\App\Command\CommandInterface;
 use App\Common\App\Command\Handler\AppCommandHandlerInterface;
 use App\Common\App\Exception\InvalidCommandException;
 use App\Common\App\Synchronization\SynchronizationInterface;
+use App\Common\Domain\Utils\Strings;
 use App\Module\Project\App\Command\CreateProjectCommand;
 use App\Module\Project\Domain\Service\ProjectDataSanitizer;
 use App\Module\Project\Domain\Service\ProjectService;
@@ -34,6 +35,6 @@ class CreateProjectCommandHandler implements AppCommandHandlerInterface
         $description = ProjectDataSanitizer::sanitizeDescription($command->getPayload()[CreateProjectCommand::DESCRIPTION]);
 
 
-        $this->synchronization->transaction(fn() => $this->projectService->addProject($name, $nameId, $ownerId, $description));
+        $this->synchronization->transaction(fn() => $this->projectService->addProject($name, $nameId !== null ? Strings::upper($nameId) : null, $ownerId, $description));
     }
 }
