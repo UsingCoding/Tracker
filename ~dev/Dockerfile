@@ -29,4 +29,6 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 
 WORKDIR /var/www
 
+RUN mkdir -p /var/php/session && chmod 777 /var/php/session
+
 ENTRYPOINT ["make", "-f", "~dev/Makefile"]
